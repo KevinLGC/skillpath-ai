@@ -11,9 +11,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "seed:check": "vitest run data/__tests__/seed.test.ts",
-    "verify:models": "node scripts/verify-models.mjs",
-    "ingest": "node scripts/ingest-knowledge.mjs",
-    "ingest:dry": "node scripts/ingest-knowledge.mjs --dry-run"
+    "verify:models": "node --env-file-if-exists=.env.local scripts/verify-models.mjs",
+    "ingest": "node --env-file-if-exists=.env.local scripts/ingest-knowledge.mjs",
+    "ingest:dry": "node --env-file-if-exists=.env.local scripts/ingest-knowledge.mjs --dry-run"
   },
   "dependencies": {
     "@supabase/ssr": "^0.7.0",
