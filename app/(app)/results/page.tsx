@@ -37,7 +37,7 @@ export default async function ResultsPage() {
 
   const top = context.recommendations[0]!;
   const topCareer = getCareer(top.careerSlug);
-  const ineligible = await Promise.resolve(context.recommendations.filter((rec) => !rec.eligible));
+  const ineligible = context.recommendations.filter((rec) => !rec.eligible);
 
   return (
     <div className="space-y-8">

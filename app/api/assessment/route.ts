@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { getActiveStudentId, getSessionUser } from "@/lib/auth/session";
 import { scoreAssessment } from "@/lib/assessment/score";
-import { getStore } from "@/lib/db";
+import { getStore, useLocalStore } from "@/lib/db";
 import { DEMO_STUDENT_ID } from "@/lib/demo/student";
 import { rankCareers } from "@/lib/recommendation";
 import { newId } from "@/lib/utils/id";
@@ -51,7 +51,8 @@ export async function POST(request: Request) {
     assessmentId,
   });
 
-  const store = getStore();
+  const isDemo = user?.kind === "demo" || studentId === DEMO_STUDENT_ID;
+  const store = isDemo ? useLocalStore() : getStore();
   await store.saveAssessment({
     id: assessmentId,
     studentId,

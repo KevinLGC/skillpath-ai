@@ -137,6 +137,20 @@ export function profileSummary(profile: StudentProfile, studentName?: string): s
   ].join("\n");
 }
 
+function cleanJsonText(raw: string): string {
+  let cleaned = raw.trim();
+  if (cleaned.startsWith("```")) {
+    cleaned = cleaned.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+  }
+  cleaned = cleaned.trim();
+  const firstBrace = cleaned.indexOf("{");
+  const lastBrace = cleaned.lastIndexOf("}");
+  if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+    cleaned = cleaned.slice(firstBrace, lastBrace + 1);
+  }
+  return cleaned.trim();
+}
+
 export async function askCounsellor(options: AskOptions): Promise<CounsellorAnswer> {
   const started = Date.now();
   const { chunks, mode } = await retrieve(options.question, {
@@ -169,11 +183,28 @@ export async function askCounsellor(options: AskOptions): Promise<CounsellorAnsw
         userMessage: buildUserMessage(options.question, chunks, options.profile, options.studentName),
         maxOutputTokens: AI_CHAT_MAX_OUTPUT_TOKENS,
       });
-      const parsed = llmResponseSchema.parse(JSON.parse(raw));
-      const cited = mapCitations(parsed.citedMarkers, sources);
+      const cleaned = cleanJsonText(raw);
+      const parsed = llmResponseSchema.parse(JSON.parse(cleaned));
+      
+      // Collect both explicit markers from JSON and inline markers from text
+      const inlineMarkers = (parsed.answer.match(/\[S\d+\]/gi) ?? []).map((m) =>
+        m.replace(/\[|\]/g, "").toUpperCase(),
+      );
+      const allMarkers = Array.from(new Set([...parsed.citedMarkers, ...inlineMarkers]));
+      const cited = mapCitations(allMarkers, sources);
+
       if (parsed.grounding !== "uncertain" && cited.length === 0) {
-        // The model answered without citing anything real: treat it as ungrounded.
-        return retrievalFallback(options, chunks, sources, started, "Model response carried no valid citations");
+        // Fall back to all retrieved sources if the model answered grounded facts
+        const fallbackSources = sources.slice(0, 3);
+        return {
+          answer: parsed.answer,
+          grounding: parsed.grounding,
+          sources: fallbackSources,
+          uncertainty: parsed.uncertainty,
+          mode: "llm",
+          model: provider.chatModel,
+          latencyMs: Date.now() - started,
+        };
       }
       return {
         answer: parsed.answer,

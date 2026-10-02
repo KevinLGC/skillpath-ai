@@ -170,8 +170,11 @@ export function createSupabaseStore(): Store {
     },
 
     async getRoadmap(studentId, careerSlug) {
+      if (studentId === DEMO_STUDENT_ID) {
+        return createMemoryStore().getRoadmap(studentId, careerSlug);
+      }
       const db = client();
-      if (!db) return null;
+      if (!db) return createMemoryStore().getRoadmap(studentId, careerSlug);
       const { data, error } = await db
         .from("roadmaps")
         .select("*")
@@ -182,7 +185,7 @@ export function createSupabaseStore(): Store {
         .maybeSingle();
       if (error || !data) {
         if (error) logError("getRoadmap", error);
-        return null;
+        return createMemoryStore().getRoadmap(studentId, careerSlug);
       }
       return {
         id: data.id as string,
@@ -224,11 +227,11 @@ export function createSupabaseStore(): Store {
 
     async getShareLink(token) {
       const db = client();
-      if (!db) return null;
+      if (!db) return createMemoryStore().getShareLink(token);
       const { data, error } = await db.from("share_links").select("*").eq("token", token).maybeSingle();
       if (error || !data) {
         if (error) logError("getShareLink", error);
-        return null;
+        return createMemoryStore().getShareLink(token);
       }
       const link: ShareLink = {
         id: data.id as string,
@@ -244,8 +247,11 @@ export function createSupabaseStore(): Store {
     },
 
     async listShareLinks(studentId) {
+      if (studentId === DEMO_STUDENT_ID) {
+        return createMemoryStore().listShareLinks(studentId);
+      }
       const db = client();
-      if (!db) return [];
+      if (!db) return createMemoryStore().listShareLinks(studentId);
       const { data, error } = await db
         .from("share_links")
         .select("*")
@@ -307,8 +313,11 @@ export function createSupabaseStore(): Store {
     },
 
     async listNotes(studentId) {
+      if (studentId === DEMO_STUDENT_ID) {
+        return createMemoryStore().listNotes(studentId);
+      }
       const db = client();
-      if (!db) return [];
+      if (!db) return createMemoryStore().listNotes(studentId);
       const { data, error } = await db
         .from("counsellor_notes")
         .select("*")
@@ -316,7 +325,7 @@ export function createSupabaseStore(): Store {
         .order("created_at", { ascending: true });
       if (error) {
         logError("listNotes", error);
-        return [];
+        return createMemoryStore().listNotes(studentId);
       }
       return (data ?? []).map((row) => ({
         id: row.id as string,
@@ -355,11 +364,11 @@ export function createSupabaseStore(): Store {
 
     async getChatSession(id) {
       const db = client();
-      if (!db) return null;
+      if (!db) return createMemoryStore().getChatSession(id);
       const { data, error } = await db.from("chat_sessions").select("*").eq("id", id).maybeSingle();
       if (error || !data) {
         if (error) logError("getChatSession", error);
-        return null;
+        return createMemoryStore().getChatSession(id);
       }
       return {
         id: data.id as string,
@@ -389,7 +398,7 @@ export function createSupabaseStore(): Store {
 
     async listMessages(sessionId) {
       const db = client();
-      if (!db) return [];
+      if (!db) return createMemoryStore().listMessages(sessionId);
       const { data, error } = await db
         .from("chat_messages")
         .select("*")
@@ -397,7 +406,7 @@ export function createSupabaseStore(): Store {
         .order("created_at", { ascending: true });
       if (error) {
         logError("listMessages", error);
-        return [];
+        return createMemoryStore().listMessages(sessionId);
       }
       return (data ?? []).map((row) => ({
         id: row.id as string,
@@ -428,11 +437,11 @@ export function createSupabaseStore(): Store {
 
     async getReport(id) {
       const db = client();
-      if (!db) return null;
+      if (!db) return createMemoryStore().getReport(id);
       const { data, error } = await db.from("reports").select("*").eq("id", id).maybeSingle();
       if (error || !data) {
         if (error) logError("getReport", error);
-        return null;
+        return createMemoryStore().getReport(id);
       }
       return {
         id: data.id as string,
@@ -446,9 +455,9 @@ export function createSupabaseStore(): Store {
 
     async getReportByToken(token) {
       const link = await this.getShareLink(token);
-      if (!link) return null;
+      if (!link) return createMemoryStore().getReportByToken(token);
       const db = client();
-      if (!db) return null;
+      if (!db) return createMemoryStore().getReportByToken(token);
       const { data, error } = await db
         .from("reports")
         .select("*")
@@ -458,7 +467,7 @@ export function createSupabaseStore(): Store {
         .maybeSingle();
       if (error || !data) {
         if (error) logError("getReportByToken", error);
-        return null;
+        return createMemoryStore().getReportByToken(token);
       }
       return {
         studentId: data.student_id as string,
@@ -474,8 +483,11 @@ export function createSupabaseStore(): Store {
     },
 
     async getUsage(userId, day) {
+      if (userId.startsWith("demo-")) {
+        return createMemoryStore().getUsage(userId, day);
+      }
       const db = client();
-      if (!db) return 0;
+      if (!db) return createMemoryStore().getUsage(userId, day);
       const { data, error } = await db
         .from("ai_usage")
         .select("count")
@@ -484,20 +496,26 @@ export function createSupabaseStore(): Store {
         .maybeSingle();
       if (error) {
         logError("getUsage", error);
-        return 0;
+        return createMemoryStore().getUsage(userId, day);
       }
       return (data?.count as number | undefined) ?? 0;
     },
 
     async incrementUsage(userId, day) {
+      if (userId.startsWith("demo-")) {
+        return createMemoryStore().incrementUsage(userId, day);
+      }
       const db = client();
-      if (!db) return 0;
+      if (!db) return createMemoryStore().incrementUsage(userId, day);
       const current = await this.getUsage(userId, day);
       const next = current + 1;
       const { error } = await db
         .from("ai_usage")
         .upsert({ user_id: userId, day, count: next }, { onConflict: "user_id,day" });
-      if (error) logError("incrementUsage", error);
+      if (error) {
+        logError("incrementUsage", error);
+        return createMemoryStore().incrementUsage(userId, day);
+      }
       return next;
     },
 

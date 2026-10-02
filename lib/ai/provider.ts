@@ -53,13 +53,24 @@ async function fetchWithTimeout(url: string, init: RequestInit, timeoutMs = GEMI
  * endpoints used are the same ones the SDK wraps.
  */
 function createGeminiProvider(): AIProvider {
+  let activeChatModel = GEMINI_CHAT_MODEL;
   return {
     kind: "gemini",
-    chatModel: GEMINI_CHAT_MODEL,
+    get chatModel() {
+      return activeChatModel;
+    },
     embedModel: GEMINI_EMBED_MODEL,
 
     async chat({ systemInstruction, userMessage, maxOutputTokens, temperature = 0.3 }) {
-      const candidates = Array.from(new Set([GEMINI_CHAT_MODEL, "gemini-3.8-flash", "gemini-3-flash-preview"]));
+      const candidates = Array.from(
+        new Set([
+          GEMINI_CHAT_MODEL,
+          "gemini-3.8-flash",
+          "gemini-3-flash-preview",
+          "gemini-2.0-flash",
+          "gemini-1.5-flash",
+        ]),
+      );
       let lastError: Error | null = null;
 
       for (const model of candidates) {
@@ -89,7 +100,10 @@ function createGeminiProvider(): AIProvider {
             candidates?: { content?: { parts?: { text?: string }[] } }[];
           };
           const text = payload.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
-          if (text) return text;
+          if (text) {
+            activeChatModel = model;
+            return text;
+          }
         } catch (err) {
           lastError = err instanceof Error ? err : new Error(String(err));
         }
@@ -100,33 +114,46 @@ function createGeminiProvider(): AIProvider {
 
     async embed(texts, taskType) {
       if (texts.length === 0) return [];
-      const url = `${GEMINI_BASE_URL}/models/${GEMINI_EMBED_MODEL}:batchEmbedContents?key=${GEMINI_API_KEY}`;
-      const response = await fetchWithTimeout(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          requests: texts.map((text) => ({
-            model: `models/${GEMINI_EMBED_MODEL}`,
-            content: { parts: [{ text }] },
-            taskType,
-            outputDimensionality: EMBEDDING_DIM,
-          })),
-        }),
-      });
+      const candidates = Array.from(new Set([GEMINI_EMBED_MODEL, "text-embedding-004", "gemini-embedding-001"]));
+      let lastError: Error | null = null;
 
-      if (!response.ok) {
-        const detail = await response.text().catch(() => "");
-        throw new ProviderUnavailableError(`Gemini embed failed (${response.status}): ${detail.slice(0, 200)}`);
+      for (const model of candidates) {
+        try {
+          const url = `${GEMINI_BASE_URL}/models/${model}:batchEmbedContents?key=${GEMINI_API_KEY}`;
+          const response = await fetchWithTimeout(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              requests: texts.map((text) => ({
+                model: `models/${model}`,
+                content: { parts: [{ text }] },
+                taskType,
+                outputDimensionality: EMBEDDING_DIM,
+              })),
+            }),
+          });
+
+          if (!response.ok) {
+            const detail = await response.text().catch(() => "");
+            lastError = new ProviderUnavailableError(`Gemini embed (${model}) failed (${response.status}): ${detail.slice(0, 200)}`);
+            continue;
+          }
+
+          const payload = (await response.json()) as { embeddings?: { values?: number[] }[] };
+          const vectors = (payload.embeddings ?? []).map((item) => item.values ?? []);
+          if (vectors.length !== texts.length) {
+            lastError = new ProviderUnavailableError(`Gemini embed (${model}) returned unexpected count`);
+            continue;
+          }
+          // Vectors below the native dimension must be L2-normalized before cosine
+          // search; storing unnormalized vectors silently degrades retrieval.
+          return vectors.map(normalizeVector);
+        } catch (err) {
+          lastError = err instanceof Error ? err : new Error(String(err));
+        }
       }
 
-      const payload = (await response.json()) as { embeddings?: { values?: number[] }[] };
-      const vectors = (payload.embeddings ?? []).map((item) => item.values ?? []);
-      if (vectors.length !== texts.length) {
-        throw new ProviderUnavailableError("Gemini returned an unexpected number of embeddings");
-      }
-      // Vectors below the native dimension must be L2-normalized before cosine
-      // search; storing unnormalized vectors silently degrades retrieval.
-      return vectors.map(normalizeVector);
+      throw lastError ?? new ProviderUnavailableError("All Gemini embed model endpoints failed");
     },
   };
 }

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { checkQuota, consumeQuota } from "@/lib/ai/quota";
 import { getActiveStudentId, getSessionUser } from "@/lib/auth/session";
-import { getStore } from "@/lib/db";
+import { getStore, useLocalStore } from "@/lib/db";
 import { DEMO_STUDENT_ID } from "@/lib/demo/student";
 import { askCounsellor } from "@/lib/rag/answer";
 import { newId } from "@/lib/utils/id";
@@ -36,7 +36,8 @@ export async function POST(request: Request) {
   }
 
   const studentId = (await getActiveStudentId(user)) ?? DEMO_STUDENT_ID;
-  const store = getStore();
+  const isDemo = user?.kind === "demo" || studentId === DEMO_STUDENT_ID;
+  const store = isDemo ? useLocalStore() : getStore();
   const recommendations: Recommendation[] = await store.getRecommendationsForStudent(studentId);
   const assessments = await store.listAssessments(studentId);
   const profile = assessments[assessments.length - 1]?.profile ?? null;

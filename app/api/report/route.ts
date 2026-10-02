@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { getActiveStudentId, getSessionUser } from "@/lib/auth/session";
 import { getCareer } from "@/lib/data";
-import { getStore } from "@/lib/db";
-import { DEMO_STUDENT_ID, DEMO_STUDENT_NAME } from "@/lib/demo/student";
+import { getStore, useLocalStore } from "@/lib/db";
+import { DEMO_ASSESSMENT_ID, DEMO_STUDENT_ID, DEMO_STUDENT_NAME } from "@/lib/demo/student";
 import { recommendationFor } from "@/lib/recommendation";
 import { buildDecisionReport } from "@/lib/report";
 import { newId, shareToken } from "@/lib/utils/id";
@@ -24,13 +24,14 @@ export async function POST(request: Request) {
 
   const user = await getSessionUser();
   const studentId = (await getActiveStudentId(user)) ?? DEMO_STUDENT_ID;
-  const store = getStore();
+  const isDemo = user?.kind === "demo" || studentId === DEMO_STUDENT_ID;
+  const store = isDemo ? useLocalStore() : getStore();
 
   const assessments = await store.listAssessments(studentId);
   const assessment =
     assessments[assessments.length - 1] ??
     (studentId === DEMO_STUDENT_ID
-      ? await store.getAssessment("demo-assessment-rahul")
+      ? await store.getAssessment(DEMO_ASSESSMENT_ID)
       : null);
 
   if (!assessment) {
