@@ -1,0 +1,44 @@
+[
+  {
+    "slug": "technology",
+    "name_en": "Technology",
+    "name_te": "సాంకేతికత",
+    "description_en": "Working with computers, electronics, software and digital tools."
+  },
+  {
+    "slug": "machines",
+    "name_en": "Machines & tools",
+    "name_te": "యంత్రాలు & పరికరాలు",
+    "description_en": "Working with engines, machines, tools and hands-on repairs."
+  },
+  {
+    "slug": "healthcare",
+    "name_en": "Healthcare",
+    "name_te": "ఆరోగ్య సంరక్షణ",
+    "description_en": "Supporting patients, clinical work and health services."
+  },
+  {
+    "slug": "design",
+    "name_en": "Design & creativity",
+    "name_te": "డిజైన్ & సృజనాత్మకత",
+    "description_en": "Visual work, aesthetics, drawing, styling and making things look good."
+  },
+  {
+    "slug": "people",
+    "name_en": "People & service",
+    "name_te": "మనుషులు & సేవ",
+    "description_en": "Helping, teaching, serving customers and working closely with people."
+  },
+  {
+    "slug": "business",
+    "name_en": "Business & trade",
+    "name_te": "వ్యాపారం & వాణిజ్యం",
+    "description_en": "Selling, organising, accounting, running a small enterprise."
+  },
+  {
+    "slug": "outdoor",
+    "name_en": "Outdoor & field work",
+    "name_te": "బహిరంగ & క్షేత్ర పని",
+    "description_en": "Working outside, on sites, in agriculture, travel and field service."
+  }
+]

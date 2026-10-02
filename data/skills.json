@@ -1,0 +1,22 @@
+[
+  { "slug": "electrical", "name_en": "Electrical work", "name_te": "ఎలక్ట్రికల్ పని", "category": "technical" },
+  { "slug": "mechanical", "name_en": "Mechanical work", "name_te": "మెకానికల్ పని", "category": "technical" },
+  { "slug": "electronics", "name_en": "Electronics & circuits", "name_te": "ఎలక్ట్రానిక్స్ & సర్క్యూట్లు", "category": "technical" },
+  { "slug": "digital", "name_en": "Digital & computer skills", "name_te": "డిజిటల్ & కంప్యూటర్ నైపుణ్యాలు", "category": "digital" },
+  { "slug": "cad-software", "name_en": "Design software / CAD", "name_te": "డిజైన్ సాఫ్ట్‌వేర్ / CAD", "category": "digital" },
+  { "slug": "hand-tools", "name_en": "Hand tools & fabrication", "name_te": "చేతి పరికరాలు & తయారీ", "category": "technical" },
+  { "slug": "safety", "name_en": "Workplace safety", "name_te": "పని ప్రదేశ భద్రత", "category": "safety" },
+  { "slug": "measurement", "name_en": "Measurement & precision", "name_te": "కొలత & ఖచ్చితత్వం", "category": "technical" },
+  { "slug": "customer-service", "name_en": "Customer service", "name_te": "కస్టమర్ సేవ", "category": "people" },
+  { "slug": "communication", "name_en": "Communication", "name_te": "సంభాషణ నైపుణ్యం", "category": "people" },
+  { "slug": "care-giving", "name_en": "Patient care", "name_te": "రోగి సంరక్షణ", "category": "people" },
+  { "slug": "lab-procedures", "name_en": "Laboratory procedures", "name_te": "ప్రయోగశాల విధానాలు", "category": "technical" },
+  { "slug": "record-keeping", "name_en": "Records & documentation", "name_te": "రికార్డులు & డాక్యుమెంటేషన్", "category": "business" },
+  { "slug": "sales", "name_en": "Sales & negotiation", "name_te": "అమ్మకాలు & చర్చలు", "category": "business" },
+  { "slug": "inventory", "name_en": "Inventory & stock handling", "name_te": "నిల్వ నిర్వహణ", "category": "business" },
+  { "slug": "visual-design", "name_en": "Visual design", "name_te": "దృశ్య డిజైన్", "category": "digital" },
+  { "slug": "tailoring", "name_en": "Tailoring & garment work", "name_te": "దుస్తుల తయారీ", "category": "technical" },
+  { "slug": "crop-practice", "name_en": "Crop & field practice", "name_te": "పంట & పొలం పద్ధతులు", "category": "technical" },
+  { "slug": "machine-operation", "name_en": "Machine operation", "name_te": "యంత్ర నిర్వహణ", "category": "technical" },
+  { "slug": "diagnostics", "name_en": "Diagnostics & troubleshooting", "name_te": "నిర్ధారణ & సమస్య పరిష్కారం", "category": "technical" }
+]

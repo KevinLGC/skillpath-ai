@@ -1,0 +1,1218 @@
+[
+  {
+    "slug": "ev-technician",
+    "title_en": "Electric Vehicle Technician",
+    "title_te": "ఎలక్ట్రిక్ వాహన టెక్నీషియన్",
+    "summary_en": "Services and repairs electric two-wheelers, three-wheelers and cars — battery packs, motors, controllers and charging systems.",
+    "summary_te": "ఎలక్ట్రిక్ ద్విచక్ర, త్రిచక్ర, కార్ల సర్వీసింగ్ — బ్యాటరీ ప్యాక్‌లు, మోటార్లు, కంట్రోలర్లు, ఛార్జింగ్ వ్యవస్థలు.",
+    "work_en": "Reading fault codes with diagnostic tools, testing battery cells and wiring, replacing components, and explaining repairs to vehicle owners.",
+    "work_environment": "workshop",
+    "sector_fit": ["private", "entrepreneurship"],
+    "team_orientation": "either",
+    "min_education_level": "class10",
+    "duration_months_min": 12,
+    "duration_months_max": 24,
+    "cost_band": "medium",
+    "relocation_likelihood": "medium",
+    "entrepreneurship": "possible",
+    "income_band_min": 15000,
+    "income_band_max": 27000,
+    "factors": { "math": 70, "logical": 75, "mechanical": 80, "creativity": 45, "communication": 60, "practical": 90 },
+    "skills": [
+      { "slug": "electrical", "level": 80, "priority": true },
+      { "slug": "electronics", "level": 70, "priority": true },
+      { "slug": "diagnostics", "level": 75, "priority": true },
+      { "slug": "safety", "level": 85, "priority": false },
+      { "slug": "digital", "level": 55, "priority": false }
+    ],
+    "interests": [
+      { "slug": "machines", "weight": 1 },
+      { "slug": "technology", "weight": 0.9 },
+      { "slug": "outdoor", "weight": 0.2 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "ITI / vocational course in EV or automotive technology", "title_te": "ఐటీఐ / ఈవీ లేదా ఆటోమొబైల్ కోర్సు", "duration_months": 12, "note_en": "Trade courses cover electrical fundamentals, battery systems and vehicle servicing.", "optional": false },
+      { "stage": 2, "type": "certification", "title_en": "EV safety and high-voltage certification", "title_te": "ఈవీ భద్రత & హై-వోల్టేజ్ సర్టిఫికేషన్", "duration_months": 3, "note_en": "Short skill certification, often offered by OEM training arms and sector skill councils.", "optional": true },
+      { "stage": 3, "type": "apprenticeship", "title_en": "Apprenticeship at a service centre or dealership", "title_te": "సర్వీస్ సెంటర్ లేదా డీలర్‌షిప్‌లో అప్రెంటిస్‌షిప్", "duration_months": 12, "note_en": "Paid on-the-job training under an experienced technician.", "optional": true },
+      { "stage": 4, "type": "employment", "title_en": "EV technician in a workshop or fleet service team", "title_te": "వర్క్‌షాప్ లేదా ఫ్లీట్ సర్వీస్ టీమ్‌లో ఈవీ టెక్నీషియన్", "duration_months": null, "note_en": "Starting role; income depends on employer, city and skill level.", "optional": false },
+      { "stage": 5, "type": "progression", "title_en": "Senior technician → workshop supervisor", "title_te": "సీనియర్ టెక్నీషియన్ → వర్క్‌షాప్ సూపర్‌వైజర్", "duration_months": null, "note_en": "With experience, supervision and own-service-centre options open up.", "optional": false }
+    ],
+    "further_education_en": [
+      "Lateral entry into a diploma in automobile or electrical engineering (where the institution allows it)",
+      "Advanced OEM certifications in battery management systems",
+      "NSQF-aligned higher-level qualifications in EV technology"
+    ],
+    "considerations_en": [
+      "Workshop-based work with standing, lifting and tool use",
+      "High-voltage safety training is essential before handling battery packs",
+      "Good opportunities cluster around cities with EV service networks"
+    ],
+    "opportunities_en": [
+      "EV service centres, dealerships and fleet operators",
+      "Delivery and transport companies maintaining electric fleets",
+      "Independent EV service and battery repair business"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Guntur", "Tirupati"] },
+      { "state": "Telangana", "districts": ["Hyderabad", "Warangal"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "automotive-service-technician",
+    "title_en": "Automotive Service Technician",
+    "title_te": "ఆటోమొబైల్ సర్వీస్ టెక్నీషియన్",
+    "summary_en": "Maintains and repairs petrol, diesel and hybrid vehicles at service centres and dealerships.",
+    "summary_te": "పెట్రోల్, డీజిల్, హైబ్రిడ్ వాహనాల నిర్వహణ మరియు మరమ్మత్తు.",
+    "work_en": "Engine servicing, brake and suspension work, electrical fault-finding, road tests and service documentation.",
+    "work_environment": "workshop",
+    "sector_fit": ["private", "entrepreneurship"],
+    "team_orientation": "team",
+    "min_education_level": "class10",
+    "duration_months_min": 12,
+    "duration_months_max": 24,
+    "cost_band": "medium",
+    "relocation_likelihood": "medium",
+    "entrepreneurship": "strong",
+    "income_band_min": 14000,
+    "income_band_max": 26000,
+    "factors": { "math": 60, "logical": 70, "mechanical": 90, "creativity": 40, "communication": 65, "practical": 95 },
+    "skills": [
+      { "slug": "mechanical", "level": 85, "priority": true },
+      { "slug": "diagnostics", "level": 75, "priority": true },
+      { "slug": "electrical", "level": 65, "priority": false },
+      { "slug": "hand-tools", "level": 80, "priority": false },
+      { "slug": "customer-service", "level": 60, "priority": false }
+    ],
+    "interests": [
+      { "slug": "machines", "weight": 1 },
+      { "slug": "technology", "weight": 0.4 },
+      { "slug": "people", "weight": 0.3 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "ITI trade course (Motor Mechanic Vehicle / Automobile)", "title_te": "ఐటీఐ ట్రేడ్ కోర్సు (మోటార్ మెకానిక్)", "duration_months": 12, "note_en": "Core trade training with workshop practice.", "optional": false },
+      { "stage": 2, "type": "certification", "title_en": "OEM or sector-skill certification", "title_te": "OEM లేదా సెక్టార్ స్కిల్ సర్టిఫికేషన్", "duration_months": 3, "note_en": "Manufacturer-specific training improves placement prospects.", "optional": true },
+      { "stage": 3, "type": "employment", "title_en": "Technician at a service centre", "title_te": "సర్వీస్ సెంటర్‌లో టెక్నీషియన్", "duration_months": null, "note_en": "Entry role with structured progression in most workshops.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Senior technician / service advisor", "title_te": "సీనియర్ టెక్నీషియన్ / సర్వీస్ అడ్వైజర్", "duration_months": null, "note_en": "Leads to supervision or an independent workshop.", "optional": false },
+      { "stage": 5, "type": "progression", "title_en": "Own workshop or multi-brand service point", "title_te": "సొంత వర్క్‌షాప్ లేదా మల్టీ-బ్రాండ్ సర్వీస్ పాయింట్", "duration_months": null, "note_en": "Entrepreneurship route commonly followed by experienced technicians.", "optional": true }
+    ],
+    "further_education_en": [
+      "Diploma in automobile engineering through lateral entry (institution-dependent)",
+      "Advanced diagnostics and hybrid/EV add-on certifications"
+    ],
+    "considerations_en": [
+      "Physically active workshop role",
+      "Tools and safety gear are usually provided by employers",
+      "Income grows with specialisation and reputation"
+    ],
+    "opportunities_en": [
+      "Dealerships, multi-brand workshops and fleet garages",
+      "Insurance and roadside-assistance service networks",
+      "Self-employment as an independent mechanic"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "cnc-machine-operator",
+    "title_en": "CNC Machine Operator",
+    "title_te": "సీఎన్‌సీ మెషిన్ ఆపరేటర్",
+    "summary_en": "Sets up and runs computer-controlled machine tools that cut metal parts to precise dimensions.",
+    "summary_te": "లోహ భాగాలను ఖచ్చితంగా కత్తిరించే కంప్యూటర్ నియంత్రిత యంత్రాల నిర్వహణ.",
+    "work_en": "Loading programmes, setting tools and offsets, measuring finished parts and inspecting quality.",
+    "work_environment": "factory",
+    "sector_fit": ["private"],
+    "team_orientation": "team",
+    "min_education_level": "class10",
+    "duration_months_min": 12,
+    "duration_months_max": 24,
+    "cost_band": "medium",
+    "relocation_likelihood": "high",
+    "entrepreneurship": "possible",
+    "income_band_min": 16000,
+    "income_band_max": 30000,
+    "factors": { "math": 75, "logical": 80, "mechanical": 75, "creativity": 40, "communication": 45, "practical": 85 },
+    "skills": [
+      { "slug": "machine-operation", "level": 85, "priority": true },
+      { "slug": "measurement", "level": 80, "priority": true },
+      { "slug": "cad-software", "level": 65, "priority": true },
+      { "slug": "safety", "level": 80, "priority": false },
+      { "slug": "mechanical", "level": 60, "priority": false }
+    ],
+    "interests": [
+      { "slug": "machines", "weight": 1 },
+      { "slug": "technology", "weight": 0.7 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "ITI trade course (Machinist / Turner / CNC)", "title_te": "ఐటీఐ ట్రేడ్ కోర్సు (మెషినిస్ట్ / సీఎన్‌సీ)", "duration_months": 12, "note_en": "Trade theory plus extensive machine practice.", "optional": false },
+      { "stage": 2, "type": "certification", "title_en": "CNC programming skill certification", "title_te": "సీఎన్‌సీ ప్రోగ్రామింగ్ స్కిల్ సర్టిఫికేషన్", "duration_months": 4, "note_en": "Short courses in G-code and CAM software.", "optional": true },
+      { "stage": 3, "type": "apprenticeship", "title_en": "Apprenticeship in a manufacturing unit", "title_te": "తయారీ యూనిట్‌లో అప్రెంటిస్‌షిప్", "duration_months": 12, "note_en": "Common route into production units.", "optional": true },
+      { "stage": 4, "type": "employment", "title_en": "CNC operator / machine setter", "title_te": "సీఎన్‌సీ ఆపరేటర్ / మెషిన్ సెట్టర్", "duration_months": null, "note_en": "Shift-based industrial employment.", "optional": false },
+      { "stage": 5, "type": "progression", "title_en": "Programmer → production supervisor", "title_te": "ప్రోగ్రామర్ → ప్రొడక్షన్ సూపర్‌వైజర్", "duration_months": null, "note_en": "Programming and quality roles pay more than machine operation.", "optional": false }
+    ],
+    "further_education_en": [
+      "Diploma in mechanical or production engineering (lateral entry, institution-dependent)",
+      "Advanced CAM and quality-inspection certifications"
+    ],
+    "considerations_en": [
+      "Factory environments with shift work and noise",
+      "Industrial clusters may be outside your home district",
+      "Attention to precision is more important than speed"
+    ],
+    "opportunities_en": [
+      "Auto-component, aerospace and general engineering units",
+      "Industrial estates near major cities",
+      "Tool rooms and precision job shops"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Sri City", "Nellore"] },
+      { "state": "Telangana", "districts": ["Hyderabad", "Medchal"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "industrial-electrician",
+    "title_en": "Industrial Electrician",
+    "title_te": "పారిశ్రామిక ఎలక్ట్రిషియన్",
+    "summary_en": "Installs, maintains and repairs electrical wiring, panels, motors and control systems in buildings and factories.",
+    "summary_te": "భవనాలు, కర్మాగారాల్లో విద్యుత్ వైరింగ్, ప్యానెల్స్, మోటార్ల నిర్వహణ మరియు మరమ్మత్తు.",
+    "work_en": "Wiring and panel work, testing circuits, preventive maintenance, reading electrical drawings and following safety isolation procedures.",
+    "work_environment": "site",
+    "sector_fit": ["government", "private", "entrepreneurship"],
+    "team_orientation": "either",
+    "min_education_level": "class10",
+    "duration_months_min": 12,
+    "duration_months_max": 24,
+    "cost_band": "low",
+    "relocation_likelihood": "low",
+    "entrepreneurship": "strong",
+    "income_band_min": 15000,
+    "income_band_max": 28000,
+    "factors": { "math": 65, "logical": 75, "mechanical": 70, "creativity": 40, "communication": 55, "practical": 90 },
+    "skills": [
+      { "slug": "electrical", "level": 90, "priority": true },
+      { "slug": "safety", "level": 90, "priority": true },
+      { "slug": "diagnostics", "level": 70, "priority": true },
+      { "slug": "measurement", "level": 65, "priority": false },
+      { "slug": "record-keeping", "level": 45, "priority": false }
+    ],
+    "interests": [
+      { "slug": "machines", "weight": 0.9 },
+      { "slug": "technology", "weight": 0.6 },
+      { "slug": "outdoor", "weight": 0.4 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "ITI Electrician trade course", "title_te": "ఐటీఐ ఎలక్ట్రిషియన్ ట్రేడ్ కోర్సు", "duration_months": 12, "note_en": "Covers wiring, machines, protection devices and safety.", "optional": false },
+      { "stage": 2, "type": "certification", "title_en": "Licensed wireman / supervisor certification (state electrical licensing)", "title_te": "లైసెన్స్ పొందిన వైర్‌మన్ సర్టిఫికేషన్", "duration_months": 6, "note_en": "Licensing requirements are set by the state electricity authority.", "optional": false },
+      { "stage": 3, "type": "apprenticeship", "title_en": "Apprenticeship with a contractor or industrial unit", "title_te": "కాంట్రాక్టర్ లేదా పరిశ్రమలో అప్రెంటిస్‌షిప్", "duration_months": 12, "note_en": "Apprenticeship routes are listed on the national apprenticeship portal.", "optional": true },
+      { "stage": 4, "type": "employment", "title_en": "Electrician in industry, utilities or construction", "title_te": "పరిశ్రమ, విద్యుత్ సంస్థ లేదా నిర్మాణంలో ఎలక్ట్రిషియన్", "duration_months": null, "note_en": "Steady demand across all sectors.", "optional": false },
+      { "stage": 5, "type": "progression", "title_en": "Electrical supervisor → own contracting business", "title_te": "ఎలక్ట్రికల్ సూపర్‌వైజర్ → సొంత కాంట్రాక్టింగ్ వ్యాపారం", "duration_months": null, "note_en": "Licensed electricians can take up independent contracts.", "optional": false }
+    ],
+    "further_education_en": [
+      "Diploma in electrical engineering (lateral entry where permitted)",
+      "Advanced certifications in solar, automation or switchgear"
+    ],
+    "considerations_en": [
+      "Electrical work carries shock and height risks — safety discipline is essential",
+      "Site work may involve travel within and beyond the district",
+      "Licensing requirements vary by state"
+    ],
+    "opportunities_en": [
+      "Factories, apartment maintenance, infrastructure projects",
+      "State power utilities and contractors",
+      "Independent electrical services and repairs"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Guntur", "Kurnool", "Tirupati", "Kakinada"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "solar-pv-installer",
+    "title_en": "Solar PV Installer & Technician",
+    "title_te": "సోలార్ పీవీ ఇన్‌స్టాలర్ & టెక్నీషియన్",
+    "summary_en": "Installs, commissions and maintains rooftop and ground-mounted solar power systems.",
+    "summary_te": "పైకప్పు, నేలపై సోలార్ విద్యుత్ వ్యవస్థల ఏర్పాటు మరియు నిర్వహణ.",
+    "work_en": "Mounting panels, DC wiring, inverter setup, performance checks and customer handover.",
+    "work_environment": "outdoor",
+    "sector_fit": ["private", "government", "entrepreneurship"],
+    "team_orientation": "team",
+    "min_education_level": "class10",
+    "duration_months_min": 6,
+    "duration_months_max": 12,
+    "cost_band": "low",
+    "relocation_likelihood": "medium",
+    "entrepreneurship": "strong",
+    "income_band_min": 14000,
+    "income_band_max": 26000,
+    "factors": { "math": 60, "logical": 65, "mechanical": 70, "creativity": 40, "communication": 65, "practical": 90 },
+    "skills": [
+      { "slug": "electrical", "level": 80, "priority": true },
+      { "slug": "safety", "level": 85, "priority": true },
+      { "slug": "measurement", "level": 60, "priority": false },
+      { "slug": "customer-service", "level": 55, "priority": false },
+      { "slug": "hand-tools", "level": 70, "priority": false }
+    ],
+    "interests": [
+      { "slug": "outdoor", "weight": 1 },
+      { "slug": "technology", "weight": 0.7 },
+      { "slug": "machines", "weight": 0.5 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Short-term solar PV installer course", "title_te": "సోలార్ పీవీ ఇన్‌స్టాలర్ షార్ట్-టర్మ్ కోర్సు", "duration_months": 3, "note_en": "Skill-India aligned short courses are widely available.", "optional": false },
+      { "stage": 2, "type": "certification", "title_en": "Suryamitra / sector skill council certification", "title_te": "సూర్యమిత్ర / సెక్టార్ స్కిల్ కౌన్సిల్ సర్టిఫికేషన్", "duration_months": 3, "note_en": "Certification improves employability with EPC companies.", "optional": true },
+      { "stage": 3, "type": "employment", "title_en": "Installer with a solar EPC or service company", "title_te": "సోలార్ కంపెనీలో ఇన్‌స్టాలర్", "duration_months": null, "note_en": "Field role with site travel.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Site supervisor / O&M technician", "title_te": "సైట్ సూపర్‌వైజర్ / O&M టెక్నీషియన్", "duration_months": null, "note_en": "Operations and maintenance roles are steadier than installation.", "optional": false },
+      { "stage": 5, "type": "progression", "title_en": "Own installation and service business", "title_te": "సొంత ఇన్‌స్టాలేషన్ & సర్వీస్ వ్యాపారం", "duration_months": null, "note_en": "Local demand for rooftop systems supports small enterprises.", "optional": true }
+    ],
+    "further_education_en": [
+      "Diploma in electrical or renewable energy (institution-dependent)",
+      "Advanced certifications in storage and hybrid systems"
+    ],
+    "considerations_en": [
+      "Outdoor work in heat, with rooftop height work",
+      "Project demand can be seasonal",
+      "Safety harness and DC safety training are essential"
+    ],
+    "opportunities_en": [
+      "Rooftop solar companies and EPC contractors",
+      "Solar farms and O&M service providers",
+      "Government renewable-energy programmes"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Anantapur", "Kurnool", "Kadapa", "Vijayawada"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "welding-fabrication-technician",
+    "title_en": "Welding & Fabrication Technician",
+    "title_te": "వెల్డింగ్ & ఫ్యాబ్రికేషన్ టెక్నీషియన్",
+    "summary_en": "Joins and fabricates metal structures and components using arc, MIG and TIG welding.",
+    "summary_te": "ఆర్క్, MIG, TIG వెల్డింగ్ ఉపయోగించి లోహ నిర్మాణాలు తయారు చేయడం.",
+    "work_en": "Reading fabrication drawings, preparing joints, welding to specification, inspecting welds and maintaining equipment.",
+    "work_environment": "factory",
+    "sector_fit": ["private", "entrepreneurship"],
+    "team_orientation": "team",
+    "min_education_level": "class8",
+    "duration_months_min": 6,
+    "duration_months_max": 12,
+    "cost_band": "low",
+    "relocation_likelihood": "high",
+    "entrepreneurship": "possible",
+    "income_band_min": 13000,
+    "income_band_max": 24000,
+    "factors": { "math": 55, "logical": 60, "mechanical": 80, "creativity": 50, "communication": 40, "practical": 95 },
+    "skills": [
+      { "slug": "hand-tools", "level": 90, "priority": true },
+      { "slug": "mechanical", "level": 75, "priority": true },
+      { "slug": "measurement", "level": 70, "priority": false },
+      { "slug": "safety", "level": 90, "priority": true }
+    ],
+    "interests": [
+      { "slug": "machines", "weight": 1 },
+      { "slug": "outdoor", "weight": 0.4 },
+      { "slug": "design", "weight": 0.2 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "ITI Welder trade course or short-term welding course", "title_te": "ఐటీఐ వెల్డర్ ట్రేడ్ కోర్సు", "duration_months": 6, "note_en": "Practice-intensive training, often available in short formats.", "optional": false },
+      { "stage": 2, "type": "certification", "title_en": "Welder qualification testing (as per industry standard)", "title_te": "వెల్డర్ అర్హత పరీక్ష", "duration_months": 1, "note_en": "Qualification tests are often required by fabrication contractors.", "optional": true },
+      { "stage": 3, "type": "employment", "title_en": "Welder in fabrication shop or construction site", "title_te": "ఫ్యాబ్రికేషన్ షాప్ లేదా నిర్మాణ సైట్‌లో వెల్డర్", "duration_months": null, "note_en": "Contract and project-based work is common.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Fabricator → welding supervisor", "title_te": "ఫ్యాబ్రికేటర్ → వెల్డింగ్ సూపర్‌వైజర్", "duration_months": null, "note_en": "Specialised welders (pipe, structural) earn more.", "optional": false },
+      { "stage": 5, "type": "progression", "title_en": "Own fabrication unit or contract team", "title_te": "సొంత ఫ్యాబ్రికేషన్ యూనిట్", "duration_months": null, "note_en": "Experienced fabricators often start small units.", "optional": true }
+    ],
+    "further_education_en": [
+      "Advanced welding certifications (pipe, structural, aluminium)",
+      "Diploma programmes in fabrication technology (institution-dependent)"
+    ],
+    "considerations_en": [
+      "Hot, noisy and physically demanding work",
+      "Safety gear — helmets, gloves, ventilation — is non-negotiable",
+      "Project work may require travel and long site hours"
+    ],
+    "opportunities_en": [
+      "Fabrication workshops and industrial contractors",
+      "Construction and infrastructure projects",
+      "Shipbuilding and heavy engineering units"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Kakinada", "Nellore", "Sri City"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "hvac-refrigeration-technician",
+    "title_en": "AC & Refrigeration Technician",
+    "title_te": "ఏసీ & రిఫ్రిజిరేషన్ టెక్నీషియన్",
+    "summary_en": "Installs and services air-conditioners, cold rooms and commercial refrigeration equipment.",
+    "summary_te": "ఎయిర్ కండీషనర్లు, కోల్డ్ రూమ్‌లు, వాణిజ్య రిఫ్రిజిరేషన్ పరికరాల సర్వీసింగ్.",
+    "work_en": "Installation, gas charging, leak detection, electrical checks in outdoor units and customer-facing service visits.",
+    "work_environment": "field",
+    "sector_fit": ["private", "entrepreneurship"],
+    "team_orientation": "either",
+    "min_education_level": "class10",
+    "duration_months_min": 6,
+    "duration_months_max": 12,
+    "cost_band": "low",
+    "relocation_likelihood": "low",
+    "entrepreneurship": "strong",
+    "income_band_min": 13000,
+    "income_band_max": 25000,
+    "factors": { "math": 55, "logical": 70, "mechanical": 75, "creativity": 40, "communication": 70, "practical": 90 },
+    "skills": [
+      { "slug": "mechanical", "level": 75, "priority": true },
+      { "slug": "electrical", "level": 70, "priority": true },
+      { "slug": "diagnostics", "level": 70, "priority": true },
+      { "slug": "customer-service", "level": 70, "priority": false },
+      { "slug": "safety", "level": 75, "priority": false }
+    ],
+    "interests": [
+      { "slug": "machines", "weight": 0.9 },
+      { "slug": "outdoor", "weight": 0.6 },
+      { "slug": "people", "weight": 0.4 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Refrigeration & AC trade course", "title_te": "రిఫ్రిజిరేషన్ & ఏసీ ట్రేడ్ కోర్సు", "duration_months": 12, "note_en": "Short formats from skill centres are also available.", "optional": false },
+      { "stage": 2, "type": "certification", "title_en": "Refrigerant handling and safety certification", "title_te": "రిఫ్రిజెరెంట్ హ్యాండ్లింగ్ & భద్రతా సర్టిఫికేషన్", "duration_months": 2, "note_en": "Refrigerant handling practice is regulated by environmental rules.", "optional": true },
+      { "stage": 3, "type": "employment", "title_en": "Service technician at an appliance brand or dealer", "title_te": "అప్లయన్స్ బ్రాండ్ లేదా డీలర్‌లో సర్వీస్ టెక్నీషియన్", "duration_months": null, "note_en": "Field service roles usually include travel within a city.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Senior technician / service franchise", "title_te": "సీనియర్ టెక్నీషియన్ / సర్వీస్ ఫ్రాంచైజీ", "duration_months": null, "note_en": "Brand service franchises are a route to self-employment.", "optional": false }
+    ],
+    "further_education_en": [
+      "Certifications in commercial refrigeration and cold-chain systems",
+      "Diploma in mechanical or refrigeration engineering (institution-dependent)"
+    ],
+    "considerations_en": [
+      "Height, heat and rooftop work on outdoor units",
+      "Summer demand peaks with long working hours",
+      "Customer interaction is a large part of the job"
+    ],
+    "opportunities_en": [
+      "Brand service networks and dealer workshops",
+      "Commercial refrigeration for shops, hotels and cold storage",
+      "Local repair service business"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Guntur", "Rajahmundry", "Tirupati"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "mechatronics-automation-technician",
+    "title_en": "Mechatronics & Automation Technician",
+    "title_te": "మెకాట్రానిక్స్ & ఆటోమేషన్ టెక్నీషియన్",
+    "summary_en": "Maintains automated production lines — sensors, PLC-controlled machines, robotics cells and pneumatic systems.",
+    "summary_te": "ఆటోమేటెడ్ ఉత్పత్తి లైన్ల నిర్వహణ — సెన్సర్లు, PLC యంత్రాలు, రోబోటిక్స్, న్యూమాటిక్ వ్యవస్థలు.",
+    "work_en": "Fault-finding on control panels, reading ladder logic, calibrating sensors and reducing machine downtime.",
+    "work_environment": "factory",
+    "sector_fit": ["private"],
+    "team_orientation": "team",
+    "min_education_level": "class12",
+    "duration_months_min": 18,
+    "duration_months_max": 36,
+    "cost_band": "medium",
+    "relocation_likelihood": "high",
+    "entrepreneurship": "limited",
+    "income_band_min": 18000,
+    "income_band_max": 35000,
+    "factors": { "math": 80, "logical": 90, "mechanical": 75, "creativity": 55, "communication": 55, "practical": 80 },
+    "skills": [
+      { "slug": "diagnostics", "level": 85, "priority": true },
+      { "slug": "electronics", "level": 80, "priority": true },
+      { "slug": "digital", "level": 70, "priority": true },
+      { "slug": "measurement", "level": 75, "priority": false },
+      { "slug": "mechanical", "level": 70, "priority": false }
+    ],
+    "interests": [
+      { "slug": "technology", "weight": 1 },
+      { "slug": "machines", "weight": 0.9 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Diploma or advanced ITI in mechatronics / instrumentation", "title_te": "మెకాట్రానిక్స్ / ఇన్‌స్ట్రుమెంటేషన్ డిప్లొమా", "duration_months": 24, "note_en": "Longer qualification with stronger technical depth.", "optional": false },
+      { "stage": 2, "type": "certification", "title_en": "PLC / industrial automation certification", "title_te": "PLC / పారిశ్రామిక ఆటోమేషన్ సర్టిఫికేషన్", "duration_months": 4, "note_en": "Vendor and sector-skill certifications are widely recognised.", "optional": true },
+      { "stage": 3, "type": "employment", "title_en": "Maintenance technician on automated lines", "title_te": "ఆటోమేటెడ్ లైన్ల మెయింటెనెన్స్ టెక్నీషియన్", "duration_months": null, "note_en": "Manufacturing plants with automation investment.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Automation engineer assistant → maintenance lead", "title_te": "ఆటోమేషన్ లీడ్", "duration_months": null, "note_en": "Growth follows experience with specific control platforms.", "optional": false }
+    ],
+    "further_education_en": [
+      "B.Voc or degree in mechatronics/electrical engineering (institution-dependent)",
+      "Vendor certifications in robotics and drives"
+    ],
+    "considerations_en": [
+      "Strong maths and logical reasoning are needed",
+      "Shift work and industrial locations",
+      "Continuous learning as control systems change"
+    ],
+    "opportunities_en": [
+      "Automotive, pharma, food-processing and electronics plants",
+      "System integrators and automation service firms"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Sri City", "Visakhapatnam", "Nellore"] },
+      { "state": "Telangana", "districts": ["Hyderabad", "Medchal"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "plumber",
+    "title_en": "Plumber & Sanitary Fitter",
+    "title_te": "ప్లంబర్ & శానిటరీ ఫిట్టర్",
+    "summary_en": "Installs and repairs water supply, drainage and sanitary fittings in homes, buildings and sites.",
+    "summary_te": "ఇళ్లు, భవనాలు, సైట్లలో నీటి సరఫరా, డ్రైనేజీ, శానిటరీ ఫిట్టింగ్‌ల ఏర్పాటు మరియు మరమ్మత్తు.",
+    "work_en": "Pipe fitting, leak repair, fixture installation, reading simple layouts and working with customers on site.",
+    "work_environment": "field",
+    "sector_fit": ["private", "entrepreneurship"],
+    "team_orientation": "either",
+    "min_education_level": "class8",
+    "duration_months_min": 6,
+    "duration_months_max": 12,
+    "cost_band": "low",
+    "relocation_likelihood": "low",
+    "entrepreneurship": "strong",
+    "income_band_min": 12000,
+    "income_band_max": 24000,
+    "factors": { "math": 50, "logical": 65, "mechanical": 75, "creativity": 45, "communication": 65, "practical": 95 },
+    "skills": [
+      { "slug": "hand-tools", "level": 85, "priority": true },
+      { "slug": "measurement", "level": 65, "priority": true },
+      { "slug": "customer-service", "level": 65, "priority": false },
+      { "slug": "safety", "level": 70, "priority": false }
+    ],
+    "interests": [
+      { "slug": "machines", "weight": 0.8 },
+      { "slug": "outdoor", "weight": 0.7 },
+      { "slug": "people", "weight": 0.5 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Plumber trade course (ITI or short-term)", "title_te": "ప్లంబర్ ట్రేడ్ కోర్సు", "duration_months": 6, "note_en": "Short courses are widely available at skill centres.", "optional": false },
+      { "stage": 2, "type": "employment", "title_en": "Plumber with a contractor or maintenance team", "title_te": "కాంట్రాక్టర్ లేదా మెయింటెనెన్స్ టీమ్‌లో ప్లంబర్", "duration_months": null, "note_en": "Apprenticeship-style learning on site is common.", "optional": false },
+      { "stage": 3, "type": "progression", "title_en": "Senior plumber / site plumbing supervisor", "title_te": "సీనియర్ ప్లంబర్ / సూపర్‌వైజర్", "duration_months": null, "note_en": "Supervision of plumbing crews on larger projects.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Own plumbing and maintenance service", "title_te": "సొంత ప్లంబింగ్ & మెయింటెనెన్స్ సేవ", "duration_months": null, "note_en": "Urban demand supports steady self-employment.", "optional": true }
+    ],
+    "further_education_en": [
+      "Advanced certifications in plumbing systems and water treatment",
+      "Diploma programmes in civil or public health engineering (institution-dependent)"
+    ],
+    "considerations_en": [
+      "Physically demanding work in wet and confined spaces",
+      "Self-employment income can vary by season and city",
+      "Customer trust and punctuality drive repeat work"
+    ],
+    "opportunities_en": [
+      "Residential and commercial building maintenance",
+      "Infrastructure and housing projects",
+      "Independent service contracts"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Tirupati"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "carpentry-woodwork-technician",
+    "title_en": "Carpentry & Interior Woodwork Technician",
+    "title_te": "కార్పెంట్రీ & ఇంటీరియర్ వుడ్‌వర్క్ టెక్నీషియన్",
+    "summary_en": "Makes and fits furniture, modular interiors, doors and wooden structures.",
+    "summary_te": "ఫర్నిచర్, మాడ్యులర్ ఇంటీరియర్స్, తలుపులు, కలప నిర్మాణాల తయారీ మరియు అమరిక.",
+    "work_en": "Reading drawings, cutting and joining wood or boards, fitting at site and finishing work.",
+    "work_environment": "workshop",
+    "sector_fit": ["private", "entrepreneurship"],
+    "team_orientation": "either",
+    "min_education_level": "class8",
+    "duration_months_min": 6,
+    "duration_months_max": 24,
+    "cost_band": "low",
+    "relocation_likelihood": "low",
+    "entrepreneurship": "strong",
+    "income_band_min": 13000,
+    "income_band_max": 26000,
+    "factors": { "math": 55, "logical": 60, "mechanical": 70, "creativity": 80, "communication": 55, "practical": 90 },
+    "skills": [
+      { "slug": "hand-tools", "level": 90, "priority": true },
+      { "slug": "measurement", "level": 75, "priority": true },
+      { "slug": "visual-design", "level": 60, "priority": false },
+      { "slug": "safety", "level": 70, "priority": false }
+    ],
+    "interests": [
+      { "slug": "design", "weight": 1 },
+      { "slug": "machines", "weight": 0.6 },
+      { "slug": "outdoor", "weight": 0.3 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Carpenter trade course or apprenticeship", "title_te": "కార్పెంటర్ ట్రేడ్ కోర్సు", "duration_months": 12, "note_en": "Traditional workshop apprenticeship plus formal trade training.", "optional": false },
+      { "stage": 2, "type": "employment", "title_en": "Carpenter at a furniture workshop or interiors contractor", "title_te": "ఫర్నిచర్ వర్క్‌షాప్ లేదా ఇంటీరియర్స్ కాంట్రాక్టర్‌లో కార్పెంటర్", "duration_months": null, "note_en": "Skill-based pay in modular interiors.", "optional": false },
+      { "stage": 3, "type": "progression", "title_en": "Interior fit-out supervisor / modular specialist", "title_te": "ఇంటీరియర్ సూపర్‌వైజర్", "duration_months": null, "note_en": "CNC woodworking and modular skills increase earnings.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Own furniture or interiors business", "title_te": "సొంత ఫర్నిచర్ లేదా ఇంటీరియర్స్ వ్యాపారం", "duration_months": null, "note_en": "Common route once a customer base is built.", "optional": true }
+    ],
+    "further_education_en": [
+      "Certifications in modular furniture and CNC woodworking",
+      "Diploma in interior design (institution-dependent, portfolio-based entry)"
+    ],
+    "considerations_en": [
+      "Dust, noise and physical work",
+      "Progress depends on building a portfolio of finished work",
+      "Site fitting may involve travel within the city"
+    ],
+    "opportunities_en": [
+      "Furniture workshops and interiors contractors",
+      "Real-estate and home-renovation projects",
+      "Independent carpentry services"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Guntur", "Kakinada"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "construction-site-supervisor",
+    "title_en": "Construction Site Supervisor",
+    "title_te": "నిర్మాణ సైట్ సూపర్‌వైజర్",
+    "summary_en": "Coordinates workers, materials and quality checks on building and infrastructure sites.",
+    "summary_te": "భవన నిర్మాణ సైట్లలో కార్మికులు, సామగ్రి, నాణ్యత తనిఖీల సమన్వయం.",
+    "work_en": "Daily work planning, measurement and quality checks, material tracking, safety compliance and reporting to the engineer.",
+    "work_environment": "site",
+    "sector_fit": ["private", "government"],
+    "team_orientation": "team",
+    "min_education_level": "class12",
+    "duration_months_min": 12,
+    "duration_months_max": 36,
+    "cost_band": "medium",
+    "relocation_likelihood": "high",
+    "entrepreneurship": "possible",
+    "income_band_min": 17000,
+    "income_band_max": 32000,
+    "factors": { "math": 75, "logical": 75, "mechanical": 60, "creativity": 45, "communication": 85, "practical": 80 },
+    "skills": [
+      { "slug": "measurement", "level": 75, "priority": true },
+      { "slug": "record-keeping", "level": 70, "priority": true },
+      { "slug": "communication", "level": 85, "priority": true },
+      { "slug": "safety", "level": 85, "priority": true },
+      { "slug": "digital", "level": 45, "priority": false }
+    ],
+    "interests": [
+      { "slug": "outdoor", "weight": 1 },
+      { "slug": "people", "weight": 0.7 },
+      { "slug": "machines", "weight": 0.4 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Diploma in civil engineering or construction trade progression", "title_te": "సివిల్ ఇంజినీరింగ్ డిప్లొమా", "duration_months": 36, "note_en": "Formal diploma is the usual route; skilled workers can progress with experience.", "optional": false },
+      { "stage": 2, "type": "certification", "title_en": "Site supervision / safety certification", "title_te": "సైట్ సూపర్‌విజన్ / భద్రతా సర్టిఫికేషన్", "duration_months": 3, "note_en": "Safety certifications are increasingly required on large projects.", "optional": true },
+      { "stage": 3, "type": "employment", "title_en": "Site supervisor on building or infrastructure projects", "title_te": "నిర్మాణ ప్రాజెక్టులో సైట్ సూపర్‌వైజర్", "duration_months": null, "note_en": "Project-based employment, often with travel.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Site engineer assistant → project coordinator", "title_te": "ప్రాజెక్ట్ కోఆర్డినేటర్", "duration_months": null, "note_en": "Coordination roles move toward project management.", "optional": false }
+    ],
+    "further_education_en": [
+      "Degree in civil engineering (institution-dependent progression routes)",
+      "Project management and safety certifications"
+    ],
+    "considerations_en": [
+      "Long hours on site, in all weather",
+      "Frequent travel or posting away from home district",
+      "Responsibility for worker safety"
+    ],
+    "opportunities_en": [
+      "Housing, roads, industrial and infrastructure projects",
+      "Government contracting and public works",
+      "Contracting and small-scale development"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Amaravati", "Tirupati", "Kurnool"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "dental-assistant",
+    "title_en": "Dental Assistant / Chairside Assistant",
+    "title_te": "డెంటల్ అసిస్టెంట్",
+    "summary_en": "Supports dentists with instruments, sterilisation, patient preparation and clinic records.",
+    "summary_te": "వైద్యుల పరికరాలు, స్టెరిలైజేషన్, రోగుల సన్నద్ధత, క్లినిక్ రికార్డుల నిర్వహణ.",
+    "work_en": "Preparing and sterilising instruments, assisting during procedures, managing appointments and keeping records.",
+    "work_environment": "healthcare",
+    "sector_fit": ["private"],
+    "team_orientation": "team",
+    "min_education_level": "class12",
+    "duration_months_min": 9,
+    "duration_months_max": 24,
+    "cost_band": "medium",
+    "relocation_likelihood": "low",
+    "entrepreneurship": "limited",
+    "income_band_min": 13000,
+    "income_band_max": 23000,
+    "factors": { "math": 45, "logical": 60, "mechanical": 50, "creativity": 45, "communication": 85, "practical": 75 },
+    "skills": [
+      { "slug": "care-giving", "level": 75, "priority": true },
+      { "slug": "record-keeping", "level": 70, "priority": true },
+      { "slug": "communication", "level": 85, "priority": true },
+      { "slug": "safety", "level": 85, "priority": true },
+      { "slug": "lab-procedures", "level": 60, "priority": false }
+    ],
+    "interests": [
+      { "slug": "healthcare", "weight": 1 },
+      { "slug": "people", "weight": 0.9 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Dental assistant / hygiene short-term course", "title_te": "డెంటల్ అసిస్టెంట్ షార్ట్-టర్మ్ కోర్సు", "duration_months": 9, "note_en": "Often offered at dental colleges and skill centres.", "optional": false },
+      { "stage": 2, "type": "employment", "title_en": "Assistant in a dental clinic", "title_te": "డెంటల్ క్లినిక్‌లో అసిస్టెంట్", "duration_months": null, "note_en": "Entry role; infection-control discipline is central.", "optional": false },
+      { "stage": 3, "type": "progression", "title_en": "Senior assistant / clinic coordinator", "title_te": "సీనియర్ అసిస్టెంట్ / క్లినిక్ కోఆర్డినేటర్", "duration_months": null, "note_en": "Front-desk and clinic management roles follow.", "optional": false },
+      { "stage": 4, "type": "further_education", "title_en": "Dental hygiene or dental technician qualification", "title_te": "డెంటల్ హైజీన్ లేదా టెక్నీషియన్ కోర్సు", "duration_months": 24, "note_en": "Further formal education opens higher-skilled roles.", "optional": true }
+    ],
+    "further_education_en": [
+      "Diploma in dental mechanics / dental hygienist programmes where available",
+      "Front-office and health-records management certifications"
+    ],
+    "considerations_en": [
+      "Long periods of standing and close patient contact",
+      "Infection-control protocols must be followed strictly",
+      "Healthcare roles often involve six-day work weeks"
+    ],
+    "opportunities_en": [
+      "Dental clinics and multi-speciality dental chains",
+      "Hospital dental departments",
+      "Dental colleges and outreach camps"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Guntur", "Tirupati", "Rajahmundry"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "medical-lab-technician",
+    "title_en": "Medical Laboratory Technician",
+    "title_te": "మెడికల్ ల్యాబ్ టెక్నీషియన్",
+    "summary_en": "Collects samples and performs routine diagnostic tests in hospital and private laboratories.",
+    "summary_te": "ఆసుపత్రి, ప్రైవేట్ ల్యాబ్‌లలో నమూనాల సేకరణ మరియు పరీక్షలు.",
+    "work_en": "Sample handling, operating analysers, recording results accurately, maintaining quality control and lab hygiene.",
+    "work_environment": "lab",
+    "sector_fit": ["government", "private"],
+    "team_orientation": "team",
+    "min_education_level": "class12",
+    "duration_months_min": 24,
+    "duration_months_max": 36,
+    "cost_band": "medium",
+    "relocation_likelihood": "medium",
+    "entrepreneurship": "possible",
+    "income_band_min": 15000,
+    "income_band_max": 28000,
+    "factors": { "math": 60, "logical": 75, "mechanical": 50, "creativity": 35, "communication": 65, "practical": 85 },
+    "skills": [
+      { "slug": "lab-procedures", "level": 90, "priority": true },
+      { "slug": "record-keeping", "level": 80, "priority": true },
+      { "slug": "safety", "level": 85, "priority": true },
+      { "slug": "measurement", "level": 75, "priority": false },
+      { "slug": "communication", "level": 60, "priority": false }
+    ],
+    "interests": [
+      { "slug": "healthcare", "weight": 1 },
+      { "slug": "technology", "weight": 0.5 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Diploma in medical laboratory technology (DMLT)", "title_te": "మెడికల్ ల్యాబ్ టెక్నాలజీ డిప్లొమా (DMLT)", "duration_months": 24, "note_en": "Paramedical diplomas are offered by recognised institutions.", "optional": false },
+      { "stage": 2, "type": "apprenticeship", "title_en": "Hospital laboratory training / internship", "title_te": "ఆసుపత్రి ల్యాబ్ శిక్షణ", "duration_months": 6, "note_en": "Supervised lab practice is usually part of the diploma.", "optional": false },
+      { "stage": 3, "type": "employment", "title_en": "Lab technician in hospital or diagnostic centre", "title_te": "ఆసుపత్రి లేదా డయాగ్నస్టిక్ సెంటర్‌లో ల్యాబ్ టెక్నీషియన్", "duration_months": null, "note_en": "Shift work is common in hospital labs.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Senior technician → lab supervisor / quality coordinator", "title_te": "సీనియర్ టెక్నీషియన్ → ల్యాబ్ సూపర్‌వైజర్", "duration_months": null, "note_en": "Quality and accreditation roles add responsibility.", "optional": false }
+    ],
+    "further_education_en": [
+      "B.Sc in medical laboratory technology (institution-dependent eligibility)",
+      "Specialised certifications in microbiology or clinical biochemistry"
+    ],
+    "considerations_en": [
+      "Biological sample handling requires strict safety practice",
+      "Shift duties including nights in hospital settings",
+      "Accuracy matters more than speed — errors affect patient care"
+    ],
+    "opportunities_en": [
+      "Hospital and diagnostic laboratory networks",
+      "Public health laboratories and blood banks",
+      "Small diagnostic collection centres"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "patient-care-assistant",
+    "title_en": "Patient Care Assistant",
+    "title_te": "పేషెంట్ కేర్ అసిస్టెంట్",
+    "summary_en": "Provides bedside care and daily-living support to patients in hospitals and home-care settings.",
+    "summary_te": "ఆసుపత్రులు, హోమ్ కేర్‌లో రోగులకు సంరక్షణ మరియు రోజువారీ సహాయం.",
+    "work_en": "Assisting with movement and hygiene, monitoring basic vitals, feeding support and reporting changes to nurses.",
+    "work_environment": "healthcare",
+    "sector_fit": ["private", "government"],
+    "team_orientation": "team",
+    "min_education_level": "class10",
+    "duration_months_min": 6,
+    "duration_months_max": 12,
+    "cost_band": "low",
+    "relocation_likelihood": "medium",
+    "entrepreneurship": "limited",
+    "income_band_min": 12000,
+    "income_band_max": 22000,
+    "factors": { "math": 40, "logical": 55, "mechanical": 45, "creativity": 40, "communication": 85, "practical": 85 },
+    "skills": [
+      { "slug": "care-giving", "level": 90, "priority": true },
+      { "slug": "communication", "level": 85, "priority": true },
+      { "slug": "safety", "level": 75, "priority": true },
+      { "slug": "record-keeping", "level": 55, "priority": false }
+    ],
+    "interests": [
+      { "slug": "healthcare", "weight": 1 },
+      { "slug": "people", "weight": 1 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "General duty assistant / patient care course", "title_te": "జనరల్ డ్యూటీ అసిస్టెంట్ కోర్సు", "duration_months": 6, "note_en": "Short-term, healthcare-sector skill courses.", "optional": false },
+      { "stage": 2, "type": "employment", "title_en": "Care assistant in hospital ward or home care", "title_te": "ఆసుపత్రి వార్డ్ లేదా హోమ్ కేర్‌లో అసిస్టెంట్", "duration_months": null, "note_en": "Ward and home-care roles differ in pace and independence.", "optional": false },
+      { "stage": 3, "type": "progression", "title_en": "Senior care assistant / home-care coordinator", "title_te": "సీనియర్ కేర్ అసిస్టెంట్", "duration_months": null, "note_en": "Supervision and scheduling roles follow with experience.", "optional": false },
+      { "stage": 4, "type": "further_education", "title_en": "Nursing assistant or paramedical diploma", "title_te": "నర్సింగ్ అసిస్టెంట్ లేదా పారామెడికల్ డిప్లొమా", "duration_months": 24, "note_en": "Further education opens clinical career paths.", "optional": true }
+    ],
+    "further_education_en": [
+      "Paramedical or nursing assistant diplomas (eligibility varies by institution)",
+      "Elder-care and home-care specialisations"
+    ],
+    "considerations_en": [
+      "Emotionally and physically demanding work",
+      "Shift duties including nights",
+      "Requires patience and strong communication"
+    ],
+    "opportunities_en": [
+      "Hospitals, nursing homes and elder-care facilities",
+      "Home-care service agencies",
+      "Medical tourism and rehabilitation centres"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Guntur", "Tirupati"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "pharmacy-assistant",
+    "title_en": "Pharmacy Assistant",
+    "title_te": "ఫార్మసీ అసిస్టెంట్",
+    "summary_en": "Supports pharmacy operations — dispensing under supervision, stock control, billing and customer guidance.",
+    "summary_te": "ఫార్మసీ నిర్వహణ — స్టాక్, బిల్లింగ్, కస్టమర్ సహాయం.",
+    "work_en": "Reading prescriptions, arranging medicines, managing expiry and stock, billing and explaining dosage instructions.",
+    "work_environment": "healthcare",
+    "sector_fit": ["private", "entrepreneurship"],
+    "team_orientation": "either",
+    "min_education_level": "class12",
+    "duration_months_min": 12,
+    "duration_months_max": 24,
+    "cost_band": "medium",
+    "relocation_likelihood": "low",
+    "entrepreneurship": "possible",
+    "income_band_min": 13000,
+    "income_band_max": 24000,
+    "factors": { "math": 60, "logical": 65, "mechanical": 35, "creativity": 35, "communication": 80, "practical": 70 },
+    "skills": [
+      { "slug": "inventory", "level": 80, "priority": true },
+      { "slug": "record-keeping", "level": 80, "priority": true },
+      { "slug": "customer-service", "level": 85, "priority": true },
+      { "slug": "communication", "level": 80, "priority": false },
+      { "slug": "digital", "level": 50, "priority": false }
+    ],
+    "interests": [
+      { "slug": "healthcare", "weight": 0.9 },
+      { "slug": "business", "weight": 0.8 },
+      { "slug": "people", "weight": 0.8 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Pharmacy assistant / pharmacy technician course", "title_te": "ఫార్మసీ అసిస్టెంట్ కోర్సు", "duration_months": 12, "note_en": "Note: dispensing medicines is regulated; assistants work under a qualified pharmacist.", "optional": false },
+      { "stage": 2, "type": "employment", "title_en": "Assistant at a retail pharmacy or hospital pharmacy", "title_te": "రిటైల్ లేదా ఆసుపత్రి ఫార్మసీలో అసిస్టెంట్", "duration_months": null, "note_en": "Entry role with in-store training.", "optional": false },
+      { "stage": 3, "type": "progression", "title_en": "Senior assistant / store and inventory in-charge", "title_te": "సీనియర్ అసిస్టెంట్ / ఇన్వెంటరీ ఇన్‌చార్జ్", "duration_months": null, "note_en": "Inventory and compliance skills drive progression.", "optional": false },
+      { "stage": 4, "type": "further_education", "title_en": "Diploma in pharmacy (D.Pharm) where eligible", "title_te": "ఫార్మసీ డిప్లొమా (D.Pharm)", "duration_months": 24, "note_en": "Qualification requirements are set by the pharmacy regulator.", "optional": true }
+    ],
+    "further_education_en": [
+      "D.Pharm (regulatory eligibility applies)",
+      "Supply-chain and inventory management certifications"
+    ],
+    "considerations_en": [
+      "Regulatory limits on what an assistant may dispense",
+      "Standing work with high customer interaction",
+      "Accuracy in stock and expiry control is critical"
+    ],
+    "opportunities_en": [
+      "Retail pharmacy chains and hospital pharmacies",
+      "Medical stores and distribution businesses",
+      "Inventory roles in pharma distribution"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Tirupati", "Rajahmundry"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "graphic-designer",
+    "title_en": "Graphic & Digital Designer",
+    "title_te": "గ్రాఫిక్ & డిజిటల్ డిజైనర్",
+    "summary_en": "Creates visual content — branding, social media creatives, print and basic motion graphics.",
+    "summary_te": "బ్రాండింగ్, సోషల్ మీడియా క్రియేటివ్స్, ప్రింట్, మోషన్ గ్రాఫిక్స్ రూపకల్పన.",
+    "work_en": "Understanding briefs, working in design software, iterating with clients and preparing files for print or digital output.",
+    "work_environment": "office",
+    "sector_fit": ["private", "entrepreneurship"],
+    "team_orientation": "either",
+    "min_education_level": "class10",
+    "duration_months_min": 6,
+    "duration_months_max": 18,
+    "cost_band": "medium",
+    "relocation_likelihood": "medium",
+    "entrepreneurship": "strong",
+    "income_band_min": 14000,
+    "income_band_max": 30000,
+    "factors": { "math": 40, "logical": 55, "mechanical": 30, "creativity": 95, "communication": 70, "practical": 60 },
+    "skills": [
+      { "slug": "visual-design", "level": 90, "priority": true },
+      { "slug": "digital", "level": 80, "priority": true },
+      { "slug": "cad-software", "level": 60, "priority": true },
+      { "slug": "communication", "level": 70, "priority": false },
+      { "slug": "customer-service", "level": 60, "priority": false }
+    ],
+    "interests": [
+      { "slug": "design", "weight": 1 },
+      { "slug": "technology", "weight": 0.7 },
+      { "slug": "business", "weight": 0.4 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Graphic design skill course (portfolio-based)", "title_te": "గ్రాఫిక్ డిజైన్ స్కిల్ కోర్సు", "duration_months": 6, "note_en": "Short courses plus a self-built portfolio are the practical entry route.", "optional": false },
+      { "stage": 2, "type": "employment", "title_en": "Junior designer at an agency, print house or in-house team", "title_te": "ఏజెన్సీ లేదా కంపెనీలో జూనియర్ డిజైనర్", "duration_months": null, "note_en": "Entry roles are usually portfolio-driven, not marks-driven.", "optional": false },
+      { "stage": 3, "type": "progression", "title_en": "Senior designer / brand specialist", "title_te": "సీనియర్ డిజైనర్ / బ్రాండ్ స్పెషలిస్ట్", "duration_months": null, "note_en": "Specialisation in brand, UI or motion improves rates.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Freelance practice or own studio", "title_te": "ఫ్రీలాన్స్ లేదా సొంత స్టూడియో", "duration_months": null, "note_en": "Freelance work is common and can be location-independent.", "optional": true }
+    ],
+    "further_education_en": [
+      "Degree or diploma in visual communication / design (portfolio-based admission)",
+      "Specialisations in UI/UX or motion design"
+    ],
+    "considerations_en": [
+      "Portfolio quality matters more than qualification alone",
+      "Client feedback and revisions are part of the work",
+      "Freelance income can be irregular at the start"
+    ],
+    "opportunities_en": [
+      "Advertising agencies, print and packaging businesses",
+      "In-house teams for retail, real estate and education brands",
+      "Freelance and remote work for national clients"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Guntur", "Tirupati"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "fashion-design-assistant",
+    "title_en": "Fashion Design & Garment Technician",
+    "title_te": "ఫ్యాషన్ డిజైన్ & గార్మెంట్ టెక్నీషియన్",
+    "summary_en": "Creates, tailors and finishes garments — pattern making, stitching, alteration and boutique work.",
+    "summary_te": "దుస్తుల తయారీ — ప్యాటర్న్, కుట్టు, ఆల్టరేషన్, బూటిక్ పని.",
+    "work_en": "Taking measurements, drafting patterns, stitching and finishing garments, and working directly with customers.",
+    "work_environment": "studio",
+    "sector_fit": ["private", "entrepreneurship"],
+    "team_orientation": "either",
+    "min_education_level": "class8",
+    "duration_months_min": 6,
+    "duration_months_max": 18,
+    "cost_band": "low",
+    "relocation_likelihood": "low",
+    "entrepreneurship": "strong",
+    "income_band_min": 11000,
+    "income_band_max": 24000,
+    "factors": { "math": 45, "logical": 50, "mechanical": 60, "creativity": 90, "communication": 65, "practical": 85 },
+    "skills": [
+      { "slug": "tailoring", "level": 90, "priority": true },
+      { "slug": "visual-design", "level": 65, "priority": true },
+      { "slug": "measurement", "level": 70, "priority": false },
+      { "slug": "customer-service", "level": 70, "priority": false },
+      { "slug": "sales", "level": 45, "priority": false }
+    ],
+    "interests": [
+      { "slug": "design", "weight": 1 },
+      { "slug": "business", "weight": 0.5 },
+      { "slug": "people", "weight": 0.4 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Sewing / fashion design skill course", "title_te": "కుట్టు / ఫ్యాషన్ డిజైన్ కోర్సు", "duration_months": 6, "note_en": "Short-term courses cover pattern making and machine stitching.", "optional": false },
+      { "stage": 2, "type": "employment", "title_en": "Tailor / stitching technician at a boutique or garment unit", "title_te": "బూటిక్ లేదా గార్మెంట్ యూనిట్‌లో టైలర్", "duration_months": null, "note_en": "Piece-rate and salaried roles both exist.", "optional": false },
+      { "stage": 3, "type": "progression", "title_en": "Design assistant / sampling technician", "title_te": "డిజైన్ అసిస్టెంట్ / శాంప్లింగ్ టెక్నీషియన్", "duration_months": null, "note_en": "Garment export units offer sampling and quality roles.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Own boutique / tailoring business", "title_te": "సొంత బూటిక్ / టైలరింగ్ వ్యాపారం", "duration_months": null, "note_en": "Small capital and local demand support self-employment.", "optional": true }
+    ],
+    "further_education_en": [
+      "Diploma or degree in fashion design (portfolio-based admission)",
+      "Specialisations in garment technology or merchandising"
+    ],
+    "considerations_en": [
+      "Piece-rate work can mean variable income early on",
+      "Long sitting hours at machines",
+      "Festival seasons bring peak demand"
+    ],
+    "opportunities_en": [
+      "Garment manufacturing and export units",
+      "Boutiques, tailoring shops and alteration services",
+      "Home-based tailoring business"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Guntur", "Kurnool", "Tirupati"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "hotel-food-beverage-service",
+    "title_en": "Hotel Food & Beverage Service Associate",
+    "title_te": "హోటల్ ఫుడ్ & బెవరేజ్ సర్వీస్ అసోసియేట్",
+    "summary_en": "Serves guests in restaurants, banquets and hotels — service, order taking and guest relations.",
+    "summary_te": "రెస్టారెంట్లు, బ్యాంకెట్లలో అతిథి సేవ, ఆర్డర్ తీసుకోవడం, సంబంధాలు.",
+    "work_en": "Setting up service areas, taking orders, serving food and beverage, handling billing and guest requests.",
+    "work_environment": "hospitality",
+    "sector_fit": ["private", "entrepreneurship"],
+    "team_orientation": "team",
+    "min_education_level": "class10",
+    "duration_months_min": 6,
+    "duration_months_max": 18,
+    "cost_band": "low",
+    "relocation_likelihood": "medium",
+    "entrepreneurship": "possible",
+    "income_band_min": 12000,
+    "income_band_max": 25000,
+    "factors": { "math": 40, "logical": 55, "mechanical": 35, "creativity": 55, "communication": 95, "practical": 75 },
+    "skills": [
+      { "slug": "customer-service", "level": 95, "priority": true },
+      { "slug": "communication", "level": 90, "priority": true },
+      { "slug": "record-keeping", "level": 50, "priority": false },
+      { "slug": "inventory", "level": 50, "priority": false }
+    ],
+    "interests": [
+      { "slug": "people", "weight": 1 },
+      { "slug": "business", "weight": 0.5 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Food & beverage service skill course", "title_te": "ఫుడ్ & బెవరేజ్ సర్వీస్ కోర్సు", "duration_months": 6, "note_en": "Hospitality sector skill courses include service practice and grooming.", "optional": false },
+      { "stage": 2, "type": "employment", "title_en": "Service associate in a hotel or restaurant", "title_te": "హోటల్ లేదా రెస్టారెంట్‌లో సర్వీస్ అసోసియేట్", "duration_months": null, "note_en": "Entry roles often include shift and weekend work.", "optional": false },
+      { "stage": 3, "type": "progression", "title_en": "Senior steward / banquet supervisor", "title_te": "సీనియర్ స్టీవార్డ్ / బ్యాంకెట్ సూపర్‌వైజర్", "duration_months": null, "note_en": "Language skills and guest handling drive promotion.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Food service outlet owner / catering business", "title_te": "ఫుడ్ ఔట్‌లెట్ / కేటరింగ్ వ్యాపారం", "duration_months": null, "note_en": "Catering and small outlets are a common transition.", "optional": true }
+    ],
+    "further_education_en": [
+      "Diploma or degree in hotel management (institution-dependent)",
+      "Certifications in barista, banquet or front-office operations"
+    ],
+    "considerations_en": [
+      "Late shifts, weekends and festival peaks",
+      "Standing and walking for most of the shift",
+      "Presentation and communication standards are high"
+    ],
+    "opportunities_en": [
+      "Hotels, resorts, restaurants and banquet halls",
+      "Catering companies and cloud kitchens",
+      "Cruise and institutional catering"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Vijayawada", "Tirupati", "Araku", "Nellore"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "agri-equipment-operator",
+    "title_en": "Farm Machinery Operator & Service Technician",
+    "title_te": "వ్యవసాయ యంత్ర ఆపరేటర్ & సర్వీస్ టెక్నీషియన్",
+    "summary_en": "Operates, maintains and repairs tractors, harvesters and farm machinery, including custom hiring services.",
+    "summary_te": "ట్రాక్టర్లు, హార్వెస్టర్లు, వ్యవసాయ యంత్రాల నిర్వహణ మరియు మరమ్మత్తు.",
+    "work_en": "Field operation, routine servicing, minor repairs, safety checks and customer support for machinery owners.",
+    "work_environment": "outdoor",
+    "sector_fit": ["private", "entrepreneurship"],
+    "team_orientation": "either",
+    "min_education_level": "class8",
+    "duration_months_min": 6,
+    "duration_months_max": 12,
+    "cost_band": "low",
+    "relocation_likelihood": "low",
+    "entrepreneurship": "strong",
+    "income_band_min": 12000,
+    "income_band_max": 24000,
+    "factors": { "math": 55, "logical": 60, "mechanical": 85, "creativity": 40, "communication": 60, "practical": 95 },
+    "skills": [
+      { "slug": "mechanical", "level": 85, "priority": true },
+      { "slug": "crop-practice", "level": 70, "priority": true },
+      { "slug": "diagnostics", "level": 65, "priority": true },
+      { "slug": "safety", "level": 80, "priority": false },
+      { "slug": "customer-service", "level": 60, "priority": false }
+    ],
+    "interests": [
+      { "slug": "outdoor", "weight": 1 },
+      { "slug": "machines", "weight": 0.9 },
+      { "slug": "business", "weight": 0.4 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Farm machinery / tractor mechanic course", "title_te": "వ్యవసాయ యంత్ర / ట్రాక్టర్ మెకానిక్ కోర్సు", "duration_months": 6, "note_en": "Skill courses for farm machinery operation and repair are available at rural skill centres.", "optional": false },
+      { "stage": 2, "type": "employment", "title_en": "Operator or service technician at a machinery dealer / custom hiring centre", "title_te": "మెషినరీ డీలర్ లేదా కస్టమ్ హైరింగ్ సెంటర్‌లో టెక్నీషియన్", "duration_months": null, "note_en": "Custom hiring centres and dealers employ trained operators.", "optional": false },
+      { "stage": 3, "type": "progression", "title_en": "Service in-charge / custom hiring operator", "title_te": "సర్వీస్ ఇన్‌చార్జ్ / కస్టమ్ హైరింగ్ ఆపరేటర్", "duration_months": null, "note_en": "Operating your own machinery for hire is a common earning model.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Own machinery rental and repair service", "title_te": "సొంత యంత్ర అద్దె & రిపేర్ సేవ", "duration_months": null, "note_en": "Requires capital or a financing route.", "optional": true }
+    ],
+    "further_education_en": [
+      "Certifications in modern farm machinery and precision agriculture",
+      "Diploma in agricultural engineering (institution-dependent)"
+    ],
+    "considerations_en": [
+      "Seasonal demand peaks during sowing and harvest",
+      "Outdoor work in heat and dust",
+      "Ownership of machinery needs financing"
+    ],
+    "opportunities_en": [
+      "Farm machinery dealers and service networks",
+      "Custom hiring centres and farmer collectives",
+      "Own rental and repair business"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Anantapur", "Kurnool", "Kadapa", "Guntur", "Nellore", "Rajahmundry"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "drone-service-technician",
+    "title_en": "Drone Service Technician",
+    "title_te": "డ్రోన్ సర్వీస్ టెక్నీషియన్",
+    "summary_en": "Assembles, maintains and repairs drones used in agriculture spraying, surveying and inspections.",
+    "summary_te": "వ్యవసాయ స్ప్రేయింగ్, సర్వే, తనిఖీల్లో ఉపయోగించే డ్రోన్‌ల అమరిక మరియు నిర్వహణ.",
+    "work_en": "Propeller, motor and electronics repairs, firmware updates, pre-flight checks and field support.",
+    "work_environment": "field",
+    "sector_fit": ["private", "entrepreneurship"],
+    "team_orientation": "either",
+    "min_education_level": "class12",
+    "duration_months_min": 6,
+    "duration_months_max": 18,
+    "cost_band": "medium",
+    "relocation_likelihood": "medium",
+    "entrepreneurship": "strong",
+    "income_band_min": 15000,
+    "income_band_max": 32000,
+    "factors": { "math": 70, "logical": 80, "mechanical": 70, "creativity": 50, "communication": 60, "practical": 85 },
+    "skills": [
+      { "slug": "electronics", "level": 80, "priority": true },
+      { "slug": "diagnostics", "level": 80, "priority": true },
+      { "slug": "digital", "level": 70, "priority": true },
+      { "slug": "measurement", "level": 60, "priority": false },
+      { "slug": "safety", "level": 80, "priority": false }
+    ],
+    "interests": [
+      { "slug": "technology", "weight": 1 },
+      { "slug": "outdoor", "weight": 0.7 },
+      { "slug": "machines", "weight": 0.6 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "Drone technology / remote pilot skill course", "title_te": "డ్రోన్ టెక్నాలజీ / రిమోట్ పైలట్ కోర్సు", "duration_months": 3, "note_en": "Short courses cover drone assembly, maintenance and flight rules.", "optional": false },
+      { "stage": 2, "type": "certification", "title_en": "Remote pilot certification (as required by aviation rules)", "title_te": "రిమోట్ పైలట్ సర్టిఫికేషన్", "duration_months": 2, "note_en": "Flying drones commercially requires certification under the applicable rules.", "optional": false },
+      { "stage": 3, "type": "employment", "title_en": "Drone service technician or field operator", "title_te": "డ్రోన్ సర్వీస్ టెక్నీషియన్ / ఫీల్డ్ ఆపరేటర్", "duration_months": null, "note_en": "Agri-drone service companies and survey firms are the main employers.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Drone service business / spraying service operator", "title_te": "డ్రోన్ సర్వీస్ వ్యాపారం / స్ప్రేయింగ్ సేవ", "duration_months": null, "note_en": "Service-per-acre models are growing in agriculture.", "optional": true }
+    ],
+    "further_education_en": [
+      "Advanced certifications in surveying, mapping or agri-spraying operations",
+      "Diploma programmes in electronics or aerospace (institution-dependent)"
+    ],
+    "considerations_en": [
+      "Regulatory compliance and certification are mandatory",
+      "Field work in rural areas with travel",
+      "Technology changes quickly — continuous learning needed"
+    ],
+    "opportunities_en": [
+      "Agri-drone service providers and agri-input companies",
+      "Surveying, mapping and inspection firms",
+      "Government and disaster-management projects"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Visakhapatnam", "Guntur", "Anantapur", "Kurnool", "Vijayawada"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  },
+  {
+    "slug": "esdm-electronics-assembly-technician",
+    "title_en": "Electronics Assembly & Test Technician",
+    "title_te": "ఎలక్ట్రానిక్స్ అసెంబ్లీ & టెస్ట్ టెక్నీషియన్",
+    "summary_en": "Assembles, tests and repairs printed circuit boards, consumer electronics and small electronic devices.",
+    "summary_te": "పీసీబీలు, ఎలక్ట్రానిక్ పరికరాల అసెంబ్లీ, పరీక్షలు మరియు మరమ్మత్తు.",
+    "work_en": "Component assembly, soldering, using test equipment, fault tracing and quality documentation in a production setting.",
+    "work_environment": "factory",
+    "sector_fit": ["private"],
+    "team_orientation": "team",
+    "min_education_level": "class10",
+    "duration_months_min": 12,
+    "duration_months_max": 24,
+    "cost_band": "low",
+    "relocation_likelihood": "high",
+    "entrepreneurship": "possible",
+    "income_band_min": 14000,
+    "income_band_max": 26000,
+    "factors": { "math": 65, "logical": 80, "mechanical": 60, "creativity": 45, "communication": 45, "practical": 85 },
+    "skills": [
+      { "slug": "electronics", "level": 90, "priority": true },
+      { "slug": "measurement", "level": 75, "priority": true },
+      { "slug": "diagnostics", "level": 75, "priority": true },
+      { "slug": "safety", "level": 70, "priority": false },
+      { "slug": "record-keeping", "level": 55, "priority": false }
+    ],
+    "interests": [
+      { "slug": "technology", "weight": 1 },
+      { "slug": "machines", "weight": 0.5 }
+    ],
+    "pathways": [
+      { "stage": 1, "type": "training", "title_en": "ITI / skill course in electronics mechanic or ESDM assembly", "title_te": "ఎలక్ట్రానిక్స్ మెకానిక్ / ESDM అసెంబ్లీ కోర్సు", "duration_months": 12, "note_en": "Trade training covers components, soldering, testing and safety.", "optional": false },
+      { "stage": 2, "type": "apprenticeship", "title_en": "Apprenticeship at an electronics manufacturing unit", "title_te": "ఎలక్ట్రానిక్స్ తయారీ యూనిట్‌లో అప్రెంటిస్‌షిప్", "duration_months": 12, "note_en": "Apprenticeships are common in electronics manufacturing clusters.", "optional": true },
+      { "stage": 3, "type": "employment", "title_en": "Assembly / test technician on a production line", "title_te": "ప్రొడక్షన్ లైన్‌లో అసెంబ్లీ / టెస్ట్ టెక్నీషియన్", "duration_months": null, "note_en": "Electronics clusters offer large numbers of entry roles.", "optional": false },
+      { "stage": 4, "type": "progression", "title_en": "Quality inspector → line supervisor → repair specialist", "title_te": "క్వాలిటీ ఇన్‌స్పెక్టర్ → లైన్ సూపర్‌వైజర్", "duration_months": null, "note_en": "Test, quality and repair roles pay above assembly lines.", "optional": false }
+    ],
+    "further_education_en": [
+      "Diploma in electronics or ECE (institution-dependent lateral entry)",
+      "Certifications in SMT assembly, testing or embedded basics"
+    ],
+    "considerations_en": [
+      "Shift-based factory work with repetitive tasks at entry level",
+      "Electronics clusters are in specific locations — relocation may be needed",
+      "ESD and precision discipline are important"
+    ],
+    "opportunities_en": [
+      "Electronics manufacturing clusters and component units",
+      "Consumer appliance assembly and service companies",
+      "Repair and refurbishment businesses"
+    ],
+    "availability": [
+      { "state": "Andhra Pradesh", "districts": ["Sri City", "Nellore", "Visakhapatnam"] },
+      { "state": "Telangana", "districts": ["Hyderabad", "Medchal"] }
+    ],
+    "source_org": "Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.msde.gov.in/",
+    "data_quality": "illustrative"
+  }
+]

@@ -1,0 +1,68 @@
+[
+  {
+    "slug": "skill-india-programme",
+    "name_en": "Skill India Programme (short-term skill training)",
+    "name_te": "స్కిల్ ఇండియా కార్యక్రమం",
+    "summary_en": "National framework for short-term skill training, recognition of prior learning and certification through empanelled training providers.",
+    "eligibility_en": "Varies by course and training partner; many courses are open to school leavers and school students. Check the individual course listing.",
+    "benefit_en": "Access to short-term certified skill courses and, for some courses, fee support as notified by the scheme.",
+    "source_org": "Skill India / Ministry of Skill Development and Entrepreneurship",
+    "source_url": "https://www.skillindia.gov.in/",
+    "verified_at": "2026-10-02"
+  },
+  {
+    "slug": "national-apprenticeship-promotion-scheme",
+    "name_en": "Apprenticeship training (NAPS / apprenticeship portal)",
+    "name_te": "అప్రెంటిస్‌షిప్ శిక్షణ",
+    "summary_en": "Apprenticeship training positions in industry under the Apprentices Act framework, listed and matched through the national apprenticeship portal.",
+    "eligibility_en": "Eligibility depends on the apprenticeship trade and the employer's requirements; minimum age and qualification rules apply.",
+    "benefit_en": "Structured on-the-job training with a stipend, which the scheme may partially support for participating employers.",
+    "source_org": "Ministry of Skill Development and Entrepreneurship / Directorate General of Training",
+    "source_url": "https://www.apprenticeshipindia.gov.in/",
+    "verified_at": "2026-10-02"
+  },
+  {
+    "slug": "nsqf-and-ncvet",
+    "name_en": "NSQF-aligned qualifications (NCVET)",
+    "name_te": "NSQF అనుసంధాన అర్హతలు",
+    "summary_en": "The National Skills Qualifications Framework organises qualifications into levels so that skills acquired in different ways can be recognised and compared.",
+    "eligibility_en": "Not a scheme — a framework. Individual qualifications set their own entry requirements.",
+    "benefit_en": "Helps students understand how a vocational qualification compares with other qualifications and how to progress to higher levels.",
+    "source_org": "National Council for Vocational Education and Training",
+    "source_url": "https://www.ncviet.gov.in/",
+    "verified_at": "2026-10-02"
+  },
+  {
+    "slug": "iti-trade-training",
+    "name_en": "ITI trade training and National Trade Certificates",
+    "name_te": "ఐటీఐ ట్రేడ్ శిక్షణ",
+    "summary_en": "Industrial Training Institutes offer trade courses leading to National Trade Certificates, which are recognised for many technical jobs and apprenticeships.",
+    "eligibility_en": "Usually Class 8 or Class 10 pass depending on the trade. Admission rules are set by the state and the institute.",
+    "benefit_en": "Trade qualification that supports employment in industry and further technical education routes.",
+    "source_org": "Directorate General of Training",
+    "source_url": "https://dgt.gov.in/",
+    "verified_at": "2026-10-02"
+  },
+  {
+    "slug": "psscive-vocational-education-in-schools",
+    "name_en": "Vocational education in schools (PSSCIVE/CBSE framework)",
+    "name_te": "పాఠశాలల్లో వృత్తి విద్య",
+    "summary_en": "Vocational subjects are offered in many schools from the secondary stage, letting students sample trades before choosing a full pathway.",
+    "eligibility_en": "Offered through participating schools; availability varies by school and state.",
+    "benefit_en": "Early exposure to vocational subjects with certification, which can be continued after school.",
+    "source_org": "PSSCIVE / Ministry of Education",
+    "source_url": "https://psscive.ac.in/",
+    "verified_at": "2026-10-02"
+  },
+  {
+    "slug": "state-skill-development-corporation",
+    "name_en": "State skill development corporation programmes",
+    "name_te": "రాష్ట్ర నైపుణ్యాభివృద్ధి సంస్థ కార్యక్రమాలు",
+    "summary_en": "State-level corporations run placement-linked skill training, sometimes with travel, boarding or fee support for eligible candidates.",
+    "eligibility_en": "Set by each state corporation and the specific batch being recruited. Verify with the state portal or district skill office.",
+    "benefit_en": "Training support and often placement linkage for candidates who meet the batch criteria.",
+    "source_org": "State Skill Development Corporations (verify with your state portal)",
+    "source_url": "https://www.skillindia.gov.in/",
+    "verified_at": "2026-10-02"
+  }
+]
