@@ -59,32 +59,43 @@ function createGeminiProvider(): AIProvider {
     embedModel: GEMINI_EMBED_MODEL,
 
     async chat({ systemInstruction, userMessage, maxOutputTokens, temperature = 0.3 }) {
-      const url = `${GEMINI_BASE_URL}/models/${GEMINI_CHAT_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
-      const response = await fetchWithTimeout(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: systemInstruction }] },
-          contents: [{ role: "user", parts: [{ text: userMessage }] }],
-          generationConfig: {
-            temperature,
-            maxOutputTokens,
-            responseMimeType: "application/json",
-          },
-        }),
-      });
+      const candidates = Array.from(new Set([GEMINI_CHAT_MODEL, "gemini-3.8-flash", "gemini-3-flash-preview"]));
+      let lastError: Error | null = null;
 
-      if (!response.ok) {
-        const detail = await response.text().catch(() => "");
-        throw new ProviderUnavailableError(`Gemini chat failed (${response.status}): ${detail.slice(0, 200)}`);
+      for (const model of candidates) {
+        try {
+          const url = `${GEMINI_BASE_URL}/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+          const response = await fetchWithTimeout(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              systemInstruction: { parts: [{ text: systemInstruction }] },
+              contents: [{ role: "user", parts: [{ text: userMessage }] }],
+              generationConfig: {
+                temperature,
+                maxOutputTokens,
+                responseMimeType: "application/json",
+              },
+            }),
+          });
+
+          if (!response.ok) {
+            const detail = await response.text().catch(() => "");
+            lastError = new ProviderUnavailableError(`Gemini chat (${model}) failed (${response.status}): ${detail.slice(0, 150)}`);
+            continue;
+          }
+
+          const payload = (await response.json()) as {
+            candidates?: { content?: { parts?: { text?: string }[] } }[];
+          };
+          const text = payload.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
+          if (text) return text;
+        } catch (err) {
+          lastError = err instanceof Error ? err : new Error(String(err));
+        }
       }
 
-      const payload = (await response.json()) as {
-        candidates?: { content?: { parts?: { text?: string }[] } }[];
-      };
-      const text = payload.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
-      if (!text) throw new ProviderUnavailableError("Gemini returned an empty candidate");
-      return text;
+      throw lastError ?? new ProviderUnavailableError("All Gemini model endpoints failed");
     },
 
     async embed(texts, taskType) {

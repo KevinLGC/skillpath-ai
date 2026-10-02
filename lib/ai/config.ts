@@ -10,7 +10,7 @@ import { normalizeLocale } from "@/lib/i18n/config";
  * still answers — from retrieval only (see lib/rag/answer.ts).
  */
 export const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? "";
-export const GEMINI_CHAT_MODEL = process.env.GEMINI_CHAT_MODEL ?? "gemini-2.5-flash";
+export const GEMINI_CHAT_MODEL = process.env.GEMINI_CHAT_MODEL ?? "gemini-3.8-flash";
 export const GEMINI_EMBED_MODEL = process.env.GEMINI_EMBED_MODEL ?? "gemini-embedding-001";
 export const GEMINI_TIMEOUT_MS = Number(process.env.GEMINI_TIMEOUT_MS ?? 8000);
 export const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
