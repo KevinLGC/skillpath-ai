@@ -14,11 +14,10 @@ export function SiteHeader({ locale, signedIn }: { locale: Locale; signedIn: boo
   return (
     <header className="sticky top-0 z-20 border-b border-[var(--border)] bg-[color-mix(in_oklab,var(--background)_90%,transparent)] backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-[var(--primary)] text-sm font-bold text-[var(--primary-foreground)]">
-            SP
+        <Link href="/" className="group flex items-center">
+          <span className="text-xl font-bold tracking-tight text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors">
+            SkillPath <span className="font-extrabold text-[var(--primary)]">AI</span>
           </span>
-          <span className="font-semibold">SkillPath AI</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
@@ -51,7 +50,9 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   return (
     <footer className="mt-16 border-t border-[var(--border)] py-8">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 text-sm text-[var(--muted-foreground)]">
-        <p className="font-medium text-[var(--foreground)]">SkillPath AI</p>
+        <p className="text-base font-bold tracking-tight text-[var(--foreground)]">
+          SkillPath <span className="font-extrabold text-[var(--primary)]">AI</span>
+        </p>
         <p className="max-w-3xl">
           {locale === "te"
             ? "SIH 2026 ప్రోటోటైప్ — నైపుణ్యాభివృద్ధి & వ్యవస్థాపకత మంత్రిత్వ శాఖ సమస్య ప్రకటన SIH26241 కోసం నిర్మించబడింది."

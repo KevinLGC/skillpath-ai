@@ -36,40 +36,55 @@ function decode(value: string | undefined): SessionPayload | null {
  *   2. Local demo session cookie — keeps the prototype explorable with no setup.
  */
 export async function getSessionUser(): Promise<SessionUser | null> {
-  const supabase = await getSupabaseServerClient();
-  if (supabase) {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("full_name, role, locale, student_id")
-        .eq("id", user.id)
-        .maybeSingle();
-      return {
-        id: user.id,
-        name: (profile?.full_name as string | undefined) ?? user.email ?? "User",
-        role: ((profile?.role as Role | undefined) ?? "student") as Role,
-        email: user.email ?? null,
-        locale: normalizeLocale(profile?.locale as string | undefined),
-        kind: "supabase",
-      };
+  const store = await cookies();
+
+  // 1. Fast path: local demo session cookie (0ms, no network roundtrip)
+  const demoCookie = store.get(SESSION_COOKIE)?.value;
+  const payload = decode(demoCookie);
+  if (payload) {
+    return {
+      id: payload.id,
+      name: payload.name,
+      role: payload.role,
+      email: payload.email,
+      locale: normalizeLocale(store.get("sp_locale")?.value),
+      kind: "demo",
+    };
+  }
+
+  // 2. Supabase Auth: only query remote auth server when Supabase auth cookies are actually present
+  const hasSupabaseCookie = store.getAll().some(
+    (c) => c.name.startsWith("sb-") && c.name.includes("-auth-token"),
+  );
+  if (hasSupabaseCookie) {
+    const supabase = await getSupabaseServerClient();
+    if (supabase) {
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (user) {
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("full_name, role, locale, student_id")
+            .eq("id", user.id)
+            .maybeSingle();
+          return {
+            id: user.id,
+            name: (profile?.full_name as string | undefined) ?? user.email ?? "User",
+            role: ((profile?.role as Role | undefined) ?? "student") as Role,
+            email: user.email ?? null,
+            locale: normalizeLocale(profile?.locale as string | undefined),
+            kind: "supabase",
+          };
+        }
+      } catch {
+        // graceful fallback on connection timeout or offline
+      }
     }
   }
 
-  const store = await cookies();
-  const payload = decode(store.get(SESSION_COOKIE)?.value);
-  if (!payload) return null;
-
-  return {
-    id: payload.id,
-    name: payload.name,
-    role: payload.role,
-    email: payload.email,
-    locale: normalizeLocale((await getLocaleFromCookie()) ?? null),
-    kind: "demo",
-  };
+  return null;
 }
 
 async function getLocaleFromCookie(): Promise<string | undefined> {

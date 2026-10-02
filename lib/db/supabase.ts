@@ -2,6 +2,8 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { getSupabaseAdminClient } from "@/lib/supabase/server";
 import { newId, shareToken } from "@/lib/utils/id";
 import { isShareLinkActive, type NewReport, type NewShareLink, type Store } from "@/lib/db/types";
+import { DEMO_ASSESSMENT_ID, DEMO_STUDENT_ID } from "@/lib/demo/student";
+import { createMemoryStore } from "@/lib/db/memory";
 import type {
   ChatMessageRecord,
   ChatSessionRecord,
@@ -50,12 +52,15 @@ export function createSupabaseStore(): Store {
     },
 
     async getAssessment(id) {
+      if (id === DEMO_ASSESSMENT_ID) {
+        return createMemoryStore().getAssessment(id);
+      }
       const db = client();
       if (!db) return null;
       const { data, error } = await db.from("assessments").select("*").eq("id", id).maybeSingle();
       if (error) {
         logError("getAssessment", error);
-        return null;
+        return id === DEMO_ASSESSMENT_ID ? createMemoryStore().getAssessment(id) : null;
       }
       if (!data) return null;
       return {
@@ -70,6 +75,9 @@ export function createSupabaseStore(): Store {
     },
 
     async listAssessments(studentId) {
+      if (studentId === DEMO_STUDENT_ID) {
+        return createMemoryStore().listAssessments(studentId);
+      }
       const db = client();
       if (!db) return [];
       const { data, error } = await db
@@ -79,7 +87,7 @@ export function createSupabaseStore(): Store {
         .order("created_at", { ascending: true });
       if (error) {
         logError("listAssessments", error);
-        return [];
+        return studentId === DEMO_STUDENT_ID ? createMemoryStore().listAssessments(studentId) : [];
       }
       return (data ?? []).map((row) => ({
         id: row.id as string,
@@ -129,6 +137,9 @@ export function createSupabaseStore(): Store {
     },
 
     async getRecommendationsForStudent(studentId) {
+      if (studentId === DEMO_STUDENT_ID) {
+        return createMemoryStore().getRecommendationsForStudent(studentId);
+      }
       const db = client();
       if (!db) return [];
       const { data, error } = await db
@@ -139,7 +150,7 @@ export function createSupabaseStore(): Store {
         .limit(20);
       if (error) {
         logError("getRecommendationsForStudent", error);
-        return [];
+        return studentId === DEMO_STUDENT_ID ? createMemoryStore().getRecommendationsForStudent(studentId) : [];
       }
       return (data ?? []).map((row) => row.payload as Recommendation);
     },
@@ -492,16 +503,15 @@ export function createSupabaseStore(): Store {
 
     async listStudents() {
       const db = client();
-      if (!db) return [];
+      if (!db) return createMemoryStore().listStudents();
       const { data, error } = await db
         .from("profiles")
         .select("id, full_name, education_level, district, created_at")
         .eq("role", "student")
         .order("created_at", { ascending: false })
         .limit(100);
-      if (error) {
-        logError("listStudents", error);
-        return [];
+      if (error || !data || data.length === 0) {
+        return createMemoryStore().listStudents();
       }
       return (data ?? []).map((row) => ({
         studentId: row.id as string,

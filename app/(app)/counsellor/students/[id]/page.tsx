@@ -6,6 +6,7 @@ import { FactorBars } from "@/components/ui/misc";
 import { currentLocale, getSessionUser } from "@/lib/auth/session";
 import { getCareer } from "@/lib/data";
 import { getStudentById } from "@/lib/queries";
+import type { Recommendation } from "@/lib/types";
 
 export default async function CounsellorStudentPage({ params }: { params: Promise<{ id: string }> }) {
   const user = await getSessionUser();
@@ -47,7 +48,7 @@ export default async function CounsellorStudentPage({ params }: { params: Promis
           <CardContent className="space-y-3">
             {data.profile ? (
               <>
-                {Object.entries(data.profile.interests)
+                {(Object.entries(data.profile.interests) as [string, number][])
                   .sort((a, b) => b[1] - a[1])
                   .slice(0, 5)
                   .map(([slug, value]) => (
@@ -94,7 +95,7 @@ export default async function CounsellorStudentPage({ params }: { params: Promis
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          {data.recommendations.slice(0, 5).map((rec, index) => {
+          {data.recommendations.slice(0, 5).map((rec: Recommendation, index: number) => {
             const career = getCareer(rec.careerSlug);
             return (
               <div key={rec.careerSlug} className="rounded-lg border border-[var(--border)] p-3">
@@ -105,7 +106,7 @@ export default async function CounsellorStudentPage({ params }: { params: Promis
                   <span className="tabular-nums font-semibold">{rec.score}%</span>
                 </div>
                 <ul className="mt-1 list-disc pl-5 text-xs text-[var(--muted-foreground)]">
-                  {rec.explanation.strongAlignment.slice(0, 3).map((item) => (
+                  {rec.explanation.strongAlignment.slice(0, 3).map((item: string) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>

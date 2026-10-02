@@ -1,6 +1,6 @@
 import "server-only";
 import { getActiveStudentId, getSessionUser } from "@/lib/auth/session";
-import { getStore, type AssessmentRecord } from "@/lib/db";
+import { getStore, useLocalStore, type AssessmentRecord } from "@/lib/db";
 import { DEMO_ASSESSMENT_ID, DEMO_STUDENT_ID, DEMO_STUDENT_NAME } from "@/lib/demo/student";
 import { getCareer } from "@/lib/data";
 import { rankCareers, recommendationFor } from "@/lib/recommendation";
@@ -25,7 +25,6 @@ export interface StudentContext {
  * demo → the seeded student; nothing at all → empty states, never fake numbers).
  */
 export async function getStudentContext(options: { allowDemoFallback?: boolean } = {}): Promise<StudentContext> {
-  const store = getStore();
   const user = await getSessionUser();
   const allowDemoFallback = options.allowDemoFallback ?? true;
 
@@ -40,6 +39,10 @@ export async function getStudentContext(options: { allowDemoFallback?: boolean }
   if (!studentId) {
     return { user, studentId: null, studentName: "", isDemoFallback, assessment: null, profile: null, recommendations: [] };
   }
+
+  // Fast path: for demo student or demo session, use memory store (0ms)
+  const isDemo = user?.kind === "demo" || studentId === DEMO_STUDENT_ID;
+  const store = isDemo ? useLocalStore() : getStore();
 
   const assessments = await store.listAssessments(studentId);
   let assessment = assessments[assessments.length - 1] ?? null;
@@ -84,22 +87,22 @@ export async function getCareerFit(careerSlug: string): Promise<CareerFit | null
 }
 
 export async function getCounsellorRoster(): Promise<StudentOverview[]> {
-  const store = getStore();
+  const user = await getSessionUser();
+  const store = user?.kind === "demo" ? useLocalStore() : getStore();
   const roster = await store.listStudents();
-  return roster.map((student) => {
-    return student;
-  });
+  return roster;
 }
 
 export async function getStudentById(studentId: string) {
-  const store = getStore();
+  const isDemo = studentId === DEMO_STUDENT_ID;
+  const store = isDemo ? useLocalStore() : getStore();
   const assessments = await store.listAssessments(studentId);
   const assessment = assessments[assessments.length - 1] ?? (studentId === DEMO_STUDENT_ID ? await store.getAssessment(DEMO_ASSESSMENT_ID) : null);
   const recommendations = await store.getRecommendationsForStudent(studentId);
   const roster = await store.listStudents();
   return {
     studentId,
-    overview: roster.find((item) => item.studentId === studentId) ?? null,
+    overview: roster.find((item: StudentOverview) => item.studentId === studentId) ?? null,
     assessment,
     profile: assessment?.profile ?? null,
     recommendations,
@@ -116,12 +119,15 @@ export interface EngagementSummary {
 
 export async function getEngagementSummary(): Promise<EngagementSummary> {
   const roster = await getCounsellorRoster();
-  const store = getStore();
-  let plans = 0;
-  for (const student of roster) {
-    const recs = await store.getRecommendationsForStudent(student.studentId);
-    if (recs.length > 0) plans += 1;
-  }
+  const user = await getSessionUser();
+  const store = user?.kind === "demo" ? useLocalStore() : getStore();
+  
+  // Parallel fetch instead of slow serial for-loop
+  const recsList = await Promise.all(
+    roster.map((student) => store.getRecommendationsForStudent(student.studentId).catch(() => [])),
+  );
+  const plans = recsList.filter((recs: Recommendation[]) => recs.length > 0).length;
+
   return {
     students: roster.length,
     completed: roster.filter((s) => s.status === "completed").length,

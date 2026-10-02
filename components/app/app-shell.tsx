@@ -104,11 +104,10 @@ export function AppShell({
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-[1500px] gap-0 lg:gap-6 lg:px-6">
       <aside className="hidden w-64 shrink-0 py-6 lg:block">
-        <Link href="/" className="mb-6 flex items-center gap-2 px-2">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-[var(--primary)] text-sm font-bold text-[var(--primary-foreground)]">
-            SP
+        <Link href="/" className="mb-6 flex items-center px-2 group">
+          <span className="text-xl font-bold tracking-tight text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors">
+            SkillPath <span className="font-extrabold text-[var(--primary)]">AI</span>
           </span>
-          <span className="font-semibold">SkillPath AI</span>
         </Link>
 
         <nav className="space-y-6">
@@ -145,11 +144,10 @@ export function AppShell({
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-10 border-b border-[var(--border)] bg-[color-mix(in_oklab,var(--background)_88%,transparent)] px-4 py-3 backdrop-blur lg:px-0">
           <div className="flex items-center justify-between gap-3">
-            <Link href="/" className="flex items-center gap-2 lg:hidden">
-              <span className="grid h-7 w-7 place-items-center rounded-lg bg-[var(--primary)] text-xs font-bold text-[var(--primary-foreground)]">
-                SP
+            <Link href="/" className="flex items-center lg:hidden">
+              <span className="text-base font-bold tracking-tight text-[var(--foreground)]">
+                SkillPath <span className="font-extrabold text-[var(--primary)]">AI</span>
               </span>
-              <span className="text-sm font-semibold">SkillPath AI</span>
             </Link>
             <div className="hidden items-center gap-2 lg:flex">
               <span className="text-sm text-[var(--muted-foreground)]">
