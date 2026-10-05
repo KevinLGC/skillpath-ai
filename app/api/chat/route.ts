@@ -4,12 +4,15 @@ import { getActiveStudentId, getSessionUser } from "@/lib/auth/session";
 import { getStore, useLocalStore } from "@/lib/db";
 import { DEMO_STUDENT_ID } from "@/lib/demo/student";
 import { askCounsellor } from "@/lib/rag/answer";
+import { detectParentalObjection } from "@/lib/data/parental-objections";
 import { newId } from "@/lib/utils/id";
 import type { Recommendation } from "@/lib/types";
 
 const requestSchema = z.object({
   question: z.string().min(3).max(600),
   roleContext: z.enum(["student", "family", "counsellor"]).default("student"),
+  perspectiveMode: z.enum(["joint", "parent", "learner"]).optional().default("joint"),
+  selectedTradeId: z.string().optional(),
   sessionId: z.string().min(1).nullable().optional(),
   forceKeywordRetrieval: z.boolean().optional(),
 });
@@ -90,6 +93,25 @@ export async function POST(request: Request) {
 
   await consumeQuota(userId);
 
+  const detectedObjection = detectParentalObjection(parsed.data.question);
+  const district = profile?.constraints.district || "Visakhapatnam";
+  const state = profile?.constraints.state || "Andhra Pradesh";
+  const trade = parsed.data.selectedTradeId || careerSlugs[0] || "electrician";
+
+  await store.recordResistanceSession({
+    district,
+    state,
+    primaryObjection: detectedObjection,
+    trade,
+  });
+
+  const suggestEscalation =
+    detectedObjection === "social_status" ||
+    detectedObjection === "degree_fixation" ||
+    parsed.data.question.toLowerCase().includes("counsellor") ||
+    parsed.data.question.toLowerCase().includes("కౌన్సెలర్") ||
+    parsed.data.question.toLowerCase().includes("शिकायत");
+
   return Response.json({
     sessionId: session.id,
     answer: answer.answer,
@@ -100,6 +122,10 @@ export async function POST(request: Request) {
     model: answer.model,
     latencyMs: answer.latencyMs,
     quota: { used: quota.used + 1, limit: quota.limit },
+    detectedObjection,
+    perspectiveMode: parsed.data.perspectiveMode,
+    suggestEscalation,
+    tradeId: trade,
   });
 }
 

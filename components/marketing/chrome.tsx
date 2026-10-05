@@ -8,6 +8,7 @@ export function SiteHeader({ locale, signedIn }: { locale: Locale; signedIn: boo
   const links = [
     { href: "/how-it-works", label: locale === "te" ? "ఇది ఎలా పనిచేస్తుంది" : "How it works" },
     { href: "/careers", label: locale === "te" ? "వృత్తులు" : "Careers" },
+    { href: "/roi", label: locale === "te" ? "3-ఏళ్ల ROI సిమ్యులేటర్" : "3-Year ROI" },
     { href: "/resources", label: locale === "te" ? "వనరులు" : "Resources" },
   ];
 

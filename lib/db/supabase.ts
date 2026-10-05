@@ -541,5 +541,25 @@ export function createSupabaseStore(): Store {
         topCareer: null,
       }));
     },
+
+    async createEscalationCase(input) {
+      return createMemoryStore().createEscalationCase(input);
+    },
+
+    async listEscalationCases(filter) {
+      return createMemoryStore().listEscalationCases(filter);
+    },
+
+    async updateEscalationCase(id, updates) {
+      return createMemoryStore().updateEscalationCase(id, updates);
+    },
+
+    async recordResistanceSession(session) {
+      return createMemoryStore().recordResistanceSession(session);
+    },
+
+    async getResistanceAnalytics() {
+      return createMemoryStore().getResistanceAnalytics();
+    },
   };
 }

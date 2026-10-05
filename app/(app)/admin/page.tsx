@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/primitives";
 import { QualityBadge } from "@/components/ui/misc";
+import { ResistanceHeatmap } from "@/components/admin/resistance-heatmap";
 import { currentLocale, getSessionUser } from "@/lib/auth/session";
 import { careers, courses, documents, institutions, jobs, questions, schemes, skills } from "@/lib/data";
 import { DEFAULT_WEIGHTS, ENGINE_VERSION, FACTOR_LABELS, WEIGHTS_VERSION } from "@/lib/recommendation";
@@ -27,9 +28,9 @@ export default async function AdminPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Administration</h1>
+        <h1 className="text-2xl font-bold tracking-tight">Administration & State Skill Mission Dashboard</h1>
         <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-          Content, engine configuration and AI status. Nothing here is hidden from the student view — the same data drives the recommendations.
+          Content, engine configuration, AI status, and State Skill Mission resistance telemetry. Nothing here is hidden from the student view — the same data drives the recommendations.
         </p>
       </div>
 
@@ -43,6 +44,19 @@ export default async function AdminPage() {
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      {/* State Skill Mission District Resistance Heatmap & Telemetry */}
+      <div className="space-y-3 pt-2">
+        <h2 className="text-xl font-bold tracking-tight text-[var(--foreground)]">
+          {locale === "te" ? "రాష్ట్ర స్కిల్ మిషన్ ప్రతిఘటన విశ్లేషణ" : "State Skill Mission Parental Resistance Analytics"}
+        </h2>
+        <p className="text-xs text-[var(--muted-foreground)]">
+          {locale === "te"
+            ? "జిల్లాల వారీగా తల్లిదండ్రుల వ్యతిరేకత (సామాజిక హోదా, డిగ్రీ వ్యామోహం, ఆదాయం, మహిళా భద్రత) మరియు కన్వర్షన్ రేట్ల హీట్‌మ్యాప్."
+            : "Telemetry across districts for parental objections, conversion rates, and CSV export for policy intervention."}
+        </p>
+        <ResistanceHeatmap locale={locale} />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">

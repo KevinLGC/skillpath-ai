@@ -8,6 +8,7 @@ import {
   ListChecks,
   Route,
   Share2,
+  TrendingUp,
   UserRound,
   Users,
   Wrench,
@@ -39,6 +40,7 @@ function navFor(role: Role, locale: Locale): { section: string; items: NavItem[]
   const support: NavItem[] = [
     { href: "/ai-counsellor", label: t("AI counsellor", "ఏఐ కౌన్సెలర్"), icon: Bot },
     { href: "/family", label: t("Family view", "కుటుంబ వీక్షణ"), icon: Share2 },
+    { href: "/roi", label: t("ROI Simulator", "ROI సిమ్యులేటర్"), icon: TrendingUp },
     { href: "/profile", label: t("Profile", "ప్రొఫైల్"), icon: UserRound },
   ];
 
@@ -47,7 +49,8 @@ function navFor(role: Role, locale: Locale): { section: string; items: NavItem[]
       {
         section: t("Counsellor", "కౌన్సెలర్"),
         items: [
-          { href: "/counsellor", label: t("Student roster", "విద్యార్థుల జాబితా"), icon: Users },
+          { href: "/counsellor", label: t("Roster & Triage Desk", "జాబితా & ట్రయాజ్ డెస్క్"), icon: Users },
+          { href: "/roi", label: t("ROI Simulator", "ROI సిమ్యులేటర్"), icon: TrendingUp },
           { href: "/careers", label: t("Career library", "వృత్తి లైబ్రరీ"), icon: Briefcase },
           { href: "/ai-counsellor", label: t("AI counsellor", "ఏఐ కౌన్సెలర్"), icon: Bot },
         ],
@@ -60,7 +63,8 @@ function navFor(role: Role, locale: Locale): { section: string; items: NavItem[]
       {
         section: t("Administration", "నిర్వహణ"),
         items: [
-          { href: "/admin", label: t("Overview", "సారాంశం"), icon: LayoutDashboard },
+          { href: "/admin", label: t("Overview & Telemetry", "సారాంశం & టెలిమెట్రీ"), icon: LayoutDashboard },
+          { href: "/roi", label: t("ROI Simulator", "ROI సిమ్యులేటర్"), icon: TrendingUp },
           { href: "/admin/careers", label: t("Careers", "వృత్తులు"), icon: Briefcase },
           { href: "/resources", label: t("Knowledge base", "నాలెడ్జ్ బేస్"), icon: ListChecks },
         ],
@@ -73,7 +77,8 @@ function navFor(role: Role, locale: Locale): { section: string; items: NavItem[]
       {
         section: t("Family view", "కుటుంబ వీక్షణ"),
         items: [
-          { href: "/family", label: t("Career plan", "కెరీర్ ప్రణాళిక"), icon: Share2 },
+          { href: "/family", label: t("Career plan & Trust Card", "కెరీర్ & విశ్వాస పత్రం"), icon: Share2 },
+          { href: "/roi", label: t("3-Year ROI Simulator", "3-ఏళ్ల ROI సిమ్యులేటర్"), icon: TrendingUp },
           { href: "/results", label: t("Recommendations", "సూచనలు"), icon: Compass },
           { href: "/compare", label: t("Compare", "పోల్చడం"), icon: GitCompare },
           { href: "/ai-counsellor", label: t("Ask a question", "ప్రశ్న అడగండి"), icon: Bot },

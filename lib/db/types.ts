@@ -10,6 +10,9 @@ import type {
   StudentConstraints,
   StudentOverview,
   StudentProfile,
+  EscalationCase,
+  ParentalObjectionType,
+  ResistanceAnalyticsSummary,
 } from "@/lib/types";
 import type { RawAnswer } from "@/lib/assessment/score";
 
@@ -98,6 +101,30 @@ export interface Store {
   incrementUsage(userId: string, day: string): Promise<number>;
 
   listStudents(): Promise<StudentOverview[]>;
+
+  createEscalationCase(input: {
+    studentName: string;
+    parentName: string;
+    parentPhone: string;
+    state?: string;
+    district?: string;
+    preferredLanguage?: string;
+    tradeInterest?: string;
+    primaryObjection?: ParentalObjectionType;
+    parentNotes?: string;
+  }): Promise<EscalationCase>;
+  listEscalationCases(filter?: { status?: string; district?: string }): Promise<EscalationCase[]>;
+  updateEscalationCase(
+    id: string,
+    updates: { status?: EscalationCase["status"]; counsellorNotes?: string; postSentimentScore?: number },
+  ): Promise<EscalationCase | null>;
+  getResistanceAnalytics(): Promise<ResistanceAnalyticsSummary>;
+  recordResistanceSession(session: {
+    district: string;
+    state: string;
+    primaryObjection: ParentalObjectionType;
+    trade: string;
+  }): Promise<void>;
 }
 
 /** Share links are valid only before expiry and only if not revoked. */

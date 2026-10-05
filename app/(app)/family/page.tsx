@@ -4,6 +4,7 @@ import { CounsellorChat } from "@/components/ai/counsellor-chat";
 import { CostSimulator } from "@/components/family/cost-simulator";
 import { ReportGenerator } from "@/components/family/report-button";
 import { SharePanel } from "@/components/family/share-panel";
+import { TrustCertificate } from "@/components/family/trust-certificate";
 import {
   Alert,
   Badge,
@@ -269,10 +270,59 @@ export default async function FamilyPage({ searchParams }: { searchParams: Promi
         </div>
       </div>
 
+      {/* 3-Year ROI Simulator Callout */}
+      <Card className="border-[var(--primary)]/20 bg-gradient-to-r from-[var(--primary)]/10 via-[var(--card)] to-[var(--secondary)]/40 p-1">
+        <CardContent className="flex flex-col items-start justify-between gap-4 p-5 sm:flex-row sm:items-center">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <Badge variant="success">{locale === "te" ? "+₹7.35 లక్షల సంపాదన ప్రయోజనం" : "+₹7.35 Lakh Net Advantage"}</Badge>
+              <span className="text-xs font-medium text-[var(--muted-foreground)]">NSQF vs 3-Yr BA/BCom</span>
+            </div>
+            <h3 className="text-lg font-bold text-[var(--foreground)]">
+              {locale === "te" ? "3-సంవత్సరాల ఆర్థిక వాస్తవికత & ROI సిమ్యులేటర్" : "3-Year Financial Reality & ROI Simulator"}
+            </h3>
+            <p className="text-xs text-[var(--muted-foreground)] max-w-2xl">
+              {locale === "te"
+                ? "సాధారణ నాన్-టెక్నికల్ డిగ్రీ అప్పులను ప్రభుత్వ-సబ్సిడీతో కూడిన ఎన్ఎస్ క్యూ ఎఫ్ స్టైపెండ్‌లతో పోల్చండి. తెలుగు లేదా ఇంగ్లీషులో ఆడియో వివరణ వినండి."
+                : "Simulate cash flow, live stipends, lateral entry into Engineering Diplomas, and medical coverage with speech narration."}
+            </p>
+          </div>
+          <Link href="/roi" className="shrink-0">
+            <Button size="md" className="gap-2">
+              <TrendingUp className="h-4 w-4" />
+              {locale === "te" ? "సిమ్యులేటర్ తెరవండి" : "Open ROI Simulator"}
+            </Button>
+          </Link>
+        </CardContent>
+      </Card>
+
+      {/* Family Vocational Trust Certificate */}
+      <div id="certificate" className="space-y-3 pt-4">
+        <SectionTitle hint={locale === "te" ? "బంధువులు మరియు సమాజం కోసం అధికారిక ధృవీకరణ" : "Social proof and legal guarantees for extended family"}>
+          {locale === "te" ? "కుటుంబ వృత్తి నైపుణ్య విశ్వాస పత్రం" : "Family Vocational Trust Certificate"}
+        </SectionTitle>
+        <p className="text-xs text-[var(--muted-foreground)]">
+          {locale === "te"
+            ? "సమాజంలో 'మిస్త్రీ' లేదా తక్కువ పని అనే భావనను తొలగించడానికి మరియు వాట్సాప్‌లో బంధువులతో పంచుకోవడానికి అధికారిక NCVT & NEP 2020 సర్టిఫికేట్."
+            : "Refute social stigma with verifiable NSQF/NCVT credentials, 3-year salary progression, and 1-click WhatsApp sharing for relatives."}
+        </p>
+        <TrustCertificate
+          locale={locale}
+          defaultStudentName={context.studentName || (locale === "te" ? "రాహుల్ వర్మ" : "Rahul Varma")}
+          defaultDistrict={context.profile.constraints.district || "Visakhapatnam"}
+        />
+      </div>
+
       <SectionTitle hint={locale === "te" ? "అంశాలను కలిపి చర్చించండి" : "Compare before deciding together"}>
         {locale === "te" ? "తదుపరి అడుగు" : "Next step"}
       </SectionTitle>
       <div className="flex flex-wrap gap-2">
+        <Link href="/roi">
+          <Button variant="default" size="sm">
+            <TrendingUp className="h-4 w-4" />
+            {locale === "te" ? "ROI సిమ్యులేటర్" : "3-Yr ROI Simulator"}
+          </Button>
+        </Link>
         <Link href={`/compare?a=${career.slug}`}>
           <Button variant="outline" size="sm">
             {locale === "te" ? "ఇతర మార్గాలతో పోల్చండి" : "Compare with other pathways"}

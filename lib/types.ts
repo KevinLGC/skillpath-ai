@@ -554,3 +554,123 @@ export interface StoreUsage {
   day: string;
   count: number;
 }
+
+/* ----------------------------- joint family & objections ----------------------------- */
+
+export type PerspectiveMode = "joint" | "parent" | "learner";
+
+export type ParentalObjectionType =
+  | "social_status"
+  | "earning_potential"
+  | "degree_fixation"
+  | "female_safety"
+  | "general";
+
+export interface TrainingProvider {
+  id: string;
+  name: string;
+  type: "Govt ITI" | "PMKK (Pradhan Mantri Kaushal Kendra)" | "NSTI Central Institute";
+  state: string;
+  district: string;
+  address: string;
+  nodalOfficer: string;
+  phone: string;
+  hostelAvailable: boolean;
+  placementRate: number;
+  tradesOffered: string[];
+}
+
+export interface TradeProgressionStep {
+  level: number;
+  title: string;
+  experience: string;
+  avgSalary: string;
+  roleDescription: string;
+}
+
+export interface TradeOutcomeData {
+  id: string;
+  nameEn: string;
+  nameTe: string;
+  nameHi: string;
+  sectorEn: string;
+  sectorTe: string;
+  sectorHi: string;
+  nsqfLevel: number;
+  placementRate: number;
+  sampleSize: number;
+  entrySalaryMin: number;
+  entrySalaryMax: number;
+  avgStartingSalary: number;
+  avg3YearSalary: number;
+  avg5YearSalary: number;
+  topEmployers: string[];
+  formalContractRate: number;
+  epfEsiCoverage: number;
+  femaleEnrollmentPercent: number;
+  safetyScore: number;
+  nsqfProgression: TradeProgressionStep[];
+  parentRebuttal: {
+    statusMyth: { en: string; te: string; hi: string };
+    statusFact: { en: string; te: string; hi: string };
+    degreeComparison: { en: string; te: string; hi: string };
+    socialStandingAdvise: { en: string; te: string; hi: string };
+  };
+  roleModel: {
+    name: string;
+    location: string;
+    originBackground: string;
+    currentRole: string;
+    currentIncome: string;
+    quoteTe: string;
+    quoteHi: string;
+    quoteEn: string;
+  };
+  suitableFor: {
+    educationReq: string;
+    interests: string[];
+  };
+}
+
+export interface EscalationCase {
+  id: string;
+  timestamp: string;
+  studentName: string;
+  parentName: string;
+  parentPhone: string;
+  state: string;
+  district: string;
+  preferredLanguage: string;
+  tradeInterest: string;
+  primaryObjection: ParentalObjectionType;
+  status: "Pending" | "In Progress" | "Resolved";
+  assignedCenter: string;
+  assignedOfficer: string;
+  officerPhone: string;
+  parentNotes: string;
+  counsellorNotes: string;
+  preSentimentScore: number;
+  postSentimentScore?: number;
+  dropoutRiskLevel: "Low" | "Medium" | "High";
+}
+
+export interface DistrictResistanceData {
+  district: string;
+  state: string;
+  totalSessions: number;
+  socialStatusResistance: number;
+  earningResistance: number;
+  degreeResistance: number;
+  safetyResistance: number;
+  primaryBlocker: string;
+}
+
+export interface ResistanceAnalyticsSummary {
+  totalSessionsTracked: number;
+  avgSentimentShiftDelta: number;
+  escalationRatePercent: number;
+  dropoutRiskAlertsCount: number;
+  objectionDistribution: Record<string, number>;
+  districtHeatmap: DistrictResistanceData[];
+  resolvedCasesCount: number;
+}

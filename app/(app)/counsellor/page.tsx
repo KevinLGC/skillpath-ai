@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { AlertTriangle, ClipboardList, Target, Users } from "lucide-react";
+import { AlertTriangle, ClipboardList, PhoneCall, Target, Users } from "lucide-react";
+import { EscalationTriage } from "@/components/counsellor/escalation-triage";
 import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress } from "@/components/ui/primitives";
 import { currentLocale, getSessionUser } from "@/lib/auth/session";
 import { getCareer } from "@/lib/data";
@@ -97,6 +98,27 @@ export default async function CounsellorRosterPage() {
           <Progress value={(summary.completed / Math.max(1, summary.students)) * 100} tone="success" />
         </CardContent>
       </Card>
+
+      {/* Human Escalation & District ITI Nodal Desk */}
+      <div className="space-y-3 pt-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="grid h-7 w-7 place-items-center rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)]">
+              <PhoneCall className="h-4 w-4" />
+            </span>
+            <h2 className="text-xl font-bold tracking-tight text-[var(--foreground)]">
+              {locale === "te" ? "జిల్లా ఐటిఐ నోడల్ ఆఫీసర్ ఎస్కలేషన్ డెస్క్" : "District ITI Nodal Officer Escalation Desk"}
+            </h2>
+          </div>
+          <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+            {locale === "te"
+              ? "తల్లిదండ్రుల ఆందోళనలు, సామాజిక వ్యతిరేకత ('మిస్త్రీ' స్టిగ్మా, డిగ్రీ వ్యామోహం) మరియు డ్రాపౌట్ రిస్క్ కేస్‌ల తక్షణ పరిష్కారం."
+              : "Live triage queue for parental resistance (social stigma, degree fixation, female safety) and ITI nodal callbacks."}
+          </p>
+        </div>
+
+        <EscalationTriage locale={locale} />
+      </div>
     </div>
   );
 }
