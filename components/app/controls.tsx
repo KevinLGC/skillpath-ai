@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Languages, Loader2, LogOut, Moon, Sun } from "lucide-react";
 import { Button, Select } from "@/components/ui/primitives";
 import { LOCALES } from "@/lib/i18n/config";
@@ -44,6 +44,13 @@ export function LocaleSwitcher({ locale }: { locale: Locale }) {
 export function ThemeToggle() {
   const [dark, setDark] = useState(false);
 
+  // The theme is applied before paint by an inline script, so on first render
+  // the button must adopt whatever that script decided — otherwise it shows a
+  // moon on a dark page.
+  useEffect(() => {
+    setDark(document.documentElement.classList.contains("dark"));
+  }, []);
+
   function toggle() {
     const next = !dark;
     setDark(next);
@@ -64,17 +71,23 @@ export function ThemeToggle() {
 
 export function SignOutButton() {
   const router = useRouter();
+  const [pending, setPending] = useState(false);
   return (
     <Button
       variant="ghost"
       size="sm"
+      disabled={pending}
       onClick={async () => {
-        await fetch("/api/logout", { method: "POST" });
-        router.push("/");
-        router.refresh();
+        setPending(true);
+        try {
+          await fetch("/api/logout", { method: "POST" });
+        } finally {
+          router.push("/");
+          router.refresh();
+        }
       }}
     >
-      <LogOut className="h-4 w-4" aria-hidden />
+      {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : <LogOut className="h-4 w-4" aria-hidden />}
       Sign out
     </Button>
   );
@@ -89,20 +102,25 @@ export function DemoSignIn() {
   async function signIn(accountId: string, role: Role) {
     setBusy(accountId);
     setError(null);
-    const response = await fetch("/api/demo-login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ accountId }),
-    });
-    if (!response.ok) {
-      const body = (await response.json().catch(() => ({}))) as { error?: string };
-      setError(body.error ?? "Could not sign in");
+    try {
+      const response = await fetch("/api/demo-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accountId }),
+      });
+      if (!response.ok) {
+        const body = (await response.json().catch(() => ({}))) as { error?: string };
+        setError(body.error ?? "Could not sign in");
+        return;
+      }
+      const target = role === "counsellor" ? "/counsellor" : role === "admin" ? "/admin" : "/dashboard";
+      router.push(target);
+      router.refresh();
+    } catch {
+      setError("Network problem — could not sign in. Try again.");
+    } finally {
       setBusy(null);
-      return;
     }
-    const target = role === "counsellor" ? "/counsellor" : role === "admin" ? "/admin" : "/dashboard";
-    router.push(target);
-    router.refresh();
   }
 
   return (

@@ -36,7 +36,11 @@ export function Button({ className, variant, size, ...props }: ButtonProps) {
 
 /* ------------------------------------- card ------------------------------------- */
 
-export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+export interface CardProps extends HTMLAttributes<HTMLDivElement> {
+  ref?: React.Ref<HTMLDivElement>;
+}
+
+export function Card({ className, ...props }: CardProps) {
   return (
     <div
       className={cn("rounded-xl border border-[var(--border)] bg-[var(--card)] text-[var(--card-foreground)] shadow-sm", className)}
@@ -96,11 +100,16 @@ export function Progress({
   value,
   className,
   tone = "primary",
+  label,
+  "aria-label": ariaLabel,
+  ...props
 }: {
   value: number;
   className?: string;
   tone?: "primary" | "success" | "warning";
-}) {
+  /** Accessible name. Falls back to `aria-label` if the caller passed one. */
+  label?: string;
+} & Omit<HTMLAttributes<HTMLDivElement>, "role">) {
   const clamped = Math.max(0, Math.min(100, Math.round(value)));
   const color = tone === "success" ? "var(--success)" : tone === "warning" ? "var(--warning)" : "var(--primary)";
   return (
@@ -110,8 +119,15 @@ export function Progress({
       aria-valuenow={clamped}
       aria-valuemin={0}
       aria-valuemax={100}
+      aria-label={ariaLabel ?? label}
+      {...props}
     >
-      <div className="h-full rounded-full transition-[width]" style={{ width: `${clamped}%`, backgroundColor: color }} />
+      {/* scaleX rather than width: it animates on the compositor instead of
+          triggering layout on every frame. */}
+      <div
+        className="h-full origin-left rounded-full transition-transform duration-300 ease-out motion-reduce:transition-none"
+        style={{ transform: `scaleX(${clamped / 100})`, backgroundColor: color }}
+      />
     </div>
   );
 }

@@ -118,14 +118,31 @@ export interface CourseWithInstitution extends Course {
   institution: Institution | null;
 }
 
+/*
+ * These joins are called inside `.map()` loops (e.g. the admin careers list), so
+ * a full-array scan per call is O(N×M). Index by career slug once at module load
+ * and the lookups become O(1).
+ */
+const coursesByCareer = new Map<string, CourseWithInstitution[]>();
+for (const course of courses) {
+  const list = coursesByCareer.get(course.career_slug) ?? [];
+  list.push({ ...course, institution: institutionIndex.get(course.institution_slug) ?? null });
+  coursesByCareer.set(course.career_slug, list);
+}
+
+const jobsByCareer = new Map<string, JobOpportunity[]>();
+for (const job of jobs) {
+  const list = jobsByCareer.get(job.career_slug) ?? [];
+  list.push(job);
+  jobsByCareer.set(job.career_slug, list);
+}
+
 export function coursesForCareer(careerSlug: string): CourseWithInstitution[] {
-  return courses
-    .filter((course) => course.career_slug === careerSlug)
-    .map((course) => ({ ...course, institution: institutionIndex.get(course.institution_slug) ?? null }));
+  return coursesByCareer.get(careerSlug) ?? [];
 }
 
 export function jobsForCareer(careerSlug: string): JobOpportunity[] {
-  return jobs.filter((job) => job.career_slug === careerSlug);
+  return jobsByCareer.get(careerSlug) ?? [];
 }
 
 export interface LocalOpportunityView {
@@ -190,8 +207,17 @@ export function localOpportunities(input: {
   return out;
 }
 
+const documentsForCareerCache = new Map<string, KnowledgeDocument[]>();
+
 export function documentsForCareer(careerSlug: string): KnowledgeDocument[] {
-  return documents.filter((doc) => doc.career_slugs.length === 0 || doc.career_slugs.includes(careerSlug));
+  const cached = documentsForCareerCache.get(careerSlug);
+  if (cached) return cached;
+  // General documents (no career tag) apply everywhere; the rest must list this career.
+  const result = documents.filter(
+    (doc) => doc.career_slugs.length === 0 || doc.career_slugs.includes(careerSlug),
+  );
+  documentsForCareerCache.set(careerSlug, result);
+  return result;
 }
 
 /* -------------------------------- seed integrity -------------------------------- */

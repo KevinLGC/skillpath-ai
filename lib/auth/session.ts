@@ -1,7 +1,8 @@
+import { cache } from "react";
 import { cookies } from "next/headers";
 import { DEMO_ACCOUNTS, findDemoAccount } from "@/lib/auth/demo-accounts";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { DEMO_STUDENT_ID } from "@/lib/demo/student";
+import { DEMO_STUDENT_ID } from "@/lib/demo/answers";
 import type { Locale, Role, SessionUser } from "@/lib/types";
 import { normalizeLocale } from "@/lib/i18n/config";
 
@@ -34,8 +35,12 @@ function decode(value: string | undefined): SessionPayload | null {
  * Session resolution order:
  *   1. Supabase Auth (cookie session) when configured — real accounts, real RLS.
  *   2. Local demo session cookie — keeps the prototype explorable with no setup.
+ *
+ * Wrapped in `cache()` so a page that resolves the session in several places
+ * (layout + page + query helpers) reads the cookies and the auth profile once
+ * per request instead of once per call.
  */
-export async function getSessionUser(): Promise<SessionUser | null> {
+export const getSessionUser = cache(async (): Promise<SessionUser | null> => {
   const store = await cookies();
 
   // 1. Fast path: local demo session cookie (0ms, no network roundtrip)
@@ -85,12 +90,7 @@ export async function getSessionUser(): Promise<SessionUser | null> {
   }
 
   return null;
-}
-
-async function getLocaleFromCookie(): Promise<string | undefined> {
-  const store = await cookies();
-  return store.get("sp_locale")?.value;
-}
+});
 
 /** Which student's data this user should see. */
 export async function getActiveStudentId(user: SessionUser | null): Promise<string | null> {
@@ -134,7 +134,7 @@ export async function requireRole(roles: Role[]): Promise<SessionUser | null> {
   return roles.includes(user.role) ? user : null;
 }
 
-export async function currentLocale(): Promise<Locale> {
+export const currentLocale = cache(async (): Promise<Locale> => {
   const store = await cookies();
   return normalizeLocale(store.get("sp_locale")?.value);
-}
+});

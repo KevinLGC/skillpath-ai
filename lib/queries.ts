@@ -1,7 +1,8 @@
 import "server-only";
+import { cache } from "react";
 import { getActiveStudentId, getSessionUser } from "@/lib/auth/session";
 import { getStore, useLocalStore, type AssessmentRecord } from "@/lib/db";
-import { DEMO_ASSESSMENT_ID, DEMO_STUDENT_ID, DEMO_STUDENT_NAME } from "@/lib/demo/student";
+import { DEMO_ASSESSMENT_ID, DEMO_STUDENT_ID, DEMO_STUDENT_NAME } from "@/lib/demo/answers";
 import { getCareer } from "@/lib/data";
 import { rankCareers, recommendationFor } from "@/lib/recommendation";
 import type { Career, Recommendation, StudentOverview, StudentProfile } from "@/lib/types";
@@ -44,14 +45,17 @@ export async function getStudentContext(options: { allowDemoFallback?: boolean }
   const isDemo = user?.kind === "demo" || studentId === DEMO_STUDENT_ID;
   const store = isDemo ? useLocalStore() : getStore();
 
-  const assessments = await store.listAssessments(studentId);
+  const [assessments, storedRecommendations] = await Promise.all([
+    store.listAssessments(studentId),
+    store.getRecommendationsForStudent(studentId),
+  ]);
   let assessment = assessments[assessments.length - 1] ?? null;
   if (!assessment && studentId === DEMO_STUDENT_ID) {
     assessment = await store.getAssessment(DEMO_ASSESSMENT_ID);
   }
 
   const profile = assessment?.profile ?? null;
-  let recommendations = await store.getRecommendationsForStudent(studentId);
+  let recommendations = storedRecommendations;
 
   if (recommendations.length === 0 && profile) {
     recommendations = rankCareers(profile, { limit: 8 }).map((rec) => ({ ...rec, studentId }));
@@ -86,27 +90,32 @@ export async function getCareerFit(careerSlug: string): Promise<CareerFit | null
   return { career, recommendation: recommendationFor(context.profile, career) };
 }
 
-export async function getCounsellorRoster(): Promise<StudentOverview[]> {
+/** Cached per request so the counsellor page and the engagement summary share one roster read. */
+export const getCounsellorRoster = cache(async (): Promise<StudentOverview[]> => {
   const user = await getSessionUser();
   const store = user?.kind === "demo" ? useLocalStore() : getStore();
-  const roster = await store.listStudents();
-  return roster;
-}
+  return store.listStudents();
+});
 
 export async function getStudentById(studentId: string) {
   const isDemo = studentId === DEMO_STUDENT_ID;
   const store = isDemo ? useLocalStore() : getStore();
-  const assessments = await store.listAssessments(studentId);
-  const assessment = assessments[assessments.length - 1] ?? (studentId === DEMO_STUDENT_ID ? await store.getAssessment(DEMO_ASSESSMENT_ID) : null);
-  const recommendations = await store.getRecommendationsForStudent(studentId);
-  const roster = await store.listStudents();
+  const [assessments, recommendations, roster, notes] = await Promise.all([
+    store.listAssessments(studentId),
+    store.getRecommendationsForStudent(studentId),
+    store.listStudents(),
+    store.listNotes(studentId),
+  ]);
+  const assessment =
+    assessments[assessments.length - 1] ??
+    (studentId === DEMO_STUDENT_ID ? await store.getAssessment(DEMO_ASSESSMENT_ID) : null);
   return {
     studentId,
     overview: roster.find((item: StudentOverview) => item.studentId === studentId) ?? null,
     assessment,
     profile: assessment?.profile ?? null,
     recommendations,
-    notes: await store.listNotes(studentId),
+    notes,
   };
 }
 
@@ -118,10 +127,12 @@ export interface EngagementSummary {
 }
 
 export async function getEngagementSummary(): Promise<EngagementSummary> {
+  // getCounsellorRoster is request-cached, so calling it here does not repeat
+  // the roster read the counsellor page already made.
   const roster = await getCounsellorRoster();
   const user = await getSessionUser();
   const store = user?.kind === "demo" ? useLocalStore() : getStore();
-  
+
   // Parallel fetch instead of slow serial for-loop
   const recsList = await Promise.all(
     roster.map((student) => store.getRecommendationsForStudent(student.studentId).catch(() => [])),

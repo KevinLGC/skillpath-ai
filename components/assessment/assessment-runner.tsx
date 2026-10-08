@@ -18,7 +18,7 @@ import {
   Select,
 } from "@/components/ui/primitives";
 import { DEFAULT_SCALE_OPTIONS } from "@/lib/assessment/scale";
-import { DEMO_ANSWERS, DEMO_CONSTRAINTS } from "@/lib/demo/student";
+import { DEMO_ANSWERS, DEMO_CONSTRAINTS } from "@/lib/demo/answers";
 import { EDUCATION_LABELS, EDUCATION_LEVELS, type AssessmentQuestion, type EducationLevel } from "@/lib/types";
 import { cn } from "@/lib/utils/cn";
 
@@ -136,27 +136,34 @@ export function AssessmentRunner({ questions, locale, districts, initialEducatio
       },
     };
 
-    const response = await fetch("/api/assessment", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      const body = (await response.json().catch(() => ({}))) as { error?: string };
-      setError(body.error ?? "Could not save the assessment. Please try again.");
-      setSubmitting(false);
-      return;
-    }
-
-    const body = (await response.json()) as { redirect?: string };
     try {
-      window.localStorage.removeItem(STORAGE_KEY);
+      const response = await fetch("/api/assessment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const body = (await response.json().catch(() => ({}))) as { error?: string };
+        setError(body.error ?? "Could not save the assessment. Please try again.");
+        setSubmitting(false);
+        return;
+      }
+
+      const body = (await response.json()) as { redirect?: string };
+      try {
+        window.localStorage.removeItem(STORAGE_KEY);
+      } catch {
+        // ignore
+      }
+      // Leave `submitting` true through the navigation so the button does not
+      // flicker back to "See my matches" mid-redirect.
+      router.push(body.redirect ?? "/results");
+      router.refresh();
     } catch {
-      // ignore
+      setError("Network problem — the assessment was not saved. Check your connection and try again.");
+      setSubmitting(false);
     }
-    router.push(body.redirect ?? "/results");
-    router.refresh();
   }
 
   const progress = Math.round((answeredCount / questions.length) * 100);
@@ -324,10 +331,7 @@ export function AssessmentRunner({ questions, locale, districts, initialEducatio
                 {locale === "te" ? "ఫలితాలు చూడండి" : "See my matches"}
               </Button>
             ) : (
-              <Button
-                onClick={() => setStep((value) => Math.min(questions.length, value + 1))}
-                disabled={answers[questions[step]?.id ?? ""] === undefined}
-              >
+              <Button onClick={() => setStep((value) => Math.min(questions.length, value + 1))}>
                 {locale === "te" ? "తరువాత" : "Next"}
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Button>

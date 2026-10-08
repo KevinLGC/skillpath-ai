@@ -7,6 +7,7 @@ import {
   type EducationLevel,
   type Locale,
   type QuestionOption,
+  type RawAnswer,
   type StudentConstraints,
   type StudentPreferences,
   type StudentProfile,
@@ -14,11 +15,8 @@ import {
 
 export const ASSESSMENT_ENGINE_VERSION = "assessment-1.0.0";
 
-export interface RawAnswer {
-  questionId: string;
-  /** "3" for scale/single, or an array of option values for multi. */
-  value: string | string[];
-}
+/** Defined in `lib/types.ts` so pure-data modules can use it without the engine. */
+export type { RawAnswer } from "@/lib/types";
 
 export interface ScoreAssessmentInput {
   answers: RawAnswer[];

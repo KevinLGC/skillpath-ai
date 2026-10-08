@@ -1,4 +1,4 @@
-import { DEMO_STUDENT_ID, DEMO_STUDENT_NAME } from "@/lib/demo/student";
+import { DEMO_STUDENT_ID, DEMO_STUDENT_NAME } from "@/lib/demo/answers";
 
 /** Seeded demo accounts so the SIH walkthrough never depends on sign-up flows. */
 export const DEMO_ACCOUNTS = [

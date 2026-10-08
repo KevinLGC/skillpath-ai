@@ -1,19 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {
-  AlertTriangle,
-  CheckCircle2,
-  Clock,
-  Filter,
-  MessageSquare,
-  Phone,
-  PhoneCall,
-  Search,
-  ShieldAlert,
-  UserCheck,
-} from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { PhoneCall, Search } from "lucide-react";
 import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Input, Select, Textarea } from "@/components/ui/primitives";
+import { useDialog } from "@/lib/hooks/use-dialog";
+import { formatDate } from "@/lib/utils/format";
 import type { EscalationCase, Locale } from "@/lib/types";
 
 interface EscalationTriageProps {
@@ -32,6 +23,13 @@ export function EscalationTriage({ locale }: EscalationTriageProps) {
   const [newStatus, setNewStatus] = useState<EscalationCase["status"]>("In Progress");
   const [postScore, setPostScore] = useState<number>(4);
   const [updating, setUpdating] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const closeModal = useCallback(() => {
+    setActiveCase(null);
+    setNewNote("");
+  }, []);
+  const dialogRef = useDialog<HTMLDivElement>(activeCase !== null, closeModal);
 
   async function loadCases() {
     try {
@@ -55,6 +53,7 @@ export function EscalationTriage({ locale }: EscalationTriageProps) {
   async function handleUpdateCase() {
     if (!activeCase) return;
     setUpdating(true);
+    setError(null);
     try {
       const res = await fetch("/api/counsellor/cases", {
         method: "PATCH",
@@ -67,36 +66,45 @@ export function EscalationTriage({ locale }: EscalationTriageProps) {
         }),
       });
 
-      if (res.ok) {
-        setActiveCase(null);
-        setNewNote("");
-        await loadCases();
+      if (!res.ok) {
+        const body = (await res.json().catch(() => ({}))) as { error?: string };
+        setError(body.error ?? "Could not save this case. Try again.");
+        return;
       }
-    } catch (err) {
-      console.error("Failed to update case:", err);
+      closeModal();
+      await loadCases();
+    } catch {
+      setError("Network problem — the case was not saved. Try again.");
     } finally {
       setUpdating(false);
     }
   }
 
-  const filtered = cases.filter((c) => {
-    if (filterStatus !== "All" && c.status !== filterStatus) return false;
-    if (filterDistrict !== "All" && !c.district.toLowerCase().includes(filterDistrict.toLowerCase())) return false;
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      return (
-        c.studentName.toLowerCase().includes(q) ||
-        c.parentName.toLowerCase().includes(q) ||
-        c.parentPhone.includes(q) ||
-        c.district.toLowerCase().includes(q)
-      );
-    }
-    return true;
-  });
+  const filtered = useMemo(() => {
+    return cases.filter((c) => {
+      if (filterStatus !== "All" && c.status !== filterStatus) return false;
+      if (filterDistrict !== "All" && !c.district.toLowerCase().includes(filterDistrict.toLowerCase())) return false;
+      if (search.trim()) {
+        const q = search.toLowerCase();
+        return (
+          c.studentName.toLowerCase().includes(q) ||
+          c.parentName.toLowerCase().includes(q) ||
+          c.parentPhone.includes(q) ||
+          c.district.toLowerCase().includes(q)
+        );
+      }
+      return true;
+    });
+  }, [cases, filterStatus, filterDistrict, search]);
 
-  const pendingCount = cases.filter((c) => c.status === "Pending").length;
-  const highRiskCount = cases.filter((c) => c.dropoutRiskLevel === "High" && c.status !== "Resolved").length;
-  const resolvedCount = cases.filter((c) => c.status === "Resolved").length;
+  const { pendingCount, highRiskCount, resolvedCount } = useMemo(
+    () => ({
+      pendingCount: cases.filter((c) => c.status === "Pending").length,
+      highRiskCount: cases.filter((c) => c.dropoutRiskLevel === "High" && c.status !== "Resolved").length,
+      resolvedCount: cases.filter((c) => c.status === "Resolved").length,
+    }),
+    [cases],
+  );
 
   return (
     <div className="space-y-6">
@@ -153,6 +161,7 @@ export function EscalationTriage({ locale }: EscalationTriageProps) {
               onChange={(e) => setSearch(e.target.value)}
               placeholder={locale === "te" ? "పేరు, ఫోన్ లేదా జిల్లా ద్వారా వెతకండి..." : "Search by student, parent, or phone..."}
               className="max-w-xs text-xs"
+              aria-label={locale === "te" ? "కేస్‌లను వెతకండి" : "Search cases"}
             />
           </div>
 
@@ -161,6 +170,7 @@ export function EscalationTriage({ locale }: EscalationTriageProps) {
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
               className="text-xs"
+              aria-label={locale === "te" ? "స్థితి ద్వారా ఫిల్టర్ చేయండి" : "Filter by status"}
             >
               <option value="All">{locale === "te" ? "అన్ని స్థితులు" : "All Statuses"}</option>
               <option value="Pending">Pending</option>
@@ -172,6 +182,7 @@ export function EscalationTriage({ locale }: EscalationTriageProps) {
               value={filterDistrict}
               onChange={(e) => setFilterDistrict(e.target.value)}
               className="text-xs"
+              aria-label={locale === "te" ? "జిల్లా ద్వారా ఫిల్టర్ చేయండి" : "Filter by district"}
             >
               <option value="All">{locale === "te" ? "అన్ని జిల్లాలు" : "All Districts"}</option>
               <option value="Visakhapatnam">Visakhapatnam</option>
@@ -232,7 +243,7 @@ export function EscalationTriage({ locale }: EscalationTriageProps) {
                       Risk: {item.dropoutRiskLevel}
                     </Badge>
                     <span className="text-xs text-[var(--muted-foreground)]">
-                      {new Date(item.timestamp).toLocaleDateString()}
+                      {formatDate(item.timestamp)}
                     </span>
                   </div>
 
@@ -291,10 +302,22 @@ export function EscalationTriage({ locale }: EscalationTriageProps) {
 
       {/* Modal / Action Drawer for Case Update */}
       {activeCase ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <Card className="w-full max-w-lg shadow-2xl">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget && !updating) closeModal();
+          }}
+        >
+          <Card
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="case-dialog-title"
+            tabIndex={-1}
+            className="w-full max-w-lg shadow-2xl outline-none"
+          >
             <CardHeader>
-              <CardTitle className="flex items-center justify-between text-base">
+              <CardTitle id="case-dialog-title" className="flex items-center justify-between text-base">
                 <span>Update Triage Case: {activeCase.id}</span>
                 <Badge variant="outline">{activeCase.studentName}</Badge>
               </CardTitle>
@@ -350,8 +373,14 @@ export function EscalationTriage({ locale }: EscalationTriageProps) {
                 </Select>
               </div>
 
+              {error ? (
+                <Alert variant="danger">
+                  <p>{error}</p>
+                </Alert>
+              ) : null}
+
               <div className="flex justify-end gap-2 pt-2">
-                <Button variant="ghost" size="sm" onClick={() => setActiveCase(null)} disabled={updating}>
+                <Button variant="ghost" size="sm" onClick={closeModal} disabled={updating}>
                   Cancel
                 </Button>
                 <Button size="sm" onClick={handleUpdateCase} disabled={updating}>

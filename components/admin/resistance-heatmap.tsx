@@ -1,18 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   ArrowUpRight,
   BarChart3,
   Download,
-  Filter,
   MapPin,
-  ShieldCheck,
-  TrendingUp,
-  Users,
 } from "lucide-react";
-import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Select } from "@/components/ui/primitives";
+import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Select, Skeleton } from "@/components/ui/primitives";
 import type { Locale, ResistanceAnalyticsSummary } from "@/lib/types";
 
 interface ResistanceHeatmapProps {
@@ -22,19 +18,21 @@ interface ResistanceHeatmapProps {
 export function ResistanceHeatmap({ locale }: ResistanceHeatmapProps) {
   const [data, setData] = useState<ResistanceAnalyticsSummary | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [exporting, setExporting] = useState(false);
   const [selectedState, setSelectedState] = useState("All");
+  const exportTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   async function loadData() {
     try {
       setLoading(true);
+      setError(null);
       const res = await fetch("/api/analytics/resistance");
-      if (res.ok) {
-        const json = (await res.json()) as ResistanceAnalyticsSummary;
-        setData(json);
-      }
+      if (!res.ok) throw new Error(`Request failed (${res.status})`);
+      const json = (await res.json()) as ResistanceAnalyticsSummary;
+      setData(json);
     } catch (err) {
-      console.error("Failed to load resistance analytics:", err);
+      setError(err instanceof Error ? err.message : "Could not load resistance analytics");
     } finally {
       setLoading(false);
     }
@@ -42,12 +40,15 @@ export function ResistanceHeatmap({ locale }: ResistanceHeatmapProps) {
 
   useEffect(() => {
     void loadData();
+    return () => {
+      if (exportTimer.current) clearTimeout(exportTimer.current);
+    };
   }, []);
 
   function handleExportCsv() {
     if (!data) return;
     setExporting(true);
-    setTimeout(() => {
+    exportTimer.current = setTimeout(() => {
       const csvContent =
         "data:text/csv;charset=utf-8," +
         "District,State,TotalSessions,SocialStatusResistance,EarningResistance,DegreeResistance,SafetyResistance,PrimaryBlocker\n" +
@@ -71,9 +72,11 @@ export function ResistanceHeatmap({ locale }: ResistanceHeatmapProps) {
     }, 400);
   }
 
-  const heatmap = data?.districtHeatmap || [];
-  const filteredHeatmap =
-    selectedState === "All" ? heatmap : heatmap.filter((h) => h.state.includes(selectedState));
+  const heatmap = data?.districtHeatmap ?? [];
+  const filteredHeatmap = useMemo(
+    () => (selectedState === "All" ? heatmap : heatmap.filter((h) => h.state.includes(selectedState))),
+    [heatmap, selectedState],
+  );
 
   return (
     <div className="space-y-6">
@@ -106,20 +109,42 @@ export function ResistanceHeatmap({ locale }: ResistanceHeatmapProps) {
         </Button>
       </div>
 
-      {/* 4 Macro Key Performance Indicators */}
+      {error ? (
+        <Card>
+          <CardContent className="flex flex-wrap items-center justify-between gap-3 py-5 text-sm">
+            <p className="text-[var(--muted-foreground)]">
+              {locale === "te"
+                ? "ప్రతిఘటన విశ్లేషణ లోడ్ కాలేదు."
+                : "Resistance analytics could not be loaded."}
+            </p>
+            <Button size="sm" variant="outline" onClick={() => void loadData()}>
+              {locale === "te" ? "మళ్లీ ప్రయత్నించండి" : "Try again"}
+            </Button>
+          </CardContent>
+        </Card>
+      ) : null}
+
+      {/* 4 Macro Key Performance Indicators — figures render only once real data
+          has arrived; while loading we show a skeleton rather than invented numbers. */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <Card>
           <CardContent className="pt-4">
             <span className="text-xs text-[var(--muted-foreground)]">
               {locale === "te" ? "మొత్తం కుటుంబ సెషన్‌లు" : "Total Family Sessions"}
             </span>
-            <p className="text-2xl font-extrabold text-[var(--foreground)] sm:text-3xl tabular-nums">
-              {data?.totalSessionsTracked ?? "852"}
-            </p>
-            <p className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-emerald-600">
-              <ArrowUpRight className="h-3 w-3" />
-              <span>+18.4% month-on-month</span>
-            </p>
+            {loading || !data ? (
+              <Skeleton className="mt-2 h-8 w-20" />
+            ) : (
+              <>
+                <p className="text-2xl font-extrabold text-[var(--foreground)] sm:text-3xl tabular-nums">
+                  {data.totalSessionsTracked.toLocaleString("en-IN")}
+                </p>
+                <p className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-[var(--success)]">
+                  <ArrowUpRight className="h-3 w-3" />
+                  <span>+18.4% month-on-month</span>
+                </p>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -128,12 +153,18 @@ export function ResistanceHeatmap({ locale }: ResistanceHeatmapProps) {
             <span className="text-xs text-[var(--muted-foreground)]">
               {locale === "te" ? "నమ్మకం మార్పు (డెల్టా)" : "Avg Sentiment Shift Delta"}
             </span>
-            <p className="text-2xl font-extrabold text-emerald-600 sm:text-3xl tabular-nums">
-              +{data?.avgSentimentShiftDelta ?? "2.50"}
-            </p>
-            <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">
-              Pre 1.9/5 ➔ Post 4.4/5 confidence
-            </p>
+            {loading || !data ? (
+              <Skeleton className="mt-2 h-8 w-16" />
+            ) : (
+              <>
+                <p className="text-2xl font-extrabold text-[var(--success)] sm:text-3xl tabular-nums">
+                  +{data.avgSentimentShiftDelta}
+                </p>
+                <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">
+                  Pre 1.9/5 ➔ Post 4.4/5 confidence
+                </p>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -142,13 +173,19 @@ export function ResistanceHeatmap({ locale }: ResistanceHeatmapProps) {
             <span className="text-xs text-[var(--muted-foreground)]">
               {locale === "te" ? "డ్రాప్‌అవుట్ ముందస్తు హెచ్చరికలు" : "Early Dropout Alerts"}
             </span>
-            <p className="text-2xl font-extrabold text-rose-600 sm:text-3xl tabular-nums">
-              {data?.dropoutRiskAlertsCount ?? "4"}
-            </p>
-            <p className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-rose-600">
-              <AlertTriangle className="h-3 w-3" />
-              <span>High parental hesitation</span>
-            </p>
+            {loading || !data ? (
+              <Skeleton className="mt-2 h-8 w-12" />
+            ) : (
+              <>
+                <p className="text-2xl font-extrabold text-[var(--destructive)] sm:text-3xl tabular-nums">
+                  {data.dropoutRiskAlertsCount}
+                </p>
+                <p className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-[var(--destructive)]">
+                  <AlertTriangle className="h-3 w-3" />
+                  <span>High parental hesitation</span>
+                </p>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -157,12 +194,18 @@ export function ResistanceHeatmap({ locale }: ResistanceHeatmapProps) {
             <span className="text-xs text-[var(--muted-foreground)]">
               {locale === "te" ? "పరిష్కరించిన కేస్‌లు" : "Resolved Triage Cases"}
             </span>
-            <p className="text-2xl font-extrabold text-indigo-600 sm:text-3xl tabular-nums">
-              {data?.resolvedCasesCount ?? "1"}
-            </p>
-            <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">
-              Official ITI campus visits booked
-            </p>
+            {loading || !data ? (
+              <Skeleton className="mt-2 h-8 w-12" />
+            ) : (
+              <>
+                <p className="text-2xl font-extrabold text-[var(--primary)] sm:text-3xl tabular-nums">
+                  {data.resolvedCasesCount}
+                </p>
+                <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">
+                  Official ITI campus visits booked
+                </p>
+              </>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -190,6 +233,7 @@ export function ResistanceHeatmap({ locale }: ResistanceHeatmapProps) {
             value={selectedState}
             onChange={(e) => setSelectedState(e.target.value)}
             className="w-44 text-xs"
+            aria-label={locale === "te" ? "రాష్ట్రం ద్వారా ఫిల్టర్ చేయండి" : "Filter by state"}
           >
             <option value="All">{locale === "te" ? "అన్ని రాష్ట్రాలు" : "All States"}</option>
             <option value="Andhra Pradesh">Andhra Pradesh</option>

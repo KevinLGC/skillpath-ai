@@ -265,6 +265,18 @@ export interface StudentConstraints {
 }
 
 /**
+ * A raw answer as submitted. Lives here rather than in the scoring engine so
+ * pure-data modules (e.g. the demo answers) can reference it without importing
+ * the engine — which would drag the whole seed into any client bundle that
+ * touches them.
+ */
+export interface RawAnswer {
+  questionId: string;
+  /** "3" for scale/single, or an array of option values for multi. */
+  value: string | string[];
+}
+
+/**
  * Preferences are nullable on purpose: a skipped question is "unknown" and is
  * excluded from scoring rather than silently defaulted to a value that would
  * inflate the preference factor.

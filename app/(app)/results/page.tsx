@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CareerCard } from "@/components/career/career-card";
-import { FactorRadar } from "@/components/charts/factor-radar";
+import { FactorRadarLazy } from "@/components/charts/factor-radar-lazy";
 import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, SectionTitle } from "@/components/ui/primitives";
 import { EmptyState, FactorBars, QualityBadge } from "@/components/ui/misc";
 import { currentLocale, getSessionUser } from "@/lib/auth/session";
@@ -70,7 +70,7 @@ export default async function ResultsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6 lg:grid-cols-2">
-          <FactorRadar contributions={top.contributions} locale={locale} />
+          <FactorRadarLazy contributions={top.contributions} locale={locale} />
           <FactorBars contributions={top.contributions} locale={locale} />
         </CardContent>
       </Card>
