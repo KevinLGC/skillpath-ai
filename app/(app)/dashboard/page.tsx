@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Circle, Clock, ListChecks, Route, Share2, Target } from "lucide-react";
 import { CareerCard } from "@/components/career/career-card";
-import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress, SectionTitle } from "@/components/ui/primitives";
+import { Alert, Badge, Button, ButtonLink, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress, SectionTitle } from "@/components/ui/primitives";
 import { EmptyState } from "@/components/ui/misc";
 import { currentLocale } from "@/lib/auth/session";
 import { buildRoadmap } from "@/lib/roadmap";
@@ -74,8 +74,7 @@ export default async function DashboardPage() {
             </div>
             <Progress value={readiness} tone={readiness >= 75 ? "success" : "primary"} />
             <div className="flex flex-wrap gap-2 pt-1">
-              <Link href="/assessment">
-                <Button size="sm" variant={context.assessment ? "outline" : "default"}>
+              <ButtonLink href="/assessment" size="sm" variant={context.assessment ? "outline" : "default"}>
                   <ListChecks className="h-4 w-4" aria-hidden />
                   {context.assessment
                     ? locale === "te"
@@ -84,13 +83,10 @@ export default async function DashboardPage() {
                     : locale === "te"
                       ? "అసెస్‌మెంట్ ప్రారంభించండి"
                       : "Start assessment"}
-                </Button>
-              </Link>
-              <Link href="/profile">
-                <Button size="sm" variant="ghost">
+                </ButtonLink>
+              <ButtonLink href="/profile" size="sm" variant="ghost">
                   {locale === "te" ? "ప్రొఫైల్ చూడండి" : "View profile"}
-                </Button>
-              </Link>
+                </ButtonLink>
             </div>
           </CardContent>
         </Card>
@@ -128,9 +124,7 @@ export default async function DashboardPage() {
               : "Complete the 2–3 minute assessment and your explained matches appear immediately."
           }
           action={
-            <Link href="/assessment" className="mt-2 inline-block">
-              <Button>{locale === "te" ? "ప్రారంభించండి" : "Start now"}</Button>
-            </Link>
+            <ButtonLink href="/assessment" className="mt-2 inline-block">{locale === "te" ? "ప్రారంభించండి" : "Start now"}</ButtonLink>
           }
         />
       ) : (
@@ -159,27 +153,34 @@ export default async function DashboardPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
-              {roadmap.steps.slice(Math.max(0, roadmap.youAreHereIndex - 1), roadmap.youAreHereIndex + 3).map((step, index) => (
-                <div
-                  key={`${step.stage}-${step.title_en}`}
-                  className={
-                    index === 1
-                      ? "rounded-lg border border-[var(--primary)] bg-[var(--accent)] p-3"
-                      : "rounded-lg border border-[var(--border)] p-3"
-                  }
-                >
-                  <p className="font-medium">
-                    {index === 1 ? `${t("roadmap.youAreHere")}: ` : ""}
-                    {step.title_en}
-                  </p>
-                  <p className="text-xs text-[var(--muted-foreground)]">{step.note_en}</p>
-                </div>
-              ))}
-              <Link href={`/roadmap?career=${topCareer.slug}`} className="inline-block pt-2">
-                <Button size="sm" variant="outline">
+              {/* Highlight by absolute step position, not by the position in this
+                  slice — when youAreHereIndex is 0 the slice starts at 0 too, so
+                  the relative index would mark the wrong row. */}
+              {roadmap.steps
+                .slice(Math.max(0, roadmap.youAreHereIndex - 1), roadmap.youAreHereIndex + 3)
+                .map((step, index) => {
+                  const stepIndex = Math.max(0, roadmap.youAreHereIndex - 1) + index;
+                  const isCurrent = stepIndex === roadmap.youAreHereIndex;
+                  return (
+                    <div
+                      key={`${step.stage}-${step.title_en}`}
+                      className={
+                        isCurrent
+                          ? "rounded-lg border border-[var(--primary)] bg-[var(--accent)] p-3"
+                          : "rounded-lg border border-[var(--border)] p-3"
+                      }
+                    >
+                      <p className="font-medium">
+                        {isCurrent ? `${t("roadmap.youAreHere")}: ` : ""}
+                        {step.title_en}
+                      </p>
+                      <p className="text-xs text-[var(--muted-foreground)]">{step.note_en}</p>
+                    </div>
+                  );
+                })}
+              <ButtonLink href={`/roadmap?career=${topCareer.slug}`} className="inline-block pt-2" size="sm" variant="outline">
                   {locale === "te" ? "పూర్తి రోడ్‌మ్యాప్" : "Full roadmap"} <ArrowRight className="h-3 w-3" aria-hidden />
-                </Button>
-              </Link>
+                </ButtonLink>
             </CardContent>
           </Card>
 
@@ -203,11 +204,9 @@ export default async function DashboardPage() {
                     : "Family members do not need an account, and you can revoke the link at any time."}
                 </p>
               </Alert>
-              <Link href={`/family${topCareer ? `?career=${topCareer.slug}` : ""}`}>
-                <Button size="sm">
+              <ButtonLink href={`/family${topCareer ? `?career=${topCareer.slug}` : ""}`} size="sm">
                   {locale === "te" ? "కుటుంబ వీక్షణ తెరవండి" : "Open family view"} <ArrowRight className="h-3 w-3" aria-hidden />
-                </Button>
-              </Link>
+                </ButtonLink>
             </CardContent>
           </Card>
         </div>

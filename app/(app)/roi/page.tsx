@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, Award, FileText, MessageSquareQuote } from "lucide-react";
 import { RoiSimulator } from "@/components/family/roi-simulator";
-import { Button } from "@/components/ui/primitives";
+import { Button, ButtonLink } from "@/components/ui/primitives";
 import { currentLocale } from "@/lib/auth/session";
 
 export const metadata = {
@@ -38,18 +38,14 @@ export default async function RoiPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Link href="/family">
-            <Button variant="outline" size="sm">
+          <ButtonLink href="/family" variant="outline" size="sm">
               <Award className="h-4 w-4" />
               {locale === "te" ? "విశ్వాస పత్రం" : "Trust Certificate"}
-            </Button>
-          </Link>
-          <Link href="/ai-counsellor">
-            <Button variant="outline" size="sm">
+            </ButtonLink>
+          <ButtonLink href="/ai-counsellor" variant="outline" size="sm">
               <MessageSquareQuote className="h-4 w-4" />
               {locale === "te" ? "ఏఐ కౌన్సెలర్" : "AI Counsellor"}
-            </Button>
-          </Link>
+            </ButtonLink>
         </div>
       </div>
 

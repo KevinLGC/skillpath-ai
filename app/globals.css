@@ -119,4 +119,23 @@
   body {
     background: white;
   }
+
+  /* When the trust certificate is on the page, printing should yield the
+     certificate and nothing else — the surrounding ledger, controls and chat
+     are hidden wholesale rather than tagged one by one, which is easy to get
+     wrong as the page grows. */
+  body:has(#printable-trust-card) * {
+    visibility: hidden;
+  }
+  body:has(#printable-trust-card) #printable-trust-card,
+  body:has(#printable-trust-card) #printable-trust-card * {
+    visibility: visible;
+  }
+  body:has(#printable-trust-card) #printable-trust-card {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    border-width: 2px;
+    box-shadow: none;
+  }
 }

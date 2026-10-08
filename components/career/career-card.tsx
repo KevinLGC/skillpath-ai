@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Info } from "lucide-react";
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Progress } from "@/components/ui/primitives";
+import { Badge, Button, ButtonLink, Card, CardContent, CardHeader, CardTitle, Progress } from "@/components/ui/primitives";
 import { QualityBadge } from "@/components/ui/misc";
 import { getCareer } from "@/lib/data";
 import type { Locale, Recommendation } from "@/lib/types";
@@ -73,21 +73,15 @@ export function CareerCard({
         ) : null}
 
         <div className="mt-auto flex flex-wrap gap-2">
-          <Link href={`/careers/${career.slug}`}>
-            <Button size="sm" variant="outline">
+          <ButtonLink href={`/careers/${career.slug}`} size="sm" variant="outline">
               {locale === "te" ? "వివరాలు" : "Details"}
-            </Button>
-          </Link>
-          <Link href={`/roadmap?career=${career.slug}`}>
-            <Button size="sm" variant="ghost">
+            </ButtonLink>
+          <ButtonLink href={`/roadmap?career=${career.slug}`} size="sm" variant="ghost">
               {locale === "te" ? "రోడ్‌మ్యాప్" : "Roadmap"}
-            </Button>
-          </Link>
-          <Link href={`/compare?a=${career.slug}`}>
-            <Button size="sm" variant="ghost">
+            </ButtonLink>
+          <ButtonLink href={`/compare?a=${career.slug}`} size="sm" variant="ghost">
               {locale === "te" ? "పోల్చండి" : "Compare"} <ArrowRight className="h-3 w-3" aria-hidden />
-            </Button>
-          </Link>
+            </ButtonLink>
         </div>
       </CardContent>
     </Card>

@@ -2,18 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Building2, ExternalLink, GraduationCap, HardHat, MapPin, TrendingUp } from "lucide-react";
 import { SiteFooter, SiteHeader } from "@/components/marketing/chrome";
-import {
-  Alert,
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  Progress,
-  SectionTitle,
-} from "@/components/ui/primitives";
+import { Alert, Badge, Button, ButtonLink, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress, SectionTitle } from "@/components/ui/primitives";
 import { FactorBars, QualityBadge, SourceList } from "@/components/ui/misc";
 import { currentLocale, getSessionUser } from "@/lib/auth/session";
 import { coursesForCareer, documentsForCareer, getCareer, jobsForCareer, localOpportunities } from "@/lib/data";
@@ -47,8 +36,7 @@ export default async function CareerDetailPage({ params }: { params: Promise<{ s
   const jobs = jobsForCareer(slug);
   const documents = documentsForCareer(slug).slice(0, 4);
 
-  const district = fit ? undefined : undefined;
-  const opportunities = localOpportunities({ careerSlug: slug, district });
+  const opportunities = localOpportunities({ careerSlug: slug });
 
   const sources: AnswerSource[] = documents.map((doc, index) => ({
     marker: `S${index + 1}`,
@@ -107,24 +95,16 @@ export default async function CareerDetailPage({ params }: { params: Promise<{ s
                   </div>
                   <p className="text-xs text-[var(--muted-foreground)]">{fit.recommendation.explanation.confidenceNote}</p>
                   <div className="flex flex-wrap gap-2">
-                    <Link href={`/compare?a=${career.slug}`}>
-                      <Button variant="outline" size="sm">
+                    <ButtonLink href={`/compare?a=${career.slug}`} variant="outline" size="sm">
                         {locale === "te" ? "పోల్చండి" : "Compare"}
-                      </Button>
-                    </Link>
-                    <Link href={`/roadmap?career=${career.slug}`}>
-                      <Button variant="outline" size="sm">
+                      </ButtonLink>
+                    <ButtonLink href={`/roadmap?career=${career.slug}`} variant="outline" size="sm">
                         {locale === "te" ? "రోడ్‌మ్యాప్" : "Roadmap"}
-                      </Button>
-                    </Link>
-                    <Link href={`/skill-gap?career=${career.slug}`}>
-                      <Button variant="outline" size="sm">
+                      </ButtonLink>
+                    <ButtonLink href={`/skill-gap?career=${career.slug}`} variant="outline" size="sm">
                         {locale === "te" ? "నైపుణ్య లోటు" : "Skill gap"}
-                      </Button>
-                    </Link>
-                    <Link href={`/family?career=${career.slug}`}>
-                      <Button size="sm">{locale === "te" ? "కుటుంబంతో పంచుకోండి" : "Share with family"}</Button>
-                    </Link>
+                      </ButtonLink>
+                    <ButtonLink href={`/family?career=${career.slug}`} size="sm">{locale === "te" ? "కుటుంబంతో పంచుకోండి" : "Share with family"}</ButtonLink>
                   </div>
                 </CardContent>
               </Card>
@@ -135,9 +115,7 @@ export default async function CareerDetailPage({ params }: { params: Promise<{ s
                     ? "మీ సరిపోలిక స్కోరు, కారణాలు మరియు నైపుణ్య లోటు చూడటానికి అసెస్‌మెంట్ పూర్తి చేయండి."
                     : "Finish the assessment to see your fit score, the factors behind it and your skill gap for this pathway."}
                 </p>
-                <Link className="mt-2 inline-block" href="/assessment">
-                  <Button size="sm">{locale === "te" ? "అసెస్‌మెంట్ ప్రారంభించండి" : "Start the assessment"}</Button>
-                </Link>
+                <ButtonLink className="mt-2 inline-block" href="/assessment" size="sm">{locale === "te" ? "అసెస్‌మెంట్ ప్రారంభించండి" : "Start the assessment"}</ButtonLink>
               </Alert>
             )}
 

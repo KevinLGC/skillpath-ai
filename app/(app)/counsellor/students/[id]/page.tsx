@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { NotesEditor } from "@/components/counsellor/notes-editor";
-import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress } from "@/components/ui/primitives";
+import { Badge, Button, ButtonLink, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress } from "@/components/ui/primitives";
 import { FactorBars } from "@/components/ui/misc";
 import { currentLocale, getSessionUser } from "@/lib/auth/session";
 import { getCareer } from "@/lib/data";
@@ -110,11 +110,9 @@ export default async function CounsellorStudentPage({ params }: { params: Promis
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-                <Link className="mt-2 inline-block" href={`/careers/${rec.careerSlug}`}>
-                  <Button size="sm" variant="ghost">
+                <ButtonLink className="mt-2 inline-block" href={`/careers/${rec.careerSlug}`} size="sm" variant="ghost">
                     {locale === "te" ? "వృత్తి వివరాలు" : "Career detail"}
-                  </Button>
-                </Link>
+                  </ButtonLink>
               </div>
             );
           })}

@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress } from "@/components/ui/primitives";
+import { Alert, Badge, Button, ButtonLink, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress } from "@/components/ui/primitives";
 import { EmptyState } from "@/components/ui/misc";
 import { currentLocale } from "@/lib/auth/session";
 import { getInterestName, getSkillName } from "@/lib/data";
@@ -24,9 +23,7 @@ export default async function ProfilePage() {
               : "Your structured profile — the exact input the matching engine uses — appears here after the assessment."
           }
           action={
-            <Link href="/assessment" className="mt-2 inline-block">
-              <Button size="sm">{t("home.hero.cta")}</Button>
-            </Link>
+            <ButtonLink href="/assessment" className="mt-2 inline-block" size="sm">{t("home.hero.cta")}</ButtonLink>
           }
         />
       </div>
@@ -178,16 +175,12 @@ export default async function ProfilePage() {
                 : "You can change any answer and re-run the engine. Family sharing happens only with your consent, through expiring links you can revoke. Personal identifiers are never sent to the AI model."}
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <Link href="/assessment">
-                <Button size="sm" variant="outline">
+              <ButtonLink href="/assessment" size="sm" variant="outline">
                   {locale === "te" ? "సమాధానాలు మార్చండి" : "Change my answers"}
-                </Button>
-              </Link>
-              <Link href="/family">
-                <Button size="sm" variant="ghost">
+                </ButtonLink>
+              <ButtonLink href="/family" size="sm" variant="ghost">
                   {locale === "te" ? "షేరింగ్ నిర్వహణ" : "Manage sharing"}
-                </Button>
-              </Link>
+                </ButtonLink>
             </div>
           </Alert>
         </div>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/primitives";
+import { Badge, Button, ButtonLink, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/primitives";
 import { QualityBadge } from "@/components/ui/misc";
 import { currentLocale, getSessionUser } from "@/lib/auth/session";
 import { careers, coursesForCareer, documentsForCareer, jobsForCareer } from "@/lib/data";
@@ -89,11 +89,9 @@ export default async function AdminCareersPage() {
           <p>• Every assessment question must have a Telugu translation before it can ship.</p>
           <p>• Illustrative figures cannot render without a provenance badge — the UI requires the label.</p>
           <p className="pt-2">
-            <Link href="/resources">
-              <Button size="sm" variant="outline">
+            <ButtonLink href="/resources" size="sm" variant="outline">
                 Review the knowledge base
-              </Button>
-            </Link>
+              </ButtonLink>
           </p>
         </CardContent>
       </Card>

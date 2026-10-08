@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/primitives";
+import { Alert, Badge, Button, ButtonLink, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/primitives";
 import { QualityBadge } from "@/components/ui/misc";
 import { ResistanceHeatmap } from "@/components/admin/resistance-heatmap";
 import { currentLocale, getSessionUser } from "@/lib/auth/session";
@@ -138,11 +137,9 @@ export default async function AdminPage() {
               </span>
             </div>
           ))}
-          <Link className="inline-block pt-2" href="/admin/careers">
-            <Button size="sm" variant="outline">
+          <ButtonLink className="inline-block pt-2" href="/admin/careers" size="sm" variant="outline">
               Manage career content
-            </Button>
-          </Link>
+            </ButtonLink>
         </CardContent>
       </Card>
     </div>

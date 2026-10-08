@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Copy, Link2, Loader2, ShieldCheck, Trash2 } from "lucide-react";
 import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Select } from "@/components/ui/primitives";
+import { formatDate } from "@/lib/utils/format";
 import type { Locale } from "@/lib/types";
 
 interface LinkRow {
@@ -44,32 +45,50 @@ export function SharePanel({
   async function create() {
     setBusy(true);
     setError(null);
-    const response = await fetch("/api/share", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ careerSlugs: careerSlug ? [careerSlug] : [], scope: "family_view", days }),
-    });
-    const body = (await response.json().catch(() => ({}))) as { error?: string; link?: { url: string } };
-    if (!response.ok) {
-      setError(body.error ?? "Could not create the link");
+    try {
+      const response = await fetch("/api/share", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ careerSlugs: careerSlug ? [careerSlug] : [], scope: "family_view", days }),
+      });
+      const body = (await response.json().catch(() => ({}))) as { error?: string; link?: { url: string } };
+      if (!response.ok) {
+        setError(body.error ?? "Could not create the link");
+        return;
+      }
+      await load();
+      if (body.link?.url) {
+        await navigator.clipboard?.writeText(body.link.url).catch(() => undefined);
+        setCopied(body.link.url);
+      }
+    } catch {
+      setError("Network problem — the link was not created. Try again.");
+    } finally {
       setBusy(false);
-      return;
-    }
-    setBusy(false);
-    await load();
-    if (body.link?.url) {
-      await navigator.clipboard?.writeText(body.link.url).catch(() => undefined);
-      setCopied(body.link.url);
     }
   }
 
   async function revoke(id: string) {
-    await fetch("/api/share", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-    await load();
+    if (busy) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const response = await fetch("/api/share", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      if (!response.ok) {
+        const body = (await response.json().catch(() => ({}))) as { error?: string };
+        setError(body.error ?? "Could not revoke the link. Try again.");
+        return;
+      }
+      await load();
+    } catch {
+      setError("Network problem — the link was not revoked. Try again.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   const active = links.filter((link) => !link.revokedAt && new Date(link.expiresAt) > new Date());
@@ -130,7 +149,7 @@ export function SharePanel({
                 <div className="min-w-0">
                   <p className="truncate font-mono text-xs">/share/{link.token.slice(0, 12)}…</p>
                   <p className="text-xs text-[var(--muted-foreground)]">
-                    {locale === "te" ? "గడువు" : "Expires"} {new Date(link.expiresAt).toLocaleDateString()} · {link.scope}
+                    {locale === "te" ? "గడువు" : "Expires"} {formatDate(link.expiresAt)} · {link.scope}
                   </p>
                 </div>
                 <div className="flex gap-2">
@@ -145,7 +164,22 @@ export function SharePanel({
                     <Copy className="h-3 w-3" aria-hidden />
                     {locale === "te" ? "కాపీ" : "Copy"}
                   </Button>
-                  <Button size="sm" variant="ghost" onClick={() => void revoke(link.id)}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    disabled={busy}
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          locale === "te"
+                            ? "ఈ లింక్‌ను రద్దు చేయాలా? కుటుంబ సభ్యులు ఇకపై తెరవలేరు."
+                            : "Revoke this link? Family members will no longer be able to open it.",
+                        )
+                      ) {
+                        void revoke(link.id);
+                      }
+                    }}
+                  >
                     <Trash2 className="h-3 w-3" aria-hidden />
                     {locale === "te" ? "రద్దు" : "Revoke"}
                   </Button>

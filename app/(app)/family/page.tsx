@@ -1,25 +1,14 @@
-import Link from "next/link";
 import { GraduationCap, Info, Route, TrendingUp } from "lucide-react";
 import { CounsellorChat } from "@/components/ai/counsellor-chat";
 import { CostSimulator } from "@/components/family/cost-simulator";
 import { ReportGenerator } from "@/components/family/report-button";
 import { SharePanel } from "@/components/family/share-panel";
 import { TrustCertificate } from "@/components/family/trust-certificate";
-import {
-  Alert,
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  Progress,
-  SectionTitle,
-} from "@/components/ui/primitives";
+import { Alert, Badge, Button, ButtonLink, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress, SectionTitle } from "@/components/ui/primitives";
 import { EmptyState, QualityBadge } from "@/components/ui/misc";
 import { currentLocale } from "@/lib/auth/session";
 import { coursesForCareer, documentsForCareer, getCareer, jobsForCareer } from "@/lib/data";
+import { VERIFIED_TRADE_OUTCOMES, VERIFIED_TRAINING_PROVIDERS } from "@/lib/data/trade-outcomes";
 import { roadmapTimeline } from "@/lib/roadmap";
 import { buildRoadmap } from "@/lib/roadmap";
 import { estimatedTrainingCost, LIVING_COST_ESTIMATE_INR, recommendationFor } from "@/lib/recommendation";
@@ -47,9 +36,7 @@ export default async function FamilyPage({ searchParams }: { searchParams: Promi
               : "Once the student completes the assessment, this page explains the chosen pathway in plain language for the family."
           }
           action={
-            <Link href="/assessment" className="mt-2 inline-block">
-              <Button size="sm">{t("home.hero.cta")}</Button>
-            </Link>
+            <ButtonLink href="/assessment" className="mt-2 inline-block" size="sm">{t("home.hero.cta")}</ButtonLink>
           }
         />
       </div>
@@ -287,27 +274,30 @@ export default async function FamilyPage({ searchParams }: { searchParams: Promi
                 : "Simulate cash flow, live stipends, lateral entry into Engineering Diplomas, and medical coverage with speech narration."}
             </p>
           </div>
-          <Link href="/roi" className="shrink-0">
-            <Button size="md" className="gap-2">
+          <ButtonLink href="/roi" size="md" className="shrink-0 gap-2">
               <TrendingUp className="h-4 w-4" />
               {locale === "te" ? "సిమ్యులేటర్ తెరవండి" : "Open ROI Simulator"}
-            </Button>
-          </Link>
+            </ButtonLink>
         </CardContent>
       </Card>
 
       {/* Family Vocational Trust Certificate */}
       <div id="certificate" className="space-y-3 pt-4">
-        <SectionTitle hint={locale === "te" ? "బంధువులు మరియు సమాజం కోసం అధికారిక ధృవీకరణ" : "Social proof and legal guarantees for extended family"}>
-          {locale === "te" ? "కుటుంబ వృత్తి నైపుణ్య విశ్వాస పత్రం" : "Family Vocational Trust Certificate"}
-        </SectionTitle>
-        <p className="text-xs text-[var(--muted-foreground)]">
-          {locale === "te"
-            ? "సమాజంలో 'మిస్త్రీ' లేదా తక్కువ పని అనే భావనను తొలగించడానికి మరియు వాట్సాప్‌లో బంధువులతో పంచుకోవడానికి అధికారిక NCVT & NEP 2020 సర్టిఫికేట్."
-            : "Refute social stigma with verifiable NSQF/NCVT credentials, 3-year salary progression, and 1-click WhatsApp sharing for relatives."}
-        </p>
+        <div className="no-print space-y-3">
+          <SectionTitle hint={locale === "te" ? "బంధువులు మరియు సమాజం కోసం అధికారిక ధృవీకరణ" : "Social proof and legal guarantees for extended family"}>
+            {locale === "te" ? "కుటుంబ వృత్తి నైపుణ్య విశ్వాస పత్రం" : "Family Vocational Trust Certificate"}
+          </SectionTitle>
+          <p className="text-xs text-[var(--muted-foreground)]">
+            {locale === "te"
+              ? "సమాజంలో 'మిస్త్రీ' లేదా తక్కువ పని అనే భావనను తొలగించడానికి మరియు వాట్సాప్‌లో బంధువులతో పంచుకోవడానికి అధికారిక NCVT & NEP 2020 సర్టిఫికేట్."
+              : "Refute social stigma with verifiable NSQF/NCVT credentials, 3-year salary progression, and 1-click WhatsApp sharing for relatives."}
+          </p>
+        </div>
         <TrustCertificate
           locale={locale}
+          trades={VERIFIED_TRADE_OUTCOMES}
+          providers={VERIFIED_TRAINING_PROVIDERS}
+          issuedAt={new Date().toISOString()}
           defaultStudentName={context.studentName || (locale === "te" ? "రాహుల్ వర్మ" : "Rahul Varma")}
           defaultDistrict={context.profile.constraints.district || "Visakhapatnam"}
         />
@@ -317,27 +307,19 @@ export default async function FamilyPage({ searchParams }: { searchParams: Promi
         {locale === "te" ? "తదుపరి అడుగు" : "Next step"}
       </SectionTitle>
       <div className="flex flex-wrap gap-2">
-        <Link href="/roi">
-          <Button variant="default" size="sm">
+        <ButtonLink href="/roi" variant="default" size="sm">
             <TrendingUp className="h-4 w-4" />
             {locale === "te" ? "ROI సిమ్యులేటర్" : "3-Yr ROI Simulator"}
-          </Button>
-        </Link>
-        <Link href={`/compare?a=${career.slug}`}>
-          <Button variant="outline" size="sm">
+          </ButtonLink>
+        <ButtonLink href={`/compare?a=${career.slug}`} variant="outline" size="sm">
             {locale === "te" ? "ఇతర మార్గాలతో పోల్చండి" : "Compare with other pathways"}
-          </Button>
-        </Link>
-        <Link href={`/roadmap?career=${career.slug}`}>
-          <Button variant="outline" size="sm">
+          </ButtonLink>
+        <ButtonLink href={`/roadmap?career=${career.slug}`} variant="outline" size="sm">
             {locale === "te" ? "పూర్తి రోడ్‌మ్యాప్" : "Full roadmap"}
-          </Button>
-        </Link>
-        <Link href="/ai-counsellor">
-          <Button variant="ghost" size="sm">
+          </ButtonLink>
+        <ButtonLink href="/ai-counsellor" variant="ghost" size="sm">
             {locale === "te" ? "ఏఐ కౌన్సెలర్" : "AI counsellor"}
-          </Button>
-        </Link>
+          </ButtonLink>
       </div>
     </div>
   );

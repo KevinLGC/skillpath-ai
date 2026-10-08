@@ -1,5 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import type { ButtonHTMLAttributes, HTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
+import Link from "next/link";
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, HTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
 import { cn } from "@/lib/utils/cn";
 
 /* ------------------------------------ button ------------------------------------ */
@@ -32,6 +33,26 @@ export interface ButtonProps
 
 export function Button({ className, variant, size, ...props }: ButtonProps) {
   return <button className={cn(buttonVariants({ variant, size }), className)} {...props} />;
+}
+
+export interface ButtonLinkProps
+  extends AnchorHTMLAttributes<HTMLAnchorElement>,
+    VariantProps<typeof buttonVariants> {
+  href: string;
+}
+
+/**
+ * A link that looks like a button. `<Link><Button/></Link>` nests an interactive
+ * element inside another one, which is invalid HTML and breaks keyboard and
+ * screen-reader navigation — this renders a single `<a>` with the button styles.
+ */
+export function ButtonLink({ className, variant, size, href, ...props }: ButtonLinkProps) {
+  return <Link href={href} className={cn(buttonVariants({ variant, size }), className)} {...props} />;
+}
+
+/** Same idea for a plain `<a>` — external URLs or `target="_blank"` links. */
+export function ButtonAnchor({ className, variant, size, ...props }: AnchorHTMLAttributes<HTMLAnchorElement> & VariantProps<typeof buttonVariants>) {
+  return <a className={cn(buttonVariants({ variant, size }), className)} {...props} />;
 }
 
 /* ------------------------------------- card ------------------------------------- */

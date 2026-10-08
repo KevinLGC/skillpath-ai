@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { SiteFooter, SiteHeader } from "@/components/marketing/chrome";
-import { Alert, Button, Card, CardContent, CardHeader, CardTitle } from "@/components/ui/primitives";
+import { Alert, Button, ButtonLink, Card, CardContent, CardHeader, CardTitle } from "@/components/ui/primitives";
 import { currentLocale, getSessionUser } from "@/lib/auth/session";
 import { DEFAULT_WEIGHTS, ENGINE_VERSION, FACTOR_LABELS } from "@/lib/recommendation";
 import { createTranslator } from "@/lib/i18n/messages";
@@ -116,14 +115,10 @@ export default async function HowItWorksPage() {
           </Card>
 
           <div className="flex flex-wrap gap-3">
-            <Link href={user ? "/assessment" : "/login"}>
-              <Button size="lg">{t("home.hero.cta")}</Button>
-            </Link>
-            <Link href="/resources">
-              <Button size="lg" variant="outline">
+            <ButtonLink href={user ? "/assessment" : "/login"} size="lg">{t("home.hero.cta")}</ButtonLink>
+            <ButtonLink href="/resources" size="lg" variant="outline">
                 {locale === "te" ? "వనరులు చూడండి" : "See the knowledge base"}
-              </Button>
-            </Link>
+              </ButtonLink>
           </div>
         </div>
       </main>

@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress } from "@/components/ui/primitives";
+import { Alert, Badge, Button, ButtonLink, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress } from "@/components/ui/primitives";
 import { EmptyState } from "@/components/ui/misc";
 import { currentLocale } from "@/lib/auth/session";
 import { coursesForCareer, getCareer } from "@/lib/data";
@@ -28,9 +27,7 @@ export default async function SkillGapPage({ searchParams }: { searchParams: Pro
               : "Skill gaps need your self-rated skills. Without them we show nothing rather than inventing a gap."
           }
           action={
-            <Link href="/assessment" className="mt-2 inline-block">
-              <Button size="sm">{t("home.hero.cta")}</Button>
-            </Link>
+            <ButtonLink href="/assessment" className="mt-2 inline-block" size="sm">{t("home.hero.cta")}</ButtonLink>
           }
         />
       </div>
@@ -138,11 +135,9 @@ export default async function SkillGapPage({ searchParams }: { searchParams: Pro
                   ? "అసెస్‌మెంట్ మళ్లీ చేసి ఆ నైపుణ్యాలను రేట్ చేయండి — అప్పుడు ప్రణాళిక మరింత కచ్చితంగా ఉంటుంది."
                   : "Retake the assessment and rate them to make this plan more precise. Until then they stay excluded rather than counted as a gap."}
               </p>
-              <Link href="/assessment" className="mt-2 inline-block">
-                <Button size="sm" variant="outline">
+              <ButtonLink href="/assessment" className="mt-2 inline-block" size="sm" variant="outline">
                   {locale === "te" ? "అసెస్‌మెంట్ అప్‌డేట్" : "Update answers"}
-                </Button>
-              </Link>
+                </ButtonLink>
             </Alert>
           ) : null}
         </div>

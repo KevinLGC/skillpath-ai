@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ComparePicker } from "@/components/career/compare-picker";
-import { Alert, Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/primitives";
+import { Alert, Button, ButtonLink, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/primitives";
 import { EmptyState, QualityBadge } from "@/components/ui/misc";
 import { currentLocale } from "@/lib/auth/session";
 import { coursesForCareer, getCareer, getSkillName } from "@/lib/data";
@@ -55,9 +55,7 @@ export default async function ComparePage({
                 : "Complete the assessment to compare your matched pathways, or open any career page and choose Compare."
             }
             action={
-              <Link href="/assessment" className="mt-2 inline-block">
-                <Button size="sm">{t("home.hero.cta")}</Button>
-              </Link>
+              <ButtonLink href="/assessment" className="mt-2 inline-block" size="sm">{t("home.hero.cta")}</ButtonLink>
             }
           />
         )}
@@ -206,14 +204,10 @@ export default async function ComparePage({
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Link href="/family">
-          <Button size="sm">{locale === "te" ? "కుటుంబ వీక్షణలో చర్చించండి" : "Discuss in the family view"}</Button>
-        </Link>
-        <Link href="/results">
-          <Button size="sm" variant="outline">
+        <ButtonLink href="/family" size="sm">{locale === "te" ? "కుటుంబ వీక్షణలో చర్చించండి" : "Discuss in the family view"}</ButtonLink>
+        <ButtonLink href="/results" size="sm" variant="outline">
             {locale === "te" ? "అన్ని సూచనలు" : "Back to all matches"}
-          </Button>
-        </Link>
+          </ButtonLink>
       </div>
     </div>
   );

@@ -4,7 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle2, Loader2, MessageSquarePlus } from "lucide-react";
 import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Textarea } from "@/components/ui/primitives";
+import { formatDateTime } from "@/lib/utils/format";
 import type { CounsellorNote, Locale } from "@/lib/types";
+
+/**
+ * A review is recorded as a note so it is attributable, timestamped and stored
+ * through the same path as any other counsellor entry — no separate schema, and
+ * it survives a reload on both the memory and Supabase drivers.
+ */
+const REVIEW_MARKER = "✓ Marked as reviewed";
 
 /** Counsellor notes: the human review layer over the AI recommendations. */
 export function NotesEditor({
@@ -23,26 +31,54 @@ export function NotesEditor({
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [reviewed, setReviewed] = useState(false);
+  const [reviewed, setReviewed] = useState(initialNotes.some((note) => note.note === REVIEW_MARKER));
+
+  /** POST one note and append it locally; returns whether it was stored. */
+  async function postNote(text: string): Promise<boolean> {
+    const response = await fetch("/api/notes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ studentId, note: text, recommendationId }),
+    });
+    const body = (await response.json().catch(() => ({}))) as { error?: string; note?: CounsellorNote };
+    if (!response.ok || !body.note) {
+      setError(body.error ?? "Could not save the note");
+      return false;
+    }
+    setNotes((previous) => [...previous, body.note as CounsellorNote]);
+    return true;
+  }
 
   async function save() {
     if (draft.trim().length < 2) return;
     setBusy(true);
     setError(null);
-    const response = await fetch("/api/notes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ studentId, note: draft.trim(), recommendationId }),
-    });
-    const body = (await response.json().catch(() => ({}))) as { error?: string; note?: CounsellorNote };
-    setBusy(false);
-    if (!response.ok || !body.note) {
-      setError(body.error ?? "Could not save the note");
-      return;
+    try {
+      if (await postNote(draft.trim())) {
+        setDraft("");
+        router.refresh();
+      }
+    } catch {
+      setError("Network problem — the note was not saved. Try again.");
+    } finally {
+      setBusy(false);
     }
-    setNotes((previous) => [...previous, body.note as CounsellorNote]);
-    setDraft("");
-    router.refresh();
+  }
+
+  async function markReviewed() {
+    if (reviewed) return;
+    setBusy(true);
+    setError(null);
+    try {
+      if (await postNote(REVIEW_MARKER)) {
+        setReviewed(true);
+        router.refresh();
+      }
+    } catch {
+      setError("Network problem — the review was not saved. Try again.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
@@ -66,7 +102,7 @@ export function NotesEditor({
               <li key={note.id} className="rounded-lg border border-[var(--border)] p-3 text-sm">
                 <p>{note.note}</p>
                 <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-                  {note.counsellorId} · {new Date(note.createdAt).toLocaleString()}
+                  {note.counsellorId} · {formatDateTime(note.createdAt)}
                 </p>
               </li>
             ))}
@@ -92,7 +128,7 @@ export function NotesEditor({
               {busy ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : <MessageSquarePlus className="h-4 w-4" aria-hidden />}
               {locale === "te" ? "నోట్ జోడించండి" : "Add note"}
             </Button>
-            <Button variant="outline" onClick={() => setReviewed(true)} disabled={reviewed}>
+            <Button variant="outline" onClick={() => void markReviewed()} disabled={reviewed || busy}>
               <CheckCircle2 className="h-4 w-4" aria-hidden />
               {locale === "te" ? "సమీక్షించినట్టు గుర్తించండి" : "Mark as reviewed"}
             </Button>

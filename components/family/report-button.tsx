@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FileText, Link2, Loader2, Printer } from "lucide-react";
-import { Alert, Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/primitives";
+import { Alert, Button, ButtonAnchor, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/primitives";
 import type { Locale } from "@/lib/types";
 
 /**
@@ -27,24 +27,29 @@ export function ReportGenerator({
   async function generate(shareWithFamily: boolean) {
     setBusy(true);
     setError(null);
-    const response = await fetch("/api/report", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ careerSlug, shareWithFamily, locale }),
-    });
-    const body = (await response.json().catch(() => ({}))) as {
-      error?: string;
-      detail?: string;
-      reportId?: string;
-      shareUrl?: string | null;
-    };
-    setBusy(false);
-    if (!response.ok || !body.reportId) {
-      setError(body.detail ?? body.error ?? "Could not generate the report.");
-      return;
+    try {
+      const response = await fetch("/api/report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ careerSlug, shareWithFamily, locale }),
+      });
+      const body = (await response.json().catch(() => ({}))) as {
+        error?: string;
+        detail?: string;
+        reportId?: string;
+        shareUrl?: string | null;
+      };
+      if (!response.ok || !body.reportId) {
+        setError(body.detail ?? body.error ?? "Could not generate the report.");
+        return;
+      }
+      setResult({ reportId: body.reportId, shareUrl: body.shareUrl ?? null });
+      router.refresh();
+    } catch {
+      setError("Network problem — the report was not generated. Try again.");
+    } finally {
+      setBusy(false);
     }
-    setResult({ reportId: body.reportId, shareUrl: body.shareUrl ?? null });
-    router.refresh();
   }
 
   return (
@@ -77,18 +82,14 @@ export function ReportGenerator({
         {result ? (
           <Alert variant="success" title={locale === "te" ? "నివేదిక సిద్ధమైంది" : "Report generated"}>
             <div className="flex flex-wrap gap-2 pt-2">
-              <a href={`/report/${result.reportId}`} target="_blank" rel="noreferrer">
-                <Button size="sm" variant="outline">
-                  <Printer className="h-3 w-3" aria-hidden />
-                  {locale === "te" ? "నివేదిక తెరవండి / ప్రింట్" : "Open / print report"}
-                </Button>
-              </a>
+              <ButtonAnchor href={`/report/${result.reportId}`} target="_blank" rel="noreferrer" size="sm" variant="outline">
+                <Printer className="h-3 w-3" aria-hidden />
+                {locale === "te" ? "నివేదిక తెరవండి / ప్రింట్" : "Open / print report"}
+              </ButtonAnchor>
               {result.shareUrl ? (
-                <a href={result.shareUrl} target="_blank" rel="noreferrer">
-                  <Button size="sm" variant="ghost">
-                    {locale === "te" ? "కుటుంబ లింక్" : "Family link"}
-                  </Button>
-                </a>
+                <ButtonAnchor href={result.shareUrl} target="_blank" rel="noreferrer" size="sm" variant="ghost">
+                  {locale === "te" ? "కుటుంబ లింక్" : "Family link"}
+                </ButtonAnchor>
               ) : null}
             </div>
           </Alert>

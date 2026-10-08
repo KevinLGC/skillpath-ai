@@ -24,6 +24,8 @@ import { speechService } from "@/lib/utils/speech";
 import { cn } from "@/lib/utils/cn";
 
 interface ChatMessage {
+  /** Stable identity so re-renders never re-key a message to a different one. */
+  id: string;
   role: "user" | "assistant";
   content: string;
   grounding?: GroundingLevel | null;
@@ -31,6 +33,9 @@ interface ChatMessage {
   mode?: "llm" | "retrieval" | null;
   uncertainty?: string | null;
 }
+
+let messageSequence = 0;
+const nextMessageId = () => `m${++messageSequence}`;
 
 const GROUNDING_COPY: Record<GroundingLevel, { en: string; te: string; variant: "success" | "warning" | "accent" | "muted" }> = {
   sourced: { en: "From sources", te: "మూలాల నుండి", variant: "success" },
@@ -95,6 +100,7 @@ export function CounsellorChat({
   const [showEscalation, setShowEscalation] = useState(false);
   const [escalating, setEscalating] = useState(false);
   const [escalatedSuccess, setEscalatedSuccess] = useState(false);
+  const [escalationError, setEscalationError] = useState<string | null>(null);
   const [escalationForm, setEscalationForm] = useState({
     parentName: "",
     studentName: "",
@@ -104,10 +110,12 @@ export function CounsellorChat({
     preferredTrade: "Electrician",
   });
   const listRef = useRef<HTMLDivElement>(null);
+  const escalationTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     return () => {
       speechService.stop();
+      if (escalationTimer.current) clearTimeout(escalationTimer.current);
     };
   }, []);
 
@@ -128,7 +136,7 @@ export function CounsellorChat({
     if (trimmed.length < 3 || busy) return;
     setBusy(true);
     setError(null);
-    setMessages((previous) => [...previous, { role: "user", content: trimmed }]);
+    setMessages((previous) => [...previous, { id: nextMessageId(), role: "user", content: trimmed }]);
     setInput("");
 
     try {
@@ -168,6 +176,7 @@ export function CounsellorChat({
       setMessages((previous) => [
         ...previous,
         {
+          id: nextMessageId(),
           role: "assistant",
           content: body.answer ?? "",
           grounding: body.grounding ?? "guidance",
@@ -188,6 +197,7 @@ export function CounsellorChat({
     e.preventDefault();
     if (!escalationForm.phone || escalationForm.phone.length < 10) return;
     setEscalating(true);
+    setEscalationError(null);
     try {
       const res = await fetch("/api/escalate", {
         method: "POST",
@@ -197,15 +207,25 @@ export function CounsellorChat({
           notes: `Escalated from Counsellor Chat. Mode: ${perspectiveMode}`,
         }),
       });
-      if (res.ok) {
-        setEscalatedSuccess(true);
-        setTimeout(() => {
-          setShowEscalation(false);
-          setEscalatedSuccess(false);
-        }, 4000);
+      if (!res.ok) {
+        setEscalationError(
+          locale === "te"
+            ? "అభ్యర్థన నమోదు కాలేదు. దయచేసి మళ్లీ ప్రయత్నించండి."
+            : "The request wasn't recorded. Please try again.",
+        );
+        return;
       }
-    } catch (err) {
-      console.error(err);
+      setEscalatedSuccess(true);
+      escalationTimer.current = setTimeout(() => {
+        setShowEscalation(false);
+        setEscalatedSuccess(false);
+      }, 4000);
+    } catch {
+      setEscalationError(
+        locale === "te"
+          ? "నెట్‌వర్క్ సమస్య — అభ్యర్థన నమోదు కాలేదు."
+          : "Network problem — the request wasn't recorded.",
+      );
     } finally {
       setEscalating(false);
     }
@@ -263,7 +283,19 @@ export function CounsellorChat({
         </div>
 
         <CardContent className="flex flex-1 flex-col gap-3 pt-4">
-          <div ref={listRef} className="flex-1 space-y-4 overflow-y-auto pr-1" aria-live="polite">
+          {/* The transcript itself is not a live region — announcing the whole
+              log on every update re-reads old answers. A separate status line
+              carries just what changed. */}
+          <p className="sr-only" role="status" aria-live="polite">
+            {busy
+              ? locale === "te"
+                ? "సమాధానం సిద్ధమవుతోంది"
+                : "Preparing an answer"
+              : messages.length > 0 && messages[messages.length - 1]!.role === "assistant"
+                ? messages[messages.length - 1]!.content
+                : ""}
+          </p>
+          <div ref={listRef} className="flex-1 space-y-4 overflow-y-auto pr-1">
             {messages.length === 0 ? (
               <div className="space-y-3 rounded-lg border border-dashed border-[var(--border)] p-4 text-sm text-[var(--muted-foreground)]">
                 <div className="flex items-center justify-between">
@@ -288,7 +320,7 @@ export function CounsellorChat({
             ) : null}
 
             {messages.map((message, index) => (
-              <div key={`${message.role}-${index}`} className={cn("flex gap-3", message.role === "user" && "justify-end")}>
+              <div key={message.id} className={cn("flex gap-3", message.role === "user" && "justify-end")}>
                 {message.role === "assistant" ? (
                   <span className="mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-[var(--accent)]">
                     <Bot className="h-4 w-4" aria-hidden />
@@ -392,25 +424,44 @@ export function CounsellorChat({
                     </div>
                   ) : (
                     <form onSubmit={handleEscalateSubmit} className="mt-2.5 grid gap-2 sm:grid-cols-3">
-                      <Input
-                        placeholder={locale === "te" ? "తల్లిదండ్రుల పేరు" : "Parent Name"}
-                        value={escalationForm.parentName}
-                        onChange={(e) => setEscalationForm((p) => ({ ...p, parentName: e.target.value }))}
-                        className="h-8 text-xs"
-                        required
-                      />
-                      <Input
-                        placeholder={locale === "te" ? "ఫోన్ నంబర్" : "Phone Number"}
-                        type="tel"
-                        value={escalationForm.phone}
-                        onChange={(e) => setEscalationForm((p) => ({ ...p, phone: e.target.value }))}
-                        className="h-8 text-xs"
-                        required
-                      />
+                      <div>
+                        <label className="sr-only" htmlFor="esc-parent">
+                          {locale === "te" ? "తల్లిదండ్రుల పేరు" : "Parent name"}
+                        </label>
+                        <Input
+                          id="esc-parent"
+                          placeholder={locale === "te" ? "తల్లిదండ్రుల పేరు" : "Parent Name"}
+                          value={escalationForm.parentName}
+                          onChange={(e) => setEscalationForm((p) => ({ ...p, parentName: e.target.value }))}
+                          className="h-8 text-xs"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="sr-only" htmlFor="esc-phone">
+                          {locale === "te" ? "ఫోన్ నంబర్" : "Phone number"}
+                        </label>
+                        <Input
+                          id="esc-phone"
+                          placeholder={locale === "te" ? "ఫోన్ నంబర్" : "Phone Number"}
+                          type="tel"
+                          inputMode="tel"
+                          autoComplete="tel"
+                          value={escalationForm.phone}
+                          onChange={(e) => setEscalationForm((p) => ({ ...p, phone: e.target.value }))}
+                          className="h-8 text-xs"
+                          required
+                        />
+                      </div>
                       <Button type="submit" size="sm" disabled={escalating}>
-                        {escalating ? <Loader2 className="h-3 w-3 animate-spin" /> : <PhoneCall className="h-3 w-3" />}
+                        {escalating ? <Loader2 className="h-3 w-3 animate-spin" aria-hidden /> : <PhoneCall className="h-3 w-3" aria-hidden />}
                         {locale === "te" ? "కాల్ పొందండి" : "Request Call"}
                       </Button>
+                      {escalationError ? (
+                        <p className="text-xs text-[var(--destructive)] sm:col-span-3" role="alert">
+                          {escalationError}
+                        </p>
+                      ) : null}
                     </form>
                   )}
                 </div>

@@ -1,8 +1,7 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AlertTriangle, ClipboardList, PhoneCall, Target, Users } from "lucide-react";
 import { EscalationTriage } from "@/components/counsellor/escalation-triage";
-import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress } from "@/components/ui/primitives";
+import { Badge, Button, ButtonLink, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress } from "@/components/ui/primitives";
 import { currentLocale, getSessionUser } from "@/lib/auth/session";
 import { getCareer } from "@/lib/data";
 import { getCounsellorRoster, getEngagementSummary } from "@/lib/queries";
@@ -75,11 +74,9 @@ export default async function CounsellorRosterPage() {
                   >
                     {student.status.replace("_", " ")}
                   </Badge>
-                  <Link href={`/counsellor/students/${student.studentId}`}>
-                    <Button size="sm" variant="outline">
+                  <ButtonLink href={`/counsellor/students/${student.studentId}`} size="sm" variant="outline">
                       {locale === "te" ? "చూడండి" : "Open"}
-                    </Button>
-                  </Link>
+                    </ButtonLink>
                 </div>
               </div>
             );

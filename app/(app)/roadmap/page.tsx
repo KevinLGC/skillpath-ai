@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/primitives";
+import { Alert, Badge, Button, ButtonLink, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/primitives";
 import { EmptyState, RoadmapTimeline } from "@/components/ui/misc";
 import { currentLocale } from "@/lib/auth/session";
 import { coursesForCareer, getCareer } from "@/lib/data";
@@ -28,9 +27,7 @@ export default async function RoadmapPage({ searchParams }: { searchParams: Prom
               : "Complete the assessment, then open any matched career to see its step-by-step roadmap."
           }
           action={
-            <Link href="/results" className="mt-2 inline-block">
-              <Button size="sm">{locale === "te" ? "సూచనలు చూడండి" : "See my matches"}</Button>
-            </Link>
+            <ButtonLink href="/results" className="mt-2 inline-block" size="sm">{locale === "te" ? "సూచనలు చూడండి" : "See my matches"}</ButtonLink>
           }
         />
       </div>

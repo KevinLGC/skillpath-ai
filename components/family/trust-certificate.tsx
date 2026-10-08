@@ -1,12 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
-  Award,
   Building,
-  CheckCircle2,
   Copy,
-  Download,
   Phone,
   Printer,
   Share2,
@@ -14,24 +11,32 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Input, Select } from "@/components/ui/primitives";
-import { VERIFIED_TRADE_OUTCOMES, VERIFIED_TRAINING_PROVIDERS } from "@/lib/data/trade-outcomes";
-import type { Locale, TradeOutcomeData } from "@/lib/types";
+import { formatDate } from "@/lib/utils/format";
+import type { Locale, TradeOutcomeData, TrainingProvider } from "@/lib/types";
 
 interface TrustCertificateProps {
   locale: Locale;
+  /** Supplied by the server page so this component never imports the data itself. */
+  trades: TradeOutcomeData[];
+  providers: TrainingProvider[];
   initialTradeId?: string;
   defaultStudentName?: string;
   defaultDistrict?: string;
+  /** ISO date, resolved on the server so the printed date cannot mismatch on hydration. */
+  issuedAt?: string;
 }
 
 export function TrustCertificate({
   locale,
+  trades,
+  providers,
   initialTradeId,
   defaultStudentName = "రాహుల్ వర్మ (Rahul Varma)",
   defaultDistrict = "Visakhapatnam",
+  issuedAt,
 }: TrustCertificateProps) {
   const [selectedTrade, setSelectedTrade] = useState<TradeOutcomeData>(
-    VERIFIED_TRADE_OUTCOMES.find((t) => t.id === initialTradeId) || VERIFIED_TRADE_OUTCOMES[0]!,
+    trades.find((t) => t.id === initialTradeId) ?? trades[0]!,
   );
   const [candidateName, setCandidateName] = useState(defaultStudentName);
   const [parentName, setParentName] = useState(
@@ -39,10 +44,16 @@ export function TrustCertificate({
   );
   const [selectedDistrict, setSelectedDistrict] = useState(defaultDistrict);
   const [copied, setCopied] = useState(false);
+  const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimer.current) clearTimeout(copiedTimer.current);
+    };
+  }, []);
 
   const matchedProvider =
-    VERIFIED_TRAINING_PROVIDERS.find((p) => p.district.toLowerCase().includes(selectedDistrict.toLowerCase())) ||
-    VERIFIED_TRAINING_PROVIDERS[0]!;
+    providers.find((p) => p.district.toLowerCase().includes(selectedDistrict.toLowerCase())) ?? providers[0]!;
 
   function handlePrint() {
     window.print();
@@ -89,15 +100,16 @@ export function TrustCertificate({
       `Verified Placement: ${selectedTrade.placementRate}%\n` +
       `3-Year Avg Wage: ₹${selectedTrade.avg3YearSalary.toLocaleString("en-IN")}/mo with EPF/ESI\n` +
       `Nodal ITI Center: ${matchedProvider.name} (${matchedProvider.phone})`;
-    void navigator.clipboard?.writeText(text);
+    void navigator.clipboard?.writeText(text).catch(() => undefined);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
+    if (copiedTimer.current) clearTimeout(copiedTimer.current);
+    copiedTimer.current = setTimeout(() => setCopied(false), 2500);
   }
 
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="flex flex-col justify-between gap-4 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-xs sm:flex-row sm:items-center">
+      <div className="no-print flex flex-col justify-between gap-4 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-xs sm:flex-row sm:items-center">
         <div>
           <Badge variant="accent">
             {locale === "te" ? "కుటుంబం & బంధువుల కోసం అధికారిక రుజువు" : "Official Family & Relatives Verification"}
@@ -122,11 +134,16 @@ export function TrustCertificate({
             <Printer className="mr-2 h-4 w-4" />
             <span>{locale === "te" ? "ప్రింట్ / PDF సేవ్" : "Print / Save PDF"}</span>
           </Button>
+
+          <Button onClick={handleCopySummary} variant="outline" className="font-bold">
+            <Copy className="mr-2 h-4 w-4" />
+            <span>{locale === "te" ? "సారాంశం కాపీ" : "Copy summary"}</span>
+          </Button>
         </div>
       </div>
 
       {/* Customization Inputs */}
-      <Card>
+      <Card className="no-print">
         <CardContent className="grid gap-3 pt-5 sm:grid-cols-3 text-xs">
           <div>
             <label className="mb-1 block font-semibold text-[var(--foreground)]" htmlFor="tc-student">
@@ -160,12 +177,12 @@ export function TrustCertificate({
               id="tc-trade"
               value={selectedTrade.id}
               onChange={(e) => {
-                const tr = VERIFIED_TRADE_OUTCOMES.find((t) => t.id === e.target.value);
+                const tr = trades.find((t) => t.id === e.target.value);
                 if (tr) setSelectedTrade(tr);
               }}
               className="text-xs"
             >
-              {VERIFIED_TRADE_OUTCOMES.map((t) => (
+              {trades.map((t) => (
                 <option key={t.id} value={t.id}>
                   {locale === "te" ? t.nameTe : t.nameEn}
                 </option>
@@ -208,7 +225,7 @@ export function TrustCertificate({
               NCVT / MSDE Verified
             </Badge>
             <span className="text-[11px] text-slate-500">
-              {locale === "te" ? "జారీ తేదీ" : "Issued"}: {new Date().toLocaleDateString()}
+              {locale === "te" ? "జారీ తేదీ" : "Issued"}: {issuedAt ? formatDate(issuedAt) : "—"}
             </span>
           </div>
         </div>
@@ -341,7 +358,9 @@ export function TrustCertificate({
         {/* Seal Footer */}
         <div className="mt-6 flex flex-wrap items-center justify-between border-t border-slate-200 pt-4 text-[11px] text-slate-500">
           <p>SkillPath AI · Verified under NCVT, Directorate General of Training (DGT) & NEP 2020</p>
-          <p>{copied ? "✓ Copied to clipboard" : "Valid for family presentation and bank educational subsidies"}</p>
+          <p aria-live="polite">
+            {copied ? "✓ Copied to clipboard" : "Valid for family presentation and bank educational subsidies"}
+          </p>
         </div>
       </div>
     </div>

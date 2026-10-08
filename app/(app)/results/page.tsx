@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { CareerCard } from "@/components/career/career-card";
 import { FactorRadarLazy } from "@/components/charts/factor-radar-lazy";
-import { Alert, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, SectionTitle } from "@/components/ui/primitives";
+import { Alert, Badge, Button, ButtonLink, Card, CardContent, CardDescription, CardHeader, CardTitle, SectionTitle } from "@/components/ui/primitives";
 import { EmptyState, FactorBars, QualityBadge } from "@/components/ui/misc";
 import { currentLocale, getSessionUser } from "@/lib/auth/session";
 import { getCareer } from "@/lib/data";
@@ -26,9 +25,7 @@ export default async function ResultsPage() {
               : "Complete the assessment and your ranked matches will appear here — each one with the factors behind its score."
           }
           action={
-            <Link href="/assessment" className="mt-2 inline-block">
-              <Button>{t("home.hero.cta")}</Button>
-            </Link>
+            <ButtonLink href="/assessment" className="mt-2 inline-block">{t("home.hero.cta")}</ButtonLink>
           }
         />
       </div>
@@ -104,11 +101,9 @@ export default async function ResultsPage() {
                 </span>
               </div>
             ))}
-            <Link href={`/skill-gap?career=${top.careerSlug}`} className="inline-block pt-2">
-              <Button variant="outline" size="sm">
+            <ButtonLink href={`/skill-gap?career=${top.careerSlug}`} className="inline-block pt-2" variant="outline" size="sm">
                 {locale === "te" ? "పూర్తి నైపుణ్య లోటు" : "Full skill gap & learning plan"}
-              </Button>
-            </Link>
+              </ButtonLink>
           </CardContent>
         </Card>
       ) : null}

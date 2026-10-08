@@ -108,7 +108,7 @@ export function AppShell({
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-[1500px] gap-0 lg:gap-6 lg:px-6">
-      <aside className="hidden w-64 shrink-0 py-6 lg:block">
+      <aside className="no-print hidden w-64 shrink-0 py-6 lg:block">
         <Link href="/" className="mb-6 flex items-center px-2 group">
           <span className="text-xl font-bold tracking-tight text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors">
             SkillPath <span className="font-extrabold text-[var(--primary)]">AI</span>
@@ -147,7 +147,7 @@ export function AppShell({
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-10 border-b border-[var(--border)] bg-[color-mix(in_oklab,var(--background)_88%,transparent)] px-4 py-3 backdrop-blur lg:px-0">
+        <header className="no-print sticky top-0 z-10 border-b border-[var(--border)] bg-[color-mix(in_oklab,var(--background)_88%,transparent)] px-4 py-3 backdrop-blur lg:px-0">
           <div className="flex items-center justify-between gap-3">
             <Link href="/" className="flex items-center lg:hidden">
               <span className="text-base font-bold tracking-tight text-[var(--foreground)]">

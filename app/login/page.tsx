@@ -7,11 +7,27 @@ import { currentLocale, getSessionUser } from "@/lib/auth/session";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createTranslator } from "@/lib/i18n/messages";
 
-export default async function LoginPage() {
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const locale = await currentLocale();
   const t = createTranslator(locale);
   const user = await getSessionUser();
   const supabaseReady = isSupabaseConfigured();
+  const { error: errorCode } = await searchParams;
+
+  const errorMessage =
+    errorCode === "invalid"
+      ? locale === "te"
+        ? "ఇమెయిల్ లేదా పాస్‌వర్డ్ సరిపోలలేదు. మళ్లీ ప్రయత్నించండి."
+        : "That email and password don't match an account. Check them and try again."
+      : errorCode === "missing"
+        ? locale === "te"
+          ? "ఇమెయిల్ మరియు పాస్‌వర్డ్ రెండూ అవసరం."
+          : "Enter both your email and password."
+        : errorCode === "unconfigured" || errorCode === "unavailable"
+          ? locale === "te"
+            ? "ఈ డిప్లాయ్‌మెంట్‌లో ఖాతా సైన్-ఇన్ అందుబాటులో లేదు. డెమో ఖాతాను ఉపయోగించండి."
+            : "Account sign-in isn't available on this deployment. Use a demo account below."
+          : null;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -45,6 +61,11 @@ export default async function LoginPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
+              {errorMessage ? (
+                <Alert variant="danger" className="mb-3">
+                  {errorMessage}
+                </Alert>
+              ) : null}
               <form className="space-y-3" action="/api/auth/login" method="post">
                 <div className="space-y-1">
                   <label className="text-sm font-medium" htmlFor="email">
